@@ -1,4 +1,4 @@
-package mapper;
+package com.vam.mapper;
 
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -13,9 +13,10 @@ import dto.User;
 
 public interface UserMapper
 {
-	public User selectByEmail(String email);
-	public void insert(User user);
-	public void update(User oldUser, User newUser);
-	public void changePassword(String email, String newPassword);
+	@Select("SELECT now() FROM user")
+	public String getTime();
+	
+	public String getTime2();
+	
 	public String selectName(String email);
 }

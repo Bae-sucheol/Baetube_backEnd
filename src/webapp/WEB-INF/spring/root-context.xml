@@ -25,10 +25,14 @@
 		<property name="dataSource" ref="dataSource"></property>
 		<property name="configLocation" value="classpath:/mybatis-config.xml"></property>
 	</bean>
-
-	<mybatis-spring:scan base-package="mapper"/>
+	
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate"
+		destroy-method="clearCache">
+		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
+	</bean>
+	
+	<mybatis-spring:scan base-package="com.vam.mapper"/>
 
 </beans>
-
 
 	

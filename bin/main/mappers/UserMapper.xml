@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	<mapper namespace="mapper.UserMapper">
+	
+		<select id="selectByEmail" parameterType="string" resultType="userVo">
+			SELECT * from user WHERE email = #{email}
+		</select>
+		
+		<select id="selectName" parameterType="string" resultType="string">
+			SELECT name FROM user WHERE email = #{email}
+		</select>
+		
+		<insert id="insert" parameterType="map" useGeneratedKeys="true" keyProperty="user_id">
+			INSERT INTO user(email, password, name, gender, birth, fcm_token, phone, address, reg_date)
+			VALUES(
+				#{user.email},
+				#{user.password},
+				#{user.name},
+				#{user.gender},
+				#{user.birth},
+				#{user.fcmToken},
+				#{user.phone},
+				#{user.address},
+				#{user.regDate}		
+			);
+		</insert>
+		
+		<update id="update" parameterType="map">
+			UPDATE user SET 
+			
+			<set>
+				<if test="oldUser.name != newUser.name">name = #{newUser.name}, </if>
+				<if test="oldUser.birth != newUser.birth">birth = #{newUser.birth} ,</if>
+				<if test="oldUser.gender != newUser.gender">gender = #{newUser.gender} ,</if>
+				<if test="oldUser.address != newUser.address">address = #{newUser.address} ,</if>
+				<if test="oldUser.phone != newUser.phone">phone = #{newUser.phone} ,</if>
+			</set>
+			
+			WHERE email = #{oldUser.email};
+		</update>
+		
+		<update id="changePassword">
+		
+			UPDATE user SET password = #{newPassword} WHERE email = #{email};
+		
+		</update>
+		
+	</mapper>
+
+	

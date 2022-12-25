@@ -4,6 +4,9 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import javax.annotation.Resource;
+
+import org.apache.ibatis.session.SqlSession;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,27 +35,63 @@ public class MapperTest
 	@Mock
 	private UserMapper userMapper;
 	
+	@Autowired
+	private UserMapper userMapperReal;
+	
 	@Before
     public void setUp() {
     	MockitoAnnotations.initMocks(this);
     }
 	
 	@Test
-	public void getUser()
+	public void selectByEmailTest()
 	{
-		when(userMapper.selectByEmail("test@naver.com")).thenReturn(new User(1, "1234", "test", "test@naver.com", "1", "1", "11111111111", "1", "1", true));
+		when(userMapper.selectByEmail("test@naver.com")).thenReturn(new User("1234", "test", "test@naver.com", "1", "1", "11111111111", "1", "1", true));
 		
 		User user = userMapper.selectByEmail("test@naver.com");
 		
-		assertEquals(1, user.getUserId());
 		assertEquals("1234", user.getPassword());
 		assertEquals(true, user.getGender());
-		
-		User insert = new User(100, "1234100", "test100", "test100@naver.com", "100", "100", "11111111111", "100", "100", true);
+	}
 	
+	@Test
+	public void insertTest()
+	{
+		User insert = new User("1234100", "test100", "test100@naver.com", "100", "100", "11111111111", "100", "100", true);
+		
 		userMapper.insert(insert);
 		verify(userMapper).insert(insert);
+	}
 	
+	
+	@Test
+	public void realTest()
+	{
+		userMapperReal.insert(new User("1234", "test", "test@naver.com", "1996-06-07 00:00:00", "1", "11111111111", "1", "2022-12-25 00:00:00", true));
+		
+	 	/*User user = userMapperReal.selectByEmail("test@naver.com");
+	 	
+	 	assertEquals(1, user.getUserId());
+		assertEquals("1234", user.getPassword());
+		assertEquals(true, user.getGender());
+		*/
+	}
+	
+	
+	@Test
+	public void realTest2()
+	{
+	 	User user = userMapperReal.selectByEmail("tncjftncjf@naver.com");
+	 	
+	 	assertEquals("¹è¼öÃ¶", user.getName());
+	}
+	
+	@Test
+	public void realTest3()
+	{
+		String name = userMapperReal.selectName("tncjftncjf@naver.com");
+		
+		assertEquals("¹è¼öÃ¶", name);
 	}
 	
 }

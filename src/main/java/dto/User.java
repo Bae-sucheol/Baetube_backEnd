@@ -14,10 +14,9 @@ public class User
     private boolean gender;
 
     // constructor
-    public User(int userId, String password, String name, String email, String birth,
+    public User(String password, String name, String email, String birth,
     		String fcmToken, String phone, String address, String regDate, boolean gender)
     {
-        this.userId = userId;
         this.password = password;
         this.name = name;
         this.email = email;
