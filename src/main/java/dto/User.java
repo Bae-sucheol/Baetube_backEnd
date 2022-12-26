@@ -1,34 +1,74 @@
 package dto;
 
+import java.sql.Timestamp;
+
+/*
+ * sql 반환형이 TinyInt Integer로 반환.
+ * int 도 Integer 로 반환되며
+ * DateTime은 TimeStamp로 변환되기 때문에 이부분에 대해서 해결법을 찾아야 할 것 같다.
+ */
+
 public class User
 {
-	private int userId;
+	private Integer userId;
+	private String email;
     private String password;
     private String name;
-    private String email;
-    private String birth;
+    private Integer gender;
+    private Timestamp birth;
     private String fcmToken;
     private String phone;
     private String address;
-    private String regDate;
-    private boolean gender;
+    private Timestamp regDate;
 
-    // constructor
-    public User(String password, String name, String email, String birth,
-    		String fcmToken, String phone, String address, String regDate, boolean gender)
-    {
-        this.password = password;
-        this.name = name;
-        this.email = email;
-        this.birth = birth;
-        this.fcmToken = fcmToken;
-        this.phone = phone;
-        this.address = address;
-        this.regDate = regDate;
-        this.gender = gender;
-    }
+    /**
+     * db에서 데이터를 받아올 때 필요한 생성자로 모든 속성을 인자로 받아서 사용한다.
+     * @param userId
+     * @param email
+     * @param password
+     * @param name
+     * @param gender
+     * @param birth
+     * @param fcmToken
+     * @param phone
+     * @param address
+     * @param regDate
+     */
+    public User(Integer userId, String email, String password, String name, Integer gender, Timestamp birth, String fcmToken,
+			String phone, String address, Timestamp regDate)
+	{
+		super();
+		this.userId = userId;
+		this.email = email;
+		this.password = password;
+		this.name = name;
+		this.gender = gender;
+		this.birth = birth;
+		this.fcmToken = fcmToken;
+		this.phone = phone;
+		this.address = address;
+		this.regDate = regDate;
+	}
+    
+    // db에서 데이터를 받아오는 용도 이외의 용도로 사용.
+	public User(String email, String password, String name, Integer gender, Timestamp birth, String fcmToken,
+			String phone, String address, Timestamp regDate)
+	{
+		super();
+		this.email = email;
+		this.password = password;
+		this.name = name;
+		this.gender = gender;
+		this.birth = birth;
+		this.fcmToken = fcmToken;
+		this.phone = phone;
+		this.address = address;
+		this.regDate = regDate;
+	}
 
-    // getter
+
+
+	// getter
     public int getUserId()
     {
         return userId;
@@ -49,7 +89,7 @@ public class User
         return email;
     }
 
-    public String getBirth()
+    public Timestamp getBirth()
     {
         return birth;
     }
@@ -69,12 +109,12 @@ public class User
         return address;
     }
 
-    public String getRegDate()
+    public Timestamp getRegDate()
     {
         return regDate;
     }
 
-    public boolean getGender()
+    public Integer getGender()
     {
         return gender;
     }
@@ -100,7 +140,7 @@ public class User
         this.email = email;
     }
 
-    public void setBirth(String birth)
+    public void setBirth(Timestamp birth)
     {
         this.birth = birth;
     }
@@ -120,12 +160,12 @@ public class User
         this.address = address;
     }
 
-    public void setRegDate(String regDate)
+    public void setRegDate(Timestamp regDate)
     {
         this.regDate = regDate;
     }
 
-    public void setGender(boolean gender)
+    public void setGender(Integer gender)
     {
         this.gender = gender;
     }

@@ -4,10 +4,13 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.sql.Timestamp;
+
 import javax.annotation.Resource;
 
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -43,43 +46,49 @@ public class MapperTest
     	MockitoAnnotations.initMocks(this);
     }
 	
+
 	@Test
 	public void selectByEmailTest()
 	{
-		when(userMapper.selectByEmail("test@naver.com")).thenReturn(new User("1234", "test", "test@naver.com", "1", "1", "11111111111", "1", "1", true));
+		User user = new User("test@naver.com", "1234", "test", 1, new Timestamp(System.nanoTime()), "1", "11111111111", "11111111", new Timestamp(System.nanoTime()));
 		
-		User user = userMapper.selectByEmail("test@naver.com");
+		when(userMapper.selectByEmail("test@naver.com")).thenReturn(user);
 		
-		assertEquals("1234", user.getPassword());
-		assertEquals(true, user.getGender());
+		User user2 = userMapper.selectByEmail("test@naver.com");
+		
+		assertEquals("1234", user2.getPassword());
+		assertTrue(user2.getGender() == 1);
 	}
 	
+
 	@Test
-	public void insertTest()
+	public void mockInsertTest()
 	{
-		User insert = new User("1234100", "test100", "test100@naver.com", "100", "100", "11111111111", "100", "100", true);
+		User insert = new User("test2@naver.com", "1234", "test2", 1, new Timestamp(System.nanoTime()), "1", "11111111111", "11111111", new Timestamp(System.nanoTime()));
 		
 		userMapper.insert(insert);
 		verify(userMapper).insert(insert);
 	}
 	
-	
+
 	@Test
-	public void realTest()
+	public void realInsertTest()
 	{
-		userMapperReal.insert(new User("1234", "test", "test@naver.com", "1996-06-07 00:00:00", "1", "11111111111", "1", "2022-12-25 00:00:00", true));
+		User insert = new User("test@naver.com", "1234", "test", 1, new Timestamp(System.nanoTime()), "1", "11111111111", "11111111", new Timestamp(System.nanoTime()));
 		
-	 	/*User user = userMapperReal.selectByEmail("test@naver.com");
+		userMapperReal.insert(insert);
+		
+	 	User user = userMapperReal.selectByEmail("test@naver.com");
 	 	
-	 	assertEquals(1, user.getUserId());
+	 	assertEquals("test@naver.com", user.getEmail());
 		assertEquals("1234", user.getPassword());
-		assertEquals(true, user.getGender());
-		*/
+		assertEquals("test", user.getName());
+		assertTrue(user.getGender() == 1);
 	}
 	
-	
+
 	@Test
-	public void realTest2()
+	public void realSelectByEmailTest()
 	{
 	 	User user = userMapperReal.selectByEmail("tncjftncjf@naver.com");
 	 	
@@ -87,11 +96,21 @@ public class MapperTest
 	}
 	
 	@Test
-	public void realTest3()
+	public void realUpdateTest()
 	{
-		String name = userMapperReal.selectName("tncjftncjf@naver.com");
+		User oldUser = userMapperReal.selectByEmail("test@naver.com");
+		User newUser = new User("test@naver.com", "1234", "test", 1, new Timestamp(System.nanoTime()), "1", "11111111111", "11111111", new Timestamp(System.nanoTime()));
+		newUser.setName("배수철");
+		newUser.setAddress("경기도 남양주시");
+		newUser.setGender(0);
 		
-		assertEquals("배수철", name);
+		userMapperReal.update(oldUser, newUser);
+		
+		User user = userMapperReal.selectByEmail("test@naver.com");
+	 	
+		assertEquals("배수철", user.getName());
+		assertEquals("경기도 남양주시", user.getAddress());
+		
 	}
 	
 }

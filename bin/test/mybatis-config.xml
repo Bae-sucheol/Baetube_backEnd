@@ -3,5 +3,6 @@
 <configuration>
 	<typeAliases>
     	<typeAlias type="dto.User" alias="userVo"/>
+    	<typeAlias type="dto.Video" alias="videoVo"/>
     </typeAliases>
 </configuration>

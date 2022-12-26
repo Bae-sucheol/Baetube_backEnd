@@ -1,65 +1,119 @@
 package dto;
 
+import java.sql.Timestamp;
+
 public class Video
 {
-	private int videoId;
-	private int channelId;
-	private int views;
-	private int like;
-	private int hate;
-	private int replyCount;
-	private int categoryId;
+	private Integer videoId;
+	private Integer channelId;
 	private String url;
+	private Integer visible;
 	private String thumbnail;
 	private String title;
 	private String info;
 	private String location;
-	private String date;
-	private boolean visible;
-	private boolean age;
+	private Integer age;
+	private Integer views;
+	private Integer like;
+	private Integer hate;
+	private Integer replyCount;
+	private Timestamp date;
+	private Integer categoryId;
+	private String profile;
+	private Timestamp historyDate;
+	
+	// constructor
+	public Video(Integer videoId, Integer channelId, String url, Integer visible, String thumbnail, String title,
+			String info, String location, Integer age, Integer views, Integer like, Integer hate, Integer replyCount,
+			Timestamp date, Integer categoryId, String profile)
+	{
+		super();
+		this.videoId = videoId;
+		this.channelId = channelId;
+		this.url = url;
+		this.visible = visible;
+		this.thumbnail = thumbnail;
+		this.title = title;
+		this.info = info;
+		this.location = location;
+		this.age = age;
+		this.views = views;
+		this.like = like;
+		this.hate = hate;
+		this.replyCount = replyCount;
+		this.date = date;
+		this.categoryId = categoryId;
+		this.profile = profile;
+		
+	}
+
+	public Video(Integer channelId, String url, Integer visible, String thumbnail, String title, String info,
+			String location, Integer age, Integer views, Integer like, Integer hate, Integer replyCount, Timestamp date,
+			Integer categoryId, String profile)
+	{
+		super();
+		this.channelId = channelId;
+		this.url = url;
+		this.visible = visible;
+		this.thumbnail = thumbnail;
+		this.title = title;
+		this.info = info;
+		this.location = location;
+		this.age = age;
+		this.views = views;
+		this.like = like;
+		this.hate = hate;
+		this.replyCount = replyCount;
+		this.date = date;
+		this.categoryId = categoryId;
+		this.profile = profile;
+	}
 	
 	
+
+	public Video(Integer videoId, Integer channelId, String url, Integer visible, String thumbnail, String title,
+			String info, String location, Integer age, Integer views, Integer like, Integer hate, Integer replyCount,
+			Timestamp date, Integer categoryId, String profile, Timestamp historyDate)
+	{
+		super();
+		this.videoId = videoId;
+		this.channelId = channelId;
+		this.url = url;
+		this.visible = visible;
+		this.thumbnail = thumbnail;
+		this.title = title;
+		this.info = info;
+		this.location = location;
+		this.age = age;
+		this.views = views;
+		this.like = like;
+		this.hate = hate;
+		this.replyCount = replyCount;
+		this.date = date;
+		this.categoryId = categoryId;
+		this.profile = profile;
+		this.historyDate = historyDate;
+	}
 
 	// getter
-
-	public int getVideoId()
+	public Integer getVideoId()
 	{
 		return videoId;
 	}
 
-	public int getChannelId()
+	public Integer getChannelId()
 	{
 		return channelId;
-	}
-
-	public int getViews()
-	{
-		return views;
-	}
-
-	public int getLike()
-	{
-		return like;
-	}
-
-	public int getHate()
-	{
-		return hate;
-	}
-
-	public int getReplyCount()
-	{
-		return replyCount;
-	}
-
-	public int getCategoryId()
-	{
-		return categoryId;
 	}
 
 	public String getUrl()
 	{
 		return url;
+	}
+
+	public Integer getVisible()
+	{
+		return visible;
 	}
 
 	public String getThumbnail()
@@ -82,61 +136,66 @@ public class Video
 		return location;
 	}
 
-	public String getDate()
-	{
-		return date;
-	}
-
-	public boolean isVisible()
-	{
-		return visible;
-	}
-
-	public boolean isAge()
+	public Integer getAge()
 	{
 		return age;
 	}
 
-	// setter
+	public Integer getViews()
+	{
+		return views;
+	}
 
-	public void setVideoId(int videoId)
+	public Integer getLike()
+	{
+		return like;
+	}
+
+	public Integer getHate()
+	{
+		return hate;
+	}
+
+	public Integer getReplyCount()
+	{
+		return replyCount;
+	}
+
+	public Timestamp getDate()
+	{
+		return date;
+	}
+
+	public Integer getCategoryId()
+	{
+		return categoryId;
+	}
+
+	public String getProfile()
+	{
+		return profile;
+	}
+	
+	
+	// setter
+	public void setVideoId(Integer videoId)
 	{
 		this.videoId = videoId;
 	}
 
-	public void setChannelId(int channelId)
+	public void setChannelId(Integer channelId)
 	{
 		this.channelId = channelId;
-	}
-
-	public void setViews(int views)
-	{
-		this.views = views;
-	}
-
-	public void setLike(int like)
-	{
-		this.like = like;
-	}
-
-	public void setHate(int hate)
-	{
-		this.hate = hate;
-	}
-
-	public void setReplyCount(int replyCount)
-	{
-		this.replyCount = replyCount;
-	}
-
-	public void setCategoryId(int categoryId)
-	{
-		this.categoryId = categoryId;
 	}
 
 	public void setUrl(String url)
 	{
 		this.url = url;
+	}
+
+	public void setVisible(Integer visible)
+	{
+		this.visible = visible;
 	}
 
 	public void setThumbnail(String thumbnail)
@@ -159,18 +218,49 @@ public class Video
 		this.location = location;
 	}
 
-	public void setDate(String date)
+	public void setAge(Integer age)
+	{
+		this.age = age;
+	}
+
+	public void setViews(Integer views)
+	{
+		this.views = views;
+	}
+
+	public void setLike(Integer like)
+	{
+		this.like = like;
+	}
+
+	public void setHate(Integer hate)
+	{
+		this.hate = hate;
+	}
+
+	public void setReplyCount(Integer replyCount)
+	{
+		this.replyCount = replyCount;
+	}
+
+	public void setDate(Timestamp date)
 	{
 		this.date = date;
 	}
 
-	public void setVisible(boolean visible)
+	public void setCategoryId(Integer categoryId)
 	{
-		this.visible = visible;
+		this.categoryId = categoryId;
 	}
 
-	public void setAge(boolean age)
+	public void setProfile(String profile)
 	{
-		this.age = age;
+		this.profile = profile;
 	}
+	
+	
+	
+	
+
+
 }

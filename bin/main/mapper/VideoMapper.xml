@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	<mapper namespace="mapper.VideoMapper">
+		
+		<insert id="insert" parameterType="map" useGeneratedKeys="true">
+			INSERT INTO video(channel_id, url, public, thumbnail, title,
+			 info, location, age, views, `like`, hate, reply_count, `date`, category_id)
+			VALUES(
+				#{video.channelId},
+				#{video.url},
+				#{video.visible},
+				#{video.thumbnail},
+				#{video.title},
+				#{video.info},
+				#{video.location},
+				#{video.age},
+				#{video.views},
+				#{video.like},
+				#{video.hate},
+				#{video.replyCount},
+				#{video.date},
+				#{video.categoryId}	
+			)
+		</insert>
+		
+		<select id="selectChannelVideo" resultType="videoVo">
+		
+			SELECT video_id, channel_id, url, public, thumbnail, title, info, location, age, views,
+			 `like`, hate, reply_count, `date`, category_id, `profile`
+			 
+			FROM CHANNEL NATURAL JOIN
+
+			(SELECT * FROM video WHERE channel_id = #{channelId} ORDER BY `date` DESC LIMIT 100) AS video_list
+			
+		</select>
+		
+		<select id="selectSubscribeVideo" resultType="videoVo">
+		
+			SELECT video_id, channel_id, url, public, thumbnail, title, info, location, age, views,
+			 `like`, hate, reply_count, `date`, category_id, `profile`
+			 
+			FROM CHANNEL NATURAL JOIN
+			
+			(SELECT * FROM video WHERE channel_id IN (SELECT channel_id FROM subscribers WHERE user_id = #{userId})
+			
+			 ORDER BY `date` DESC LIMIT 100) AS video_list ORDER BY `date` DESC;
+			 
+		</select>
+		
+		<select id="selectMainVideo" resultType="videoVo">
+		
+			SELECT video_id, channel_id, url, public, thumbnail, title, info, location, age, views,
+			 `like`, hate, reply_count, `date`, category_id, `profile` 
+			 
+			 FROM CHANNEL NATURAL JOIN
+			
+			((SELECT * FROM video WHERE category_id IN
+			(SELECT category_id FROM (SELECT category_id, COUNT(*) AS COUNT FROM video 
+			JOIN 
+			(SELECT * FROM HISTORY WHERE user_id = #{userId}) AS user_history
+			WHERE user_history.video_id = video.video_id 
+			GROUP BY category_id 
+			ORDER BY COUNT DESC 
+			LIMIT 3) AS category_list) 
+			
+			ORDER BY `date` 
+			LIMIT 80)
+			
+			UNION
+			
+			(SELECT * FROM video ORDER BY views LIMIT 20) ORDER BY RAND()) AS video_list
+			
+		</select>
+		
+		<select id="selectHistoryVideo" resultType="videoVo">
+		
+			SELECT video_id, channel_id, url, public, thumbnail, title, info, location, age, views,
+			 `like`, hate, reply_count, `date`, category_id, `profile`, history_date FROM CHANNEL
+
+			NATURAL JOIN
+			
+			(SELECT * FROM video 
+			
+			NATURAL JOIN
+			
+			(SELECT user_id, video_id, `date` AS history_date FROM HISTORY 
+			WHERE user_id = #{userId}) AS history_list) AS video_list
+			
+			ORDER BY history_date
+			
+		</select>
+		
+	</mapper>

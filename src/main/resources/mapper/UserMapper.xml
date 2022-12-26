@@ -10,11 +10,7 @@
 			SELECT * from user WHERE email = #{email}
 		</select>
 		
-		<select id="selectName" parameterType="string" resultType="string">
-			SELECT name FROM user WHERE email = #{email}
-		</select>
-		
-		<insert id="insert" parameterType="map" useGeneratedKeys="true" keyProperty="user_id">
+		<insert id="insert" parameterType="map" useGeneratedKeys="true">
 			INSERT INTO user(email, password, name, gender, birth, fcm_token, phone, address, reg_date)
 			VALUES(
 				#{user.email},
@@ -26,29 +22,27 @@
 				#{user.phone},
 				#{user.address},
 				#{user.regDate}		
-			);
+			)
 		</insert>
 		
 		<update id="update" parameterType="map">
-			UPDATE user SET 
+			UPDATE user 
 			
 			<set>
-				<if test="oldUser.name != newUser.name">name = #{newUser.name}, </if>
-				<if test="oldUser.birth != newUser.birth">birth = #{newUser.birth} ,</if>
-				<if test="oldUser.gender != newUser.gender">gender = #{newUser.gender} ,</if>
-				<if test="oldUser.address != newUser.address">address = #{newUser.address} ,</if>
-				<if test="oldUser.phone != newUser.phone">phone = #{newUser.phone} ,</if>
+				<if test='!oldUser.name.equals(newUser.name)'>name = #{newUser.name}, </if>
+				<if test='!oldUser.birth.equals(newUser.birth)'>birth = #{newUser.birth}, </if>
+				<if test='oldUser.gender != newUser.gender'>gender = #{newUser.gender}, </if>
+				<if test='!oldUser.address.equals(newUser.address)'>address = #{newUser.address}, </if>
+				<if test='!oldUser.phone.equals(newUser.phone)'>phone = #{newUser.phone}, </if>
 			</set>
 			
-			WHERE email = #{oldUser.email};
+			WHERE email = #{oldUser.email}
 		</update>
 		
 		<update id="changePassword">
 		
-			UPDATE user SET password = #{newPassword} WHERE email = #{email};
+			UPDATE user SET password = #{newPassword} WHERE email = #{email}
 		
 		</update>
 		
 	</mapper>
-
-	

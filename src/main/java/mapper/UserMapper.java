@@ -14,8 +14,7 @@ import dto.User;
 public interface UserMapper
 {
 	public User selectByEmail(String email);
-	public void insert(User user);
-	public void update(User oldUser, User newUser);
+	public void insert(@Param("user") User user);
+	public void update(@Param("oldUser") User oldUser, @Param("newUser") User newUser);
 	public void changePassword(String email, String newPassword);
-	public String selectName(String email);
 }
