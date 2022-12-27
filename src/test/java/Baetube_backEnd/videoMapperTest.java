@@ -49,7 +49,7 @@ public class videoMapperTest
 			stringBuilder.append(" video_id : ");
 			stringBuilder.append(video.getVideoId()).append("\n");
 			stringBuilder.append(" channel_id : ");
-			stringBuilder.append(video.getCategoryId()).append("\n");
+			stringBuilder.append(video.getChannelId()).append("\n");
 			stringBuilder.append(" url : ");
 			stringBuilder.append(video.getUrl()).append("\n");
 			stringBuilder.append(" public : ");
@@ -98,7 +98,7 @@ public class videoMapperTest
 			stringBuilder.append(" video_id : ");
 			stringBuilder.append(video.getVideoId()).append("\n");
 			stringBuilder.append(" channel_id : ");
-			stringBuilder.append(video.getCategoryId()).append("\n");
+			stringBuilder.append(video.getChannelId()).append("\n");
 			stringBuilder.append(" url : ");
 			stringBuilder.append(video.getUrl()).append("\n");
 			stringBuilder.append(" public : ");
@@ -147,7 +147,7 @@ public class videoMapperTest
 			stringBuilder.append(" video_id : ");
 			stringBuilder.append(video.getVideoId()).append("\n");
 			stringBuilder.append(" channel_id : ");
-			stringBuilder.append(video.getCategoryId()).append("\n");
+			stringBuilder.append(video.getChannelId()).append("\n");
 			stringBuilder.append(" url : ");
 			stringBuilder.append(video.getUrl()).append("\n");
 			stringBuilder.append(" public : ");
@@ -196,7 +196,7 @@ public class videoMapperTest
 			stringBuilder.append(" video_id : ");
 			stringBuilder.append(video.getVideoId()).append("\n");
 			stringBuilder.append(" channel_id : ");
-			stringBuilder.append(video.getCategoryId()).append("\n");
+			stringBuilder.append(video.getChannelId()).append("\n");
 			stringBuilder.append(" url : ");
 			stringBuilder.append(video.getUrl()).append("\n");
 			stringBuilder.append(" public : ");
