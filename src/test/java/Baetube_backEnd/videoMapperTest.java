@@ -20,13 +20,14 @@ public class videoMapperTest
 	@Autowired
 	private VideoMapper videoMapper;
 	
-	@Ignore
 	@Test
 	public void insertVideoTest()
 	{
-		for (int i = 10; i < 20; i++)
+		for (int i = 0; i < 10; i++)
 		{
-			Video video = new Video(2, "1234", 1, "1234", "테스트 비디오" + (i + 1), "1234",
+			
+			
+			Video video = new Video(1, "1234", 1, "1234", "테스트 비디오" + (i + 1), "1234",
 					"1234", 1, 0, 0, 0, 0, new Timestamp(System.currentTimeMillis()),
 					1, "1234");
 			
@@ -181,6 +182,7 @@ public class videoMapperTest
 		}
 	}
 	
+	@Ignore
 	@Test
 	public void selectSubscribeVideoTest()
 	{
