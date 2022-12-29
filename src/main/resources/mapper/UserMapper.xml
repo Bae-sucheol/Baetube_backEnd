@@ -6,7 +6,7 @@
 	
 	<mapper namespace="mapper.UserMapper">
 	
-		<select id="selectByEmail" parameterType="string" resultType="userVo">
+		<select id="selectByEmail" parameterType="string" resultType="userDto">
 			SELECT * from user WHERE email = #{email}
 		</select>
 		
@@ -44,5 +44,11 @@
 			UPDATE user SET password = #{newPassword} WHERE email = #{email}
 		
 		</update>
+		
+		<delete id="delete">
+		
+			DELETE FROM user WHERE user_id = #{userId}
+		
+		</delete>
 		
 	</mapper>

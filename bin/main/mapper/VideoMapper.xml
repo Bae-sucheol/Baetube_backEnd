@@ -6,10 +6,8 @@
 	
 	<mapper namespace="mapper.VideoMapper">
 		
-		<insert id="insert" parameterType="map" useGeneratedKeys="true">
-			INSERT INTO video(channel_id, url, public, thumbnail, title,
-			 info, location, age, views, `like`, hate, reply_count, `date`, category_id)
-			VALUES(
+		<insert id="insert" statementType="CALLABLE" parameterType="map">
+			CALL insert_video(
 				#{video.channelId},
 				#{video.url},
 				#{video.visible},
@@ -27,7 +25,7 @@
 			)
 		</insert>
 		
-		<select id="selectChannelVideo" resultType="videoVo">
+		<select id="selectChannelVideo" resultType="videoDto">
 		
 			SELECT video_id, channel_id, url, public, thumbnail, title, info, location, age, views,
 			 `like`, hate, reply_count, `date`, category_id, `profile`
@@ -38,7 +36,7 @@
 			
 		</select>
 		
-		<select id="selectSubscribeVideo" resultType="videoVo">
+		<select id="selectSubscribeVideo" resultType="videoDto">
 		
 			SELECT video_id, channel_id, url, public, thumbnail, title, info, location, age, views,
 			 `like`, hate, reply_count, `date`, category_id, `profile`
@@ -51,7 +49,7 @@
 			 
 		</select>
 		
-		<select id="selectMainVideo" resultType="videoVo">
+		<select id="selectMainVideo" resultType="videoDto">
 		
 			SELECT video_id, channel_id, url, public, thumbnail, title, info, location, age, views,
 			 `like`, hate, reply_count, `date`, category_id, `profile` 
@@ -76,7 +74,7 @@
 			
 		</select>
 		
-		<select id="selectHistoryVideo" resultType="videoVo">
+		<select id="selectHistoryVideo" resultType="videoDto">
 		
 			SELECT video_id, channel_id, url, public, thumbnail, title, info, location, age, views,
 			 `like`, hate, reply_count, `date`, category_id, `profile`, history_date FROM CHANNEL
@@ -90,8 +88,53 @@
 			(SELECT user_id, video_id, `date` AS history_date FROM HISTORY 
 			WHERE user_id = #{userId}) AS history_list) AS video_list
 			
-			ORDER BY history_date
+			ORDER BY history_date DESC
 			
 		</select>
+		
+		<delete id="delete">
+		
+			DELETE FROM video WHERE video_id = #{videoId}
+		
+		</delete>
+		
+		<update id="update" parameterType="map">
+			UPDATE video 
+			
+			<set>
+				<if test='!oldVideo.title.equals(newVideo.title)'>title = #{newVideo.title}, </if>
+				<if test='!oldVideo.info.equals(newVideo.info)'>info = #{newVideo.info}, </if>
+				<if test='oldVideo.visible != newVideo.visible'>public = #{newVideo.visible}, </if>
+				<if test='oldVideo.age != newVideo.age'>age = #{newVideo.age}, </if>
+				<if test='!oldVideo.location.equals(newVideo.location)'>location = #{newVideo.location}, </if>
+				<if test='!oldVideo.thumbnail.equals(newVideo.thumbnail)'>thumbnail = #{newVideo.thumbnail}, </if>
+			</set>
+			
+			WHERE video_id = #{oldVideo.videoId}
+		</update>
+		
+		<update id="updateLike">
+		
+			UPDATE video SET 'like' = 'like' + #{value} WHERE video_id = #{videoId}
+		
+		</update>
+		
+		<update id="updateHate">
+		
+			UPDATE video SET hate = hate + #{value} WHERE video_id = #{videoId}
+		
+		</update>
+		
+		<update id="updateReplyCount">
+		
+			UPDATE video SET reply_count = reply_count + #{value} WHERE video_id = #{videoId}
+		
+		</update>
+		
+		<update id="updateViews">
+		
+			UPDATE video SET views = views + #{value} WHERE video_id = #{videoId}
+		
+		</update>
 		
 	</mapper>

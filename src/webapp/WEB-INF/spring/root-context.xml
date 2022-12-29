@@ -15,7 +15,7 @@
 	<bean id="dataSource"
 	class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
-		<property name="url" value="jdbc:mysql://localhost:3306/spring5fs?useSSL=false&amp;characterEncoding=utf8"></property>
+		<property name="url" value="jdbc:mysql://localhost:3306/spring5fs?useSSL=false&amp;characterEncoding=utf8&amp;noAccessToProcedureBodies=true"></property>
 		<property name="username" value="spring5"></property>
 		<property name="password" value="spring5"></property>
 	</bean>

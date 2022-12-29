@@ -17,4 +17,5 @@ public interface UserMapper
 	public void insert(@Param("user") User user);
 	public void update(@Param("oldUser") User oldUser, @Param("newUser") User newUser);
 	public void changePassword(String email, String newPassword);
+	public void delete(Integer userId);
 }

@@ -2,5 +2,5 @@ package mapper;
 
 public interface ContentsMapper
 {
-	public int createContents(int type);
+	public void delete(long contentsID);
 }
