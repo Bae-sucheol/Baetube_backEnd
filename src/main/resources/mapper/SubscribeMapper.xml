@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	<mapper namespace="mapper.SubscribeMapper">
+	
+		<insert id="subscribe">
+		
+			INSERT INTO subscribers(channel_id, subscriber_id)
+			VALUES(
+				#{channelId}
+				#{subscriberId}
+			)
+		
+		</insert>
+		
+		<delete id="unSubscribe">
+		
+			DELETE FROM subscribers WHERE channel_id = #{channelId} AND subscriber_id = #{subscriber_id}
+		
+		</delete>
+		
+		<select id="select" resultType="subscribersDto">
+		
+			SELECT * FROM subscribers WHERE channel_id = #{channelId} AND subscriber_id = #{subscriber_id}
+		
+		</select>
+		
+	</mapper>

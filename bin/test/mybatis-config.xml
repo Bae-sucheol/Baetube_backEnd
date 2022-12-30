@@ -5,5 +5,9 @@
     	<typeAlias type="dto.User" alias="userDto"/>
     	<typeAlias type="dto.Video" alias="videoDto"/>
     	<typeAlias type="dto.Channel" alias="channelDto"/>
+    	<typeAlias type="dto.Subscribers" alias="subscribersDto"/>
+    	<typeAlias type="dto.Community" alias="communityDto"/>
+    	<typeAlias type="dto.Reply" alias="replyDto"/>
+    	<typeAlias type="dto.NestedReply" alias="nestedReplyDto"/>
     </typeAliases>
 </configuration>

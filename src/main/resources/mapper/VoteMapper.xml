@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	<mapper namespace="mapper.VoteMapper">
+	
+		<insert id="insertVote" parameterType="map" useGeneratedKeys="true" keyProperty="vote_id">
+		
+			INSERT INTO vote(community_id, title, `comment`)
+			VALUES(
+				#{vote.communityId}
+				#{vote.title}
+				#{vote.comment}
+			)
+		
+		</insert>
+		
+		<insert id="insertVoteOption" parameterType="map" useGeneratedKeys="true" keyProperty="vote_option_id">
+		
+			INSERT INTO vote_option(vote_id, `option`)
+			VALUES(
+				#{voteOption.voteId}
+				#{voteOption.option}
+			)
+		
+		</insert>
+		
+		<update id="updateVote" parameterType="map">
+		
+			UPDATE vote
+			
+			<set>
+				<if test='!oldVote.title.equals(newVote.title)'>title = #{newVote.title}, </if>
+				<if test='!oldVote.comment.equals(newVote.comment)'>`comment` = #{newVote.comment}, </if>
+			</set>
+			
+			WHERE vote_id = #{oldVote.voteId}
+		
+		</update>
+		
+		<update id="updateVoteOption" parameterType="map">
+		
+			UPDATE vote_option
+			
+			<set>
+				<if test='!oldVoteOption.option.equals(newVoteOption.option)'>`option` = #{newVoteOption.option}, </if>
+			</set>
+			
+			WHERE vote_id = #{oldVoteOption.voteId} AND vote_option_id = #{oldVoteOption.voteOptionId}
+		
+		</update>
+		
+		<update id="updateVoteOptionCount">
+		
+			UPDATE vote_option SET count = count + #{value} where vote_id = #{voteId} AND vote_option_id = #{voteOptionId}
+		
+		</update>
+		
+		<delete id="deleteVote">
+		
+			DELETE FROM vote WHERE vote_id = #{voteId}
+		
+		</delete>
+		
+		<delete id="deleteVoteOption">
+		
+			DELETE FROM vote_option WHERE vote_id = #{voteID} AND vote_option_id = #{voteOptionId}
+		
+		</delete>
+		
+	</mapper>

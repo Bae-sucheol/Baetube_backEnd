@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 public class Video
 {
 	private Integer videoId;
+	private Long contentsId;
 	private Integer channelId;
 	private String url;
 	private Integer visible;
@@ -23,12 +24,13 @@ public class Video
 	private Timestamp historyDate;
 	
 	// constructor
-	public Video(Integer videoId, Integer channelId, String url, Integer visible, String thumbnail, String title,
+	public Video(Integer videoId, Long contentsId, Integer channelId, String url, Integer visible, String thumbnail, String title,
 			String info, String location, Integer age, Integer views, Integer like, Integer hate, Integer replyCount,
 			Timestamp date, Integer categoryId, String profile)
 	{
 		super();
 		this.videoId = videoId;
+		this.contentsId = contentsId;
 		this.channelId = channelId;
 		this.url = url;
 		this.visible = visible;
@@ -99,6 +101,11 @@ public class Video
 	public Integer getVideoId()
 	{
 		return videoId;
+	}
+	
+	public Long getContentsId()
+	{
+		return contentsId;
 	}
 
 	public Integer getChannelId()
@@ -181,6 +188,11 @@ public class Video
 	public void setVideoId(Integer videoId)
 	{
 		this.videoId = videoId;
+	}
+	
+	public void setContentsId(Long contentsId)
+	{
+		this.contentsId = contentsId;
 	}
 
 	public void setChannelId(Integer channelId)
