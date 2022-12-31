@@ -26,27 +26,10 @@
 			WHERE community_id = #{oldCommunity.communityId}
 		</update>
 		
-		<update id="updateLike">
-		
-			UPDATE community SET 'like' = 'like' + #{value} WHERE community_id = #{communityId}
-		
-		</update>
-		
-		<update id="updateHate">
-		
-			UPDATE community SET hate = hate + #{value} WHERE community_id = #{communityId}
-		
-		</update>
-		
-		<update id="updateReplyCount">
-		
-			UPDATE community SET reply_count = reply_count + #{value} WHERE community_id = #{communityId}
-		
-		</update>
-		
 		<select id="selectByChannel" resultType="communityDto">
 		
-			SELECT * FROM community WHERE channel_id = #{channelId};
+			SELECT community_id, contents_id, channel_id, `like`, hate, reply_count, image_url, `comment`, `date` 
+			FROM community NATURAL JOIN contents WHERE channel_id = #{channelId};
 		
 		</select>
 		

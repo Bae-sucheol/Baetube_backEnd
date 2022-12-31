@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	<mapper namespace="mapper.SearchHistoryMapper">
+	
+		<insert id="insert">
+		
+			INSERT INTO search_history(user_id, keywords, `date`)
+			VALUES(#{userId}, #{keywords}, NOW()) 
+			ON DUPLICATE KEY UPDATE `date` = NOW();
+		
+		</insert>
+		
+		<delete id="delete">
+		
+			DELETE FROM search_history WHERE user_id = #{userId} AND keywords = #{keywords}
+		
+		</delete>
+
+	</mapper>

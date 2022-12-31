@@ -6,12 +6,14 @@ import org.apache.ibatis.annotations.Param;
 
 import dto.Reply;
 
+/*
+ * SELECT user_id, v_contents_id AS contents_id, NOW() AS `date` FROM CHANNEL NATURAL JOIN reply WHERE reply_id = 24;
+ * 이걸로 프로시저를 최적화 할 수 있을 것 같다.
+ */
+
 public interface ReplyMapper
 {
 	public void insert(@Param("reply") Reply reply, Integer type);
 	public void updateComment(Integer replyId, String comment);
-	public void updateLike(Integer replyId, Integer value);
-	public void updateHate(Integer replyId, Integer value);
-	public void updateNestedCount(Integer replyId, Integer value);
 	public List<Reply> selectByContentsId(Integer contentsId);
 }

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	<mapper namespace="mapper.PlaylistMapper">
+	
+		<insert id="insert" parameterType="map">
+		
+			INSERT INTO playlist(channel_id, name, public, thumbnail)
+			VALUES(#{playlist.channelId}, #{playlist.name}, #{playlist.visible}, #{playlist.thumbnail})
+		
+		</insert>
+		
+		<delete id="delete">
+		
+			DELETE FROM playlist WHERE playlist_id = #{playlistId} AND channel_id #{channelId}
+		
+		</delete>
+		
+		<select id="selectByChannelId" resultType="playlistDto">
+		
+			SELECT * FROM playlist WHERE channel_id = #{channelId}
+		
+		</select>
+		
+		<update id="update" parameterType="map">
+		
+			UPDATE playlist
+			
+			<set>
+				<if test='!oldPlaylist.name.equals(newPlaylist.name)'>name = #{newPlaylist.name}, </if>
+				<if test='!oldPlaylist.visible.equals(newPlaylist.visible)'>public = #{newPlaylist.visible}, </if>
+				<if test='!oldPlaylist.thumbnail.equals(newPlaylist.thumbnail)'>thumbnail = #{newPlaylist.thumbnail}, </if>
+			</set>
+			
+			WHERE platlist_id = #{oldPlaylist.playlistId}
+		
+		</update>
+		
+		<update id="updateVideoCount" parameterType="map">
+		
+			UPDATE playlist
+			
+			SET video_count = video_count + #{value}
+			
+			WHERE platlist_id = #{playlistId}
+		
+		</update>
+
+	</mapper>

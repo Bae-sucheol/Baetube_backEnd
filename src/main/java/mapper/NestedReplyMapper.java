@@ -8,7 +8,7 @@ import dto.NestedReply;
 
 public interface NestedReplyMapper
 {
-	public void insert(@Param("nestedreply") NestedReply nestedreply);
+	public void insert(@Param("nestedreply") NestedReply nestedreply, Long attached_id);
 	public void updateComment(Integer nestedReplyId, String comment);
 	public void updateLike(Integer nestedReplyId, Integer value);
 	public void updateHate(Integer nestedReplyId, Integer value);

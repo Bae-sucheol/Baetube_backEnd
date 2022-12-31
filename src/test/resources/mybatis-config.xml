@@ -9,5 +9,6 @@
     	<typeAlias type="dto.Community" alias="communityDto"/>
     	<typeAlias type="dto.Reply" alias="replyDto"/>
     	<typeAlias type="dto.NestedReply" alias="nestedReplyDto"/>
+    	<typeAlias type="dto.Playlist" alias="playlistDto"/>
     </typeAliases>
 </configuration>

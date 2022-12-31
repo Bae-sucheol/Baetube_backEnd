@@ -11,7 +11,6 @@
 				#{reply.attachedId},
 				#{reply.channelId},
 				#{reply.comment},
-				#{reply.date}
 				#{type}
 			)
 		</insert>

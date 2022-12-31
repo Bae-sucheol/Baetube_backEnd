@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	<mapper namespace="mapper.HistoryMapper">
+	
+		<insert id="insert">
+		
+			INSERT INTO history(user_id, video_id, `date`)
+			VALUES(#{userId}, #{videoId}, NOW()) 
+			ON DUPLICATE KEY UPDATE `date` = NOW();
+		
+		</insert>
+		
+		<delete id="delete">
+		
+			DELETE FROM history WHERE user_id = #{userId} AND video_id = #{videoId}
+		
+		</delete>
+
+	</mapper>
