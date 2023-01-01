@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+    	<typeAlias type="Baetube_backEnd.dto.User" alias="userDto"/>
+    	<typeAlias type="Baetube_backEnd.dto.Video" alias="videoDto"/>
+    	<typeAlias type="Baetube_backEnd.dto.Channel" alias="channelDto"/>
+    	<typeAlias type="Baetube_backEnd.dto.Subscribers" alias="subscribersDto"/>
+    	<typeAlias type="Baetube_backEnd.dto.Community" alias="communityDto"/>
+    	<typeAlias type="Baetube_backEnd.dto.Reply" alias="replyDto"/>
+    	<typeAlias type="Baetube_backEnd.dto.NestedReply" alias="nestedReplyDto"/>
+    	<typeAlias type="Baetube_backEnd.dto.Playlist" alias="playlistDto"/>
+    </typeAliases>
+</configuration>

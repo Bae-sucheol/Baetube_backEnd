@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	<mapper namespace="Baetube_backEnd.mapper.ChannelMapper">
+	
+		<insert id="insert" parameterType="map" useGeneratedKeys="true">
+			INSERT INTO channel(user_id, name, reg_date)
+			VALUES(
+				#{channel.userId},
+				#{channel.name},
+				#{channel.regDate}	
+			)
+		</insert>
+		
+		<delete id="delete">
+		
+			DELETE FROM channel WHERE channel_id = #{channelId}
+		
+		</delete>
+		
+		<update id="update" parameterType="map">
+			UPDATE channel 
+			
+			<set>
+				<if test='!oldChannel.name.equals(newChannel.name)'>name = #{newChannel.name}, </if>
+				<if test='!oldChannel.description.equals(newChannel.description)'>description = #{newChannel.description}, </if>
+				<if test='!oldChannel.arts.equals(newChannel.arts)'>arts = #{newChannel.arts}, </if>
+				<if test='!oldChannel.profile.equals(newChannel.profile)'>profile = #{newChannel.profile}, </if>
+			</set>
+			
+			WHERE chennl_id = #{oldChannel.channelId}
+		</update>
+		
+		<update id="updateSubscribes">
+		
+			UPDATE channel SET subs = subs + #{value} WHERE channel_id = #{channelId}
+		
+		</update>
+		
+		<update id="updateVideoCount">
+		
+			UPDATE channel SET video_count = video_count + #{value} WHERE channel_id = #{channelId}
+		
+		</update>
+		
+		<select id="select" resultType="channelDto">
+		
+			SELECT * FROM channel WHERE channel_id = #{channelId}
+		
+		</select>
+		
+	</mapper>

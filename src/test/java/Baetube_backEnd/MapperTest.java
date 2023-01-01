@@ -20,8 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import dto.User;
-import mapper.UserMapper;
+import Baetube_backEnd.dto.User;
+import Baetube_backEnd.mapper.UserMapper;
 
 /*
  * Controller.java - Service.java - Mapper.java - Mapper.xml 구조를 사용하는 것이 

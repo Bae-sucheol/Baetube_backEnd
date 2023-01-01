@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	<mapper namespace="Baetube_backEnd.mapper.RateMapper">
+	
+		<insert id="insert" statementType="CALLABLE">
+		
+			CALL insert_rate(
+				#{contentsId, mode=IN, jdbcType=BIGINT, javaType=long},
+				#{channelId, mode=IN, jdbcType=INTEGER, javaType=int},
+				#{value, mode=IN, jdbcType=INTEGER, javaType=int},
+				#{result, mode=OUT, jdbcType=INTEGER, javaType=int}
+			)
+			
+		</insert>
+
+	</mapper>

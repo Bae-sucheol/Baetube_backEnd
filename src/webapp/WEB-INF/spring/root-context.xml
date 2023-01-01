@@ -31,8 +31,8 @@
 		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
 	</bean>
 	
-	<mybatis-spring:scan base-package="mapper"/>
-
+	<mybatis-spring:scan base-package="Baetube_backEnd.mapper"/>
+	<context:component-scan base-package="Baetube_backEnd"/>
 </beans>
 
 	

@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import dto.Video;
-import mapper.VideoMapper;
+import Baetube_backEnd.dto.Video;
+import Baetube_backEnd.mapper.VideoMapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "file:src/webapp/WEB-INF/spring/**/root-context.xml" })

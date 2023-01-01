@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import dto.Channel;
-import mapper.ChannelMapper;
+import Baetube_backEnd.dto.Channel;
+import Baetube_backEnd.mapper.ChannelMapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "file:src/webapp/WEB-INF/spring/**/root-context.xml" })
