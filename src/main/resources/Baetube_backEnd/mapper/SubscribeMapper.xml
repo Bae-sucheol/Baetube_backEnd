@@ -6,19 +6,15 @@
 	
 	<mapper namespace="Baetube_backEnd.mapper.SubscribeMapper">
 	
-		<insert id="subscribe">
+		<insert id="subscribe" statementType="CALLABLE">
 		
-			INSERT INTO subscribers(channel_id, subscriber_id)
-			VALUES(
-				#{channelId}
-				#{subscriberId}
-			)
+			CALL insert_subscriber(channelId, subscriberId)
 		
 		</insert>
 		
 		<delete id="unSubscribe">
 		
-			DELETE FROM subscribers WHERE channel_id = #{channelId} AND subscriber_id = #{subscriber_id}
+			CALL delete_subscriber(channelId, subscriberId)
 		
 		</delete>
 		

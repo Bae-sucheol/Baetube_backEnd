@@ -17,8 +17,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import Baetube_backEnd.dto.User;
-import Baetube_backEnd.exception.DuplicateMemberException;
+import Baetube_backEnd.exception.DuplicateUserException;
+import Baetube_backEnd.exception.WrongIdPasswordException;
+import Baetube_backEnd.service.UserLoginService;
 import Baetube_backEnd.service.UserRegisterService;
+import Baetube_backEnd.service.UserUnregisterService;
 import Baetube_backEnd.ErrorResponse;
 
 
@@ -29,6 +32,12 @@ public class RestUserController
 	
 	@Autowired
 	private UserRegisterService userRegisterService;
+	
+	@Autowired
+	private UserLoginService userLoginService;
+	
+	@Autowired
+	private UserUnregisterService userUnregisterService;
 
 	@PostMapping("/api/regist")
 	public ResponseEntity<Object> newUser(@RequestBody User register, Errors errors, HttpServletResponse response) throws IOException
@@ -46,12 +55,34 @@ public class RestUserController
 			Integer newUserId = userRegisterService.regist(register);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
-		catch (DuplicateMemberException e)
+		catch (DuplicateUserException e)
 		{
 			
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
 		
+	}
+	
+	@PostMapping("/api/login")
+	public ResponseEntity<Object> loginUser(@RequestBody User login, Errors errors, HttpServletResponse response) throws IOException
+	{
+		if(errors.hasErrors())
+		{
+			String errorCodes = errors.getAllErrors().stream().map(error -> error.getCodes()[0]).collect(Collectors.joining(","));
+			
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse("errorCodes = " + errorCodes));
+		}
+		                                                 
+		try
+		{
+			
+			return ResponseEntity.status(HttpStatus.OK).build();
+		} 
+		catch (WrongIdPasswordException e)
+		{
+			
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+		}
 	}
 	
 }
