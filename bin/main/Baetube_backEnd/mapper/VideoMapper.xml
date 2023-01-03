@@ -75,6 +75,14 @@
 		
 		</select>
 		
+		<select id="selectByVideoId" resultType="videoDto">
+		
+			SELECT video_id, contents_id, channel_id, url, public, thumbnail, title, info, location, age, views,
+			`like`, hate, reply_count, `date`, category_id, `profile` 
+			FROM video NATURAL JOIN contents NATURAL JOIN CHANNEL WHERE video_id = #{videoId};
+		
+		</select>
+		
 		<update id="update" parameterType="map">
 			UPDATE video 
 			

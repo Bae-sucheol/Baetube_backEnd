@@ -2,6 +2,9 @@ package Baetube_backEnd.dto;
 
 import java.sql.Timestamp;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
+
 /*
  * sql 반환형이 TinyInt Integer로 반환.
  * int 도 Integer 로 반환되며
@@ -10,6 +13,8 @@ import java.sql.Timestamp;
 public class User
 {
 	private Integer userId;
+	@NotBlank
+	@Email
 	private String email;
     private String password;
     private String name;
