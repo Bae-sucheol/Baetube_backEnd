@@ -20,7 +20,6 @@ public class HistoryVideoRequestService implements VideoRequestService
 	@Override
 	public List<Video> requestVideo(Integer userId)
 	{
-		
 		return videoMapper.selectHistoryVideo(userId);
 	}
 

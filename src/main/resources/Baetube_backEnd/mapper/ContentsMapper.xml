@@ -15,22 +15,4 @@
 		
 		</delete>
 		
-		<update id="updateLike">
-		
-			UPDATE contents SET 'like' = 'like' + #{value} WHERE contents_id = #{contentsId}
-		
-		</update>
-		
-		<update id="updateHate">
-		
-			UPDATE contents SET hate = hate + #{value} WHERE contents_id = #{contentsId}
-		
-		</update>
-		
-		<update id="updateReplyCount">
-		
-			UPDATE contents SET reply_count = reply_count + #{value} WHERE contents_id = #{contentsId}
-		
-		</update>
-		
 	</mapper>

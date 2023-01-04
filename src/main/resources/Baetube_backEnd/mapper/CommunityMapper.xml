@@ -26,10 +26,23 @@
 			WHERE community_id = #{oldCommunity.communityId}
 		</update>
 		
+		<delete id="delete">
+		
+			DELETE FROM community WHERE community_id = #{communityId}
+		
+		</delete>
+		
 		<select id="selectByChannel" resultType="communityDto">
 		
 			SELECT community_id, contents_id, channel_id, `like`, hate, reply_count, image_url, `comment`, `date` 
 			FROM community NATURAL JOIN contents WHERE channel_id = #{channelId};
+		
+		</select>
+		
+		<select id="selectByCommunityId" resultType="communityDto">
+		
+			SELECT community_id, contents_id, channel_id, `like`, hate, reply_count, image_url, `comment`, `date` 
+			FROM community NATURAL JOIN contents WHERE channel_id = #{communityId};
 		
 		</select>
 		

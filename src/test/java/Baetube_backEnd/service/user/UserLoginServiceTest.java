@@ -28,16 +28,13 @@ public class UserLoginServiceTest
 	@Mock
 	private UserMapper userMapper;
 	
-	private String newEmail = "new@naver.com";
-	private String dupleEmail = "duple@naver.com";
-	private String duplePassword = "1234";
-	private String dupleWrongPassowrd = "12345";
-	private User newUser = new User(0, newEmail, "1234", "1234", 1, new Timestamp(System.currentTimeMillis()), "1234",
-			"1234", "1234", new Timestamp(System.currentTimeMillis()));
-	private User dupleUser = new User(1, dupleEmail, duplePassword, "1234", 1, new Timestamp(System.currentTimeMillis()), "1234",
-			"1234", "1234", new Timestamp(System.currentTimeMillis()));
-	User dupleUserWrongPassword = new User(1, dupleEmail, dupleWrongPassowrd, "1234", 1, new Timestamp(System.currentTimeMillis()), "1234",
-			"1234", "1234", new Timestamp(System.currentTimeMillis()));
+	private String newEmail;
+	private String dupleEmail;
+	private String duplePassword;
+	private String dupleWrongPassowrd;
+	private User newUser;
+	private User dupleUser;
+	private User dupleUserWrongPassword;
 	
 	@Before
 	public void setUp()
@@ -45,6 +42,18 @@ public class UserLoginServiceTest
 		userLoginService = new UserLoginService();
 		userLoginService.setUserMapper(userMapper);
 		MockitoAnnotations.initMocks(this);
+		
+		newEmail = "new@naver.com";
+		dupleEmail = "duple@naver.com";
+		duplePassword = "1234";
+		dupleWrongPassowrd = "12345";
+		
+		newUser = new User(0, newEmail, "1234", "1234", 1, new Timestamp(System.currentTimeMillis()), "1234",
+				"1234", "1234", new Timestamp(System.currentTimeMillis()));
+		dupleUser = new User(1, dupleEmail, duplePassword, "1234", 1, new Timestamp(System.currentTimeMillis()), "1234",
+				"1234", "1234", new Timestamp(System.currentTimeMillis()));
+		dupleUserWrongPassword = new User(1, dupleEmail, dupleWrongPassowrd, "1234", 1, new Timestamp(System.currentTimeMillis()), "1234",
+				"1234", "1234", new Timestamp(System.currentTimeMillis()));
 		
 		when(userMapper.selectByEmail(newEmail)).thenReturn(null);
 		when(userMapper.selectByEmail(dupleEmail)).thenReturn(dupleUser);

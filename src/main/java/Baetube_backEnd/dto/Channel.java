@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 public class Channel
 {
-	private Integer ChannelID;
+	private Integer channelId;
 	private Integer userId;
 	private Integer subs;
 	private Integer videoCount;
@@ -14,12 +14,22 @@ public class Channel
 	private Timestamp regDate;
 	
 	
-	
-	public Channel(Integer channelID, Integer userId, Integer subs, Integer videoCount, String name, String description,
+	/**
+	 * 
+	 * @param channelId
+	 * @param userId
+	 * @param subs
+	 * @param videoCount
+	 * @param name
+	 * @param description
+	 * @param arts
+	 * @param regDate
+	 */
+	public Channel(Integer channelId, Integer userId, Integer subs, Integer videoCount, String name, String description,
 			String arts, Timestamp regDate)
 	{
 		super();
-		ChannelID = channelID;
+		this.channelId = channelId;
 		this.userId = userId;
 		this.subs = subs;
 		this.videoCount = videoCount;
@@ -54,9 +64,9 @@ public class Channel
 
 
 	// setter
-	public Integer getChannelID()
+	public Integer getChannelId()
 	{
-		return ChannelID;
+		return channelId;
 	}
 	public Integer getUserId()
 	{
@@ -88,9 +98,9 @@ public class Channel
 	}
 	
 	// getter
-	public void setChannelID(Integer channelID)
+	public void setChannelId(Integer channelId)
 	{
-		ChannelID = channelID;
+		this.channelId = channelId;
 	}
 	public void setUserId(Integer userId)
 	{

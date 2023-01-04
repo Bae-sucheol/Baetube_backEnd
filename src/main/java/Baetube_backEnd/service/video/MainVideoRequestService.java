@@ -20,7 +20,6 @@ public class MainVideoRequestService implements VideoRequestService
 	@Override
 	public List<Video> requestVideo(Integer userId)
 	{
-		
 		return videoMapper.selectMainVideo(userId);
 	}
 

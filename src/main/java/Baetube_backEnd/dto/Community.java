@@ -1,5 +1,7 @@
 package Baetube_backEnd.dto;
 
+import java.sql.Timestamp;
+
 public class Community
 {
 	 	private Integer communityId;
@@ -10,11 +12,11 @@ public class Community
 	    private Integer replyCount;
 	    private String imageUrl;
 	    private String comment;
-	    private String date;
+	    private Timestamp date;
 	    
 	    // constructor
 	    public Community(Integer communityId, Long contentsId, Integer channelId, Integer likeCount,
-				Integer hateCount, Integer replyCount, String imageUrl, String comment, String date)
+				Integer hateCount, Integer replyCount, String imageUrl, String comment, Timestamp date)
 		{
 			super();
 			this.communityId = communityId;
@@ -29,7 +31,7 @@ public class Community
 		}
 	    
  
-		public Community(Integer channelId, String imageUrl, String comment, String date)
+		public Community(Integer channelId, String imageUrl, String comment, Timestamp date)
 		{
 			super();
 			this.channelId = channelId;
@@ -71,7 +73,7 @@ public class Community
 		{
 			return comment;
 		}
-		public String getDate()
+		public Timestamp getDate()
 		{
 			return date;
 		}
@@ -109,7 +111,7 @@ public class Community
 		{
 			this.comment = comment;
 		}
-		public void setDate(String date)
+		public void setDate(Timestamp date)
 		{
 			this.date = date;
 		}

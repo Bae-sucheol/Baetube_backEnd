@@ -25,6 +25,12 @@
 		
 		</select>
 		
+		<select id="selectByPlaylistId" resultType="playlistDto">
+		
+			SELECT * FROM playlist WHERE playlist_id = #{playlistId} 
+		
+		</select>
+		
 		<update id="update" parameterType="map">
 		
 			UPDATE playlist

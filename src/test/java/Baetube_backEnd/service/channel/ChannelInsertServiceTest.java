@@ -1,0 +1,45 @@
+package Baetube_backEnd.service.channel;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.sql.Timestamp;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import Baetube_backEnd.dto.Channel;
+import Baetube_backEnd.mapper.ChannelMapper;
+
+public class ChannelInsertServiceTest
+{
+	@InjectMocks
+	private ChannelInsertService channelInsertService;
+	
+	@Mock
+	private ChannelMapper channelMapper;
+	
+	@Before
+	public void setUp()
+	{
+		channelInsertService = new ChannelInsertService();
+		channelInsertService.setChannelMapper(channelMapper);
+		
+		MockitoAnnotations.initMocks(this);
+	}
+	
+	@Test
+	public void CorrectTest()
+	{
+		Channel channel = new Channel(1, 1, 0, 0, "test", "test", "test", null);
+		
+		assertEquals(true, channelInsertService.insertChannel(channel));
+		verify(channelMapper, atLeastOnce()).insert(channel);
+	}
+
+}

@@ -2,6 +2,7 @@ package Baetube_backEnd.service.video;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.atMost;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doNothing;
@@ -15,7 +16,9 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import Baetube_backEnd.dto.Video;
+import Baetube_backEnd.dto.VideoViewRequest;
 import Baetube_backEnd.exception.NullVideoException;
+import Baetube_backEnd.mapper.HistoryMapper;
 import Baetube_backEnd.mapper.VideoMapper;
 
 public class VideoViewServiceTest
@@ -25,16 +28,21 @@ public class VideoViewServiceTest
 	
 	@Mock
 	private VideoMapper videoMapper;
+	@Mock
+	private HistoryMapper historyMapper;
 	
-	private Video correctVideo = new Video(1, 1L, 1, "1234", 1, "1234", "1234", "1234", "1234", 1, 100, 0, 0, 0, 
-			null, 1, "1234", null, null, null);
+	private Video correctVideo;
 
 	@Before
 	public void setUp()
 	{
 		videoViewService = new VideoViewService();
 		videoViewService.setVideoMapper(videoMapper);
+		videoViewService.setHistoryMapper(historyMapper);
 		MockitoAnnotations.initMocks(this);
+		
+		correctVideo = new Video(1, 1L, 1, "1234", 1, "1234", "1234", "1234", "1234", 1, 100, 0, 0, 0, 
+				null, 1, "1234", null, null, null);
 		
 		when(videoMapper.selectByVideoId(0)).thenReturn(null);
 		when(videoMapper.selectByVideoId(1)).thenReturn(correctVideo);
@@ -43,12 +51,15 @@ public class VideoViewServiceTest
 	@Test
 	public void correctTest()
 	{
-		Video video = videoViewService.selectVideo(1);
+		VideoViewRequest videoViewRequest = new VideoViewRequest(1, 1, 1);
+		Video video = videoViewService.selectVideo(videoViewRequest);
 		
 		// updateViews가 한번 실행되었다면 통과
-		verify(videoMapper, atMost(1)).updateViews(1, 1);
+		verify(videoMapper, atLeastOnce()).updateViews(1, 1);
 		// 실행되었다면 조회수 1 증가
 		video.setViews(video.getViews() + 1);
+		
+		verify(historyMapper, atLeastOnce()).insert(1, 1);
 		
 		assertTrue(1 == video.getVideoId());
 		assertTrue(101 == video.getViews());
@@ -57,7 +68,12 @@ public class VideoViewServiceTest
 	@Test(expected = NullVideoException.class)
 	public void nullVideoTest()
 	{
-		Video video = videoViewService.selectVideo(0);
+		VideoViewRequest videoViewRequest = new VideoViewRequest(0, 1, 1);
+		
+		Video video = videoViewService.selectVideo(videoViewRequest);
+		
+		verify(videoMapper, atLeastOnce()).updateViews(1, 1);
+		verify(historyMapper, atLeastOnce()).insert(1, 1);
 	}
 	
 }
