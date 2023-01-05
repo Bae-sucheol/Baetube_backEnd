@@ -11,7 +11,7 @@
 				#{nestedReply.replyId},
 				#{nestedReply.channelId},
 				#{nestedReply.comment},
-				#{attached_id}
+				#{nestedReply.attachedId}
 			)
 		</insert>
 		

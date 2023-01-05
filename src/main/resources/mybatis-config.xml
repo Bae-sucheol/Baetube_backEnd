@@ -10,5 +10,8 @@
     	<typeAlias type="Baetube_backEnd.dto.Reply" alias="replyDto"/>
     	<typeAlias type="Baetube_backEnd.dto.NestedReply" alias="nestedReplyDto"/>
     	<typeAlias type="Baetube_backEnd.dto.Playlist" alias="playlistDto"/>
+    	<typeAlias type="Baetube_backEnd.dto.PlaylistItem" alias="playlistItemDto"/>
+    	<typeAlias type="Baetube_backEnd.dto.SearchHistory" alias="searchHistoryDto"/>
+    	<typeAlias type="Baetube_backEnd.dto.Vote" alias="voteDto"/>
     </typeAliases>
 </configuration>

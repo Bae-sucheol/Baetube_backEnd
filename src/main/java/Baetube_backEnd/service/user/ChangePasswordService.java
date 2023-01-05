@@ -18,6 +18,7 @@ public class ChangePasswordService
 		this.userMapper = userMapper;
 	}
 	
+	@Transactional
 	public boolean changePassword(ChangePasswordRequest request)
 	{
 		User user = userMapper.selectByEmail(request.getEmail());

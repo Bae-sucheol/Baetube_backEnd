@@ -125,7 +125,7 @@ public class RestUserController
 		}
 	}
 	
-	@PostMapping("/api/user/changepassword")
+	@PostMapping("/api/user/change_password")
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Object> changePassword(@RequestBody @Valid ChangePasswordRequest request, Errors errors, HttpServletResponse response) throws IOException
 	{

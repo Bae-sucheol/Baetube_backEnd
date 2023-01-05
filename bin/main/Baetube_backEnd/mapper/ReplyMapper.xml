@@ -10,32 +10,13 @@
 			CALL insert_reply(
 				#{reply.attachedId},
 				#{reply.channelId},
-				#{reply.comment},
-				#{type}
+				#{reply.comment}
 			)
 		</insert>
 		
 		<update id="updateComment">
 		
 			UPDATE reply SET `comment` = #{comment} WHERE reply_id = #{replyId}
-		
-		</update>
-		
-		<update id="updateLike">
-		
-			UPDATE reply SET 'like' = 'like' + #{value} WHERE reply_id = #{replyId}
-		
-		</update>
-		
-		<update id="updateHate">
-		
-			UPDATE reply SET hate = hate + #{value} WHERE reply_id = #{replyId}
-		
-		</update>
-		
-		<update id="updateNestedCount">
-		
-			UPDATE reply SET nested_count = nested_count + #{value} WHERE reply_id = #{replyId}
 		
 		</update>
 		

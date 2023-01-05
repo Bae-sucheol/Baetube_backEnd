@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import Baetube_backEnd.dto.User;
 import Baetube_backEnd.exception.DuplicateUserException;
@@ -21,6 +22,7 @@ public class UserRegisterService
 		this.userMapper = userMapper;
 	}
 	
+	@Transactional
 	public Integer regist(User request)
 	{
 		User user = userMapper.selectByEmail(request.getEmail());

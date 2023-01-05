@@ -3,6 +3,7 @@ package Baetube_backEnd.service.video;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import Baetube_backEnd.dto.Playlist;
 import Baetube_backEnd.dto.Video;
@@ -28,6 +29,7 @@ public class PlaylistVideoRequestService implements VideoRequestService
 	}
 	
 	@Override
+	@Transactional
 	public List<Video> requestVideo(Integer playlistId)
 	{
 		Playlist playlist = playlistMapper.selectByPlaylistId(playlistId);

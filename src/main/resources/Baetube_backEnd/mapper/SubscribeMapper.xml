@@ -6,21 +6,21 @@
 	
 	<mapper namespace="Baetube_backEnd.mapper.SubscribeMapper">
 	
-		<insert id="subscribe" statementType="CALLABLE">
+		<insert id="subscribe" statementType="CALLABLE" parameterType="map">
 		
-			CALL insert_subscriber(channelId, subscriberId)
+			CALL insert_subscriber(subscribers.channelId, subscribers.subscriberId)
 		
 		</insert>
 		
-		<delete id="unSubscribe">
+		<delete id="unSubscribe" parameterType="map">
 		
-			CALL delete_subscriber(channelId, subscriberId)
+			CALL delete_subscriber(subscribers.channelId, subscribers.subscriberId)
 		
 		</delete>
 		
-		<select id="select" resultType="subscribersDto">
+		<select id="select" resultType="subscribersDto" parameterType="map">
 		
-			SELECT * FROM subscribers WHERE channel_id = #{channelId} AND subscriber_id = #{subscriber_id}
+			SELECT * FROM subscribers WHERE channel_id = #{subscribers.channelId} AND subscriber_id = #{subscribers.subscriberId}
 		
 		</select>
 		

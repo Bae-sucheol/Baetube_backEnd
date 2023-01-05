@@ -1,6 +1,7 @@
 package Baetube_backEnd.service.community;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import Baetube_backEnd.dto.Community;
 import Baetube_backEnd.exception.NullCommunityException;
@@ -16,6 +17,7 @@ public class CommunityDeleteService
 		this.communityMapper = communityMapper;
 	}
 	
+	@Transactional
 	public boolean deleteCommunity(Integer request)
 	{
 		Community community = communityMapper.selectByCommunityId(request);

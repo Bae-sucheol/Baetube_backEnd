@@ -51,7 +51,7 @@ public class RestVideoController
 	@Autowired
 	private VideoViewService videoViewService;
 	
-	@GetMapping("/api/video/channelvideo")
+	@GetMapping("/api/video/channel_video")
 	public ResponseEntity<Object> getChannelVideo(@RequestBody @Valid Integer request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		
@@ -75,7 +75,7 @@ public class RestVideoController
 		
 	}
 	
-	@GetMapping("/api/video/historyvideo")
+	@GetMapping("/api/video/history_video")
 	public ResponseEntity<Object> getHistoryVideo(@RequestBody @Valid Integer request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		
@@ -99,7 +99,7 @@ public class RestVideoController
 		
 	}
 	
-	@GetMapping("/api/video/mainvideo")
+	@GetMapping("/api/video/main_video")
 	public ResponseEntity<Object> getMainVideo(@RequestBody @Valid Integer request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		
@@ -123,7 +123,7 @@ public class RestVideoController
 		
 	}
 	
-	@GetMapping("/api/video/playlistvideo")
+	@GetMapping("/api/video/playlist_video")
 	public ResponseEntity<Object> getPlaylistVideo(@RequestBody @Valid Integer request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		
@@ -147,7 +147,7 @@ public class RestVideoController
 		
 	}
 	
-	@GetMapping("/api/video/subscribevideo")
+	@GetMapping("/api/video/subscribe_video")
 	public ResponseEntity<Object> getSubscribeVideo(@RequestBody @Valid Integer request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		
@@ -171,7 +171,7 @@ public class RestVideoController
 		
 	}
 	
-	@PostMapping("/api/video/insertvideo")
+	@PostMapping("/api/video/insert")
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Object> insertVideo(@RequestBody @Valid Video request, Errors errors, HttpServletResponse response) throws IOException
 	{
@@ -196,7 +196,7 @@ public class RestVideoController
 		
 	}
 	
-	@PostMapping("/api/video/updatevideo")
+	@PostMapping("/api/video/update")
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Object> updateVideo(@RequestBody @Valid Video request, Errors errors, HttpServletResponse response) throws IOException
 	{
@@ -221,7 +221,7 @@ public class RestVideoController
 		
 	}
 	
-	@GetMapping("/api/video/viewvideo")
+	@GetMapping("/api/video/view_video")
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Object> viewVideo(@RequestBody @Valid VideoViewRequest request, Errors errors, HttpServletResponse response) throws IOException
 	{

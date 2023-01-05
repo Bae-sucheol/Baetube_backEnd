@@ -11,9 +11,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import Baetube_backEnd.dto.DeleteHistoryRequest;
-import Baetube_backEnd.mapper.ContentsMapper;
 import Baetube_backEnd.mapper.HistoryMapper;
-import Baetube_backEnd.service.contents.ContentsDeleteService;
 
 public class HistoryDeleteServiceTest
 {

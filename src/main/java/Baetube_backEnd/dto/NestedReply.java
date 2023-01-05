@@ -12,6 +12,7 @@ public class NestedReply
 	private Timestamp date;
 	private String name;
 	private String profile;
+	private Long attachedId;
 	
 	// constructor
 	public NestedReply(Integer nestedReplyId, Integer replyId, Long contentsId, Integer channelId, String comment,
@@ -26,6 +27,21 @@ public class NestedReply
 		this.date = date;
 		this.name = name;
 		this.profile = profile;
+	}
+	
+	public NestedReply(Integer nestedReplyId, Integer replyId, Long contentsId, Integer channelId, String comment,
+			Timestamp date, String name, String profile, Long attachedId)
+	{
+		super();
+		this.nestedReplyId = nestedReplyId;
+		this.replyId = replyId;
+		this.contentsId = contentsId;
+		this.channelId = channelId;
+		this.comment = comment;
+		this.date = date;
+		this.name = name;
+		this.profile = profile;
+		this.attachedId = attachedId;
 	}
 
 	public NestedReply(Integer replyId, Integer channelId, String comment, Timestamp date)

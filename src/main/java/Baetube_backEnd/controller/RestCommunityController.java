@@ -34,7 +34,7 @@ public class RestCommunityController
 	@Autowired
 	private CommunityInsertService communityInsertService;
 	
-	@GetMapping("/api/community/channelvisit")
+	@GetMapping("/api/community/channel_visit")
 	public ResponseEntity<Object> getChannelCommunity(@RequestBody @Valid Integer request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		

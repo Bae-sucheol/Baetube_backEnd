@@ -6,13 +6,13 @@
 	
 	<mapper namespace="Baetube_backEnd.mapper.RateMapper">
 	
-		<insert id="insert" statementType="CALLABLE">
+		<insert id="insert" statementType="CALLABLE" parameterType="map">
 		
 			CALL insert_rate(
-				#{contentsId, mode=IN, jdbcType=BIGINT, javaType=long},
-				#{channelId, mode=IN, jdbcType=INTEGER, javaType=int},
-				#{value, mode=IN, jdbcType=INTEGER, javaType=int},
-				#{result, mode=OUT, jdbcType=INTEGER, javaType=int}
+				#{rate.contentsId, mode=IN, jdbcType=BIGINT, javaType=long},
+				#{rate.channelId, mode=IN, jdbcType=INTEGER, javaType=int},
+				#{rate.value, mode=IN, jdbcType=INTEGER, javaType=int},
+				#{rate.result, mode=OUT, jdbcType=INTEGER, javaType=int}
 			)
 			
 		</insert>

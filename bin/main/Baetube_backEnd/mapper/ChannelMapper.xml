@@ -52,4 +52,10 @@
 		
 		</select>
 		
+		<select id="selectSubscribers">
+		
+			SELECT channel_id, `name`, `profile` FROM CHANNEL NATURAL JOIN subscribers WHERE subscriber_id = #{channelId};
+		
+		</select>
+		
 	</mapper>

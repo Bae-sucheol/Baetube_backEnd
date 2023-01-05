@@ -1,5 +1,7 @@
 package Baetube_backEnd.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 import Baetube_backEnd.dto.Channel;
@@ -12,4 +14,5 @@ public interface ChannelMapper
 	public void updateSubscribes(Integer channelId, Integer value);
 	public void updateVideoCount(Integer channelId, Integer value);
 	public Channel select(Integer channelId);	
+	public List<Channel> selectSubscribers(Integer channelId);
 }

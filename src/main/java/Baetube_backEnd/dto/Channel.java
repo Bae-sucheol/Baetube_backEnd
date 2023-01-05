@@ -12,6 +12,7 @@ public class Channel
 	private String description;
 	private String arts;
 	private Timestamp regDate;
+	private String profile;
 	
 	
 	/**
@@ -24,6 +25,7 @@ public class Channel
 	 * @param description
 	 * @param arts
 	 * @param regDate
+	 * @param profile
 	 */
 	public Channel(Integer channelId, Integer userId, Integer subs, Integer videoCount, String name, String description,
 			String arts, Timestamp regDate)
@@ -52,6 +54,35 @@ public class Channel
 		this.regDate = regDate;
 	}
 	
+	public Channel(Integer channelId, Integer userId, Integer subs, Integer videoCount, String name, String description,
+			String arts, Timestamp regDate, String profile)
+	{
+		super();
+		this.channelId = channelId;
+		this.userId = userId;
+		this.subs = subs;
+		this.videoCount = videoCount;
+		this.name = name;
+		this.description = description;
+		this.arts = arts;
+		this.regDate = regDate;
+		this.profile = profile;
+	}
+	
+	public Channel(Integer userId, Integer subs, Integer videoCount, String name, String description, String arts,
+			Timestamp regDate, String profile)
+	{
+		super();
+		this.userId = userId;
+		this.subs = subs;
+		this.videoCount = videoCount;
+		this.name = name;
+		this.description = description;
+		this.arts = arts;
+		this.regDate = regDate;
+		this.profile = profile;
+	}
+
 	// 초기 insert 전용.
 	public Channel(Integer userId, String name, Timestamp regDate)
 	{
@@ -61,9 +92,7 @@ public class Channel
 		this.regDate = regDate;
 	}
 
-
-
-	// setter
+	// getter
 	public Integer getChannelId()
 	{
 		return channelId;
@@ -96,8 +125,12 @@ public class Channel
 	{
 		return regDate;
 	}
+	public String getProfile()
+	{
+		return this.profile;
+	}
 	
-	// getter
+	// setter
 	public void setChannelId(Integer channelId)
 	{
 		this.channelId = channelId;
@@ -129,6 +162,10 @@ public class Channel
 	public void setRegDate(Timestamp regDate)
 	{
 		this.regDate = regDate;
+	}
+	public void setProfile(String profile)
+	{
+		this.profile = profile;
 	}
 	
 	

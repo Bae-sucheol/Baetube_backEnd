@@ -1,6 +1,7 @@
 package Baetube_backEnd.service.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import Baetube_backEnd.dto.User;
 import Baetube_backEnd.exception.DuplicateUserException;
@@ -18,6 +19,7 @@ public class UserUnregisterService
 		this.userMapper = userMapper;
 	}
 	
+	@Transactional
 	public boolean unRegist(User request)
 	{
 		User user = userMapper.selectByEmail(request.getEmail());

@@ -18,6 +18,7 @@ public class UserLoginService
 		this.userMapper = userMapper;
 	}
 	
+	@Transactional
 	public User login(User request)
 	{
 		User user = userMapper.selectByEmail(request.getEmail());

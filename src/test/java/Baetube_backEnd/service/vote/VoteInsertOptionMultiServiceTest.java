@@ -1,0 +1,82 @@
+package Baetube_backEnd.service.vote;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import Baetube_backEnd.dto.Vote;
+import Baetube_backEnd.exception.DuplicateVoteOptionException;
+import Baetube_backEnd.exception.NullVoteException;
+import Baetube_backEnd.mapper.VoteMapper;
+
+public class VoteInsertOptionMultiServiceTest
+{
+	@InjectMocks
+	private VoteInsertOptionMultiService voteInsertOptionMultiService;
+	
+	@Mock
+	private VoteMapper voteMapper;
+	
+	private ArrayList<Vote> requestList;
+	private Vote requestVoteA;
+	private Vote requestVoteB;
+	private Vote WrongVote;
+	
+	@Before
+	public void setUp()
+	{
+		voteInsertOptionMultiService = new VoteInsertOptionMultiService();
+		voteInsertOptionMultiService.setVoteMapper(voteMapper);
+		
+		MockitoAnnotations.initMocks(this);
+		
+		requestVoteA = new Vote(1, 1, "testa", 0);
+		requestVoteB = new Vote(1, 2, "testb", 0);
+		WrongVote = new Vote(0, 0, "testwrong", 0);
+		
+		requestList = new ArrayList<>();
+		requestList.add(requestVoteA);
+		requestList.add(requestVoteB);
+	}
+	
+	@Test
+	public void correctTest()
+	{
+		ArrayList<Vote> voteList = new ArrayList<>();
+		voteList.add(WrongVote);
+		voteList.add(WrongVote);
+		voteList.add(WrongVote);
+		voteList.add(WrongVote);
+		voteList.add(WrongVote);
+		
+		when(voteMapper.selectVoteOptions(1)).thenReturn(voteList);
+		
+		assertEquals(true, voteInsertOptionMultiService.insertOptionMulti(requestList));
+		verify(voteMapper, atLeastOnce()).selectVoteOptions(1);
+	}
+	
+	@Test(expected = DuplicateVoteOptionException.class)
+	public void wrongTest()
+	{
+		ArrayList<Vote> voteList = new ArrayList<>();
+		voteList.add(requestVoteA);
+		voteList.add(WrongVote);
+		voteList.add(requestVoteB);
+		voteList.add(WrongVote);
+		voteList.add(WrongVote);
+		
+		when(voteMapper.selectVoteOptions(1)).thenReturn(voteList);
+		
+		assertEquals(true, voteInsertOptionMultiService.insertOptionMulti(requestList));
+		verify(voteMapper, atLeastOnce()).selectVoteOptions(1);
+	}
+}

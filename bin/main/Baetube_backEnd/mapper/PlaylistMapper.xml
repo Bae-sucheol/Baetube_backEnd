@@ -13,9 +13,27 @@
 		
 		</insert>
 		
-		<delete id="delete">
+		<insert id="insertItem" statementType="CALLABLE" parameterType="map">
 		
-			DELETE FROM playlist WHERE playlist_id = #{playlistId} AND channel_id #{channelId}
+			CALL insert_playlist_item(
+				#{playlistItem.playlistId},
+				#{playlistItem.videoId}
+			)
+			
+		</insert>
+		
+		<delete id="delete" parameterType="map">
+		
+			DELETE FROM playlist WHERE playlist_id = #{playlist.playlistId} AND channel_id #{playlist.channelId}
+		
+		</delete>
+		
+		<delete id="deleteItem" statementType="CALLABLE" parameterType="map">
+		
+			CALL delete_playlist_item(
+				#{playlistItem.playlistId},
+				#{playlistItem.videoId}
+			)
 		
 		</delete>
 		
@@ -28,6 +46,12 @@
 		<select id="selectByPlaylistId" resultType="playlistDto">
 		
 			SELECT * FROM playlist WHERE playlist_id = #{playlistId} 
+		
+		</select>
+		
+		<select id="selectPlaylistItem" resultType="playlistItemDto">
+		
+			SELECT * FROM playlistItem WHERE playlist_id = #{playlistItem.playlistId} AND video_id = #{playlistItem.videoId}
 		
 		</select>
 		

@@ -13,7 +13,7 @@ import Baetube_backEnd.dto.Reply;
 
 public interface ReplyMapper
 {
-	public void insert(@Param("reply") Reply reply, Integer type);
+	public void insert(@Param("reply") Reply reply);
 	public void updateComment(Integer replyId, String comment);
-	public List<Reply> selectByContentsId(Integer contentsId);
+	public List<Reply> selectByContentsId(Long contentsId);
 }

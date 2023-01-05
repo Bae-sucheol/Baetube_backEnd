@@ -6,18 +6,30 @@
 	
 	<mapper namespace="Baetube_backEnd.mapper.SearchHistoryMapper">
 	
-		<insert id="insert">
+		<insert id="insert" parameterType="map">
 		
 			INSERT INTO search_history(user_id, keywords, `date`)
-			VALUES(#{userId}, #{keywords}, NOW()) 
+			VALUES(#{searchHistory.userId}, #{searchHistory.keywords}, NOW()) 
 			ON DUPLICATE KEY UPDATE `date` = NOW();
 		
 		</insert>
 		
-		<delete id="delete">
+		<delete id="delete" parameterType="map">
 		
-			DELETE FROM search_history WHERE user_id = #{userId} AND keywords = #{keywords}
+			DELETE FROM search_history WHERE user_id = #{searchHistory.userId} AND keywords = #{searchHistory.keywords}
 		
 		</delete>
+		
+		<select id="select" resultType="searchHistoryDto">
+		
+			SELECT * FROM search_history WHERE user_id = #{searchHistory.userId} AND keywords = #{searchHistory.keywords}
+		
+		</select>
+		
+		<select id="selectAll" resultType="searchHistoryDto">
+		
+			SELECT * FROM search_history WHERE user_id = #{userId}
+		
+		</select>
 
 	</mapper>

@@ -1,6 +1,7 @@
 package Baetube_backEnd.service.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import Baetube_backEnd.dto.User;
 import Baetube_backEnd.exception.WrongIdPasswordException;
@@ -16,6 +17,7 @@ public class UserUpdateService
 		this.userMapper = userMapper;
 	}
 	
+	@Transactional
 	public boolean update(User request)
 	{
 		User user = userMapper.selectByEmail(request.getEmail());
