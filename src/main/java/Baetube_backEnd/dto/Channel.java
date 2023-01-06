@@ -14,7 +14,6 @@ public class Channel
 	private Timestamp regDate;
 	private String profile;
 	
-	
 	/**
 	 * 
 	 * @param channelId

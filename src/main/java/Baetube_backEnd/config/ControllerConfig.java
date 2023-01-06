@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import Baetube_backEnd.controller.RestChannelController;
 import Baetube_backEnd.controller.RestCommunityController;
 import Baetube_backEnd.controller.RestContentsController;
+import Baetube_backEnd.controller.RestFileController;
 import Baetube_backEnd.controller.RestHistoryController;
 import Baetube_backEnd.controller.RestNestedReplyController;
 import Baetube_backEnd.controller.RestPlaylistController;
@@ -98,5 +99,11 @@ public class ControllerConfig
 	public RestVoteController restVoteController()
 	{
 		return new RestVoteController();
+	}
+	
+	@Bean
+	public RestFileController restFileController()
+	{
+		return new RestFileController();
 	}
 }

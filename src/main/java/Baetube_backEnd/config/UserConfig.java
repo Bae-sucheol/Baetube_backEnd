@@ -4,10 +4,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import Baetube_backEnd.controller.RestUserController;
-import Baetube_backEnd.service.ChangePasswordService;
-import Baetube_backEnd.service.UserLoginService;
-import Baetube_backEnd.service.UserRegisterService;
-import Baetube_backEnd.service.UserUnregisterService;
+import Baetube_backEnd.service.user.ChangePasswordService;
+import Baetube_backEnd.service.user.UserLoginService;
+import Baetube_backEnd.service.user.UserRegisterService;
+import Baetube_backEnd.service.user.UserUnregisterService;
 
 @Configuration
 public class UserConfig

@@ -3,48 +3,19 @@ package Baetube_backEnd.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import Baetube_backEnd.service.ChannelVideoRequestService;
-import Baetube_backEnd.service.HistoryVideoRequestService;
-import Baetube_backEnd.service.MainVideoRequestService;
-import Baetube_backEnd.service.PlaylistVideoRequestService;
-import Baetube_backEnd.service.SubscriveVideoRequestService;
-import Baetube_backEnd.service.VideoInsertService;
-import Baetube_backEnd.service.VideoUpdateService;
-import Baetube_backEnd.service.VideoUpdateViewService;
+import Baetube_backEnd.service.video.ChannelVideoRequestService;
+import Baetube_backEnd.service.video.HistoryVideoRequestService;
+import Baetube_backEnd.service.video.MainVideoRequestService;
+import Baetube_backEnd.service.video.PlaylistVideoRequestService;
+import Baetube_backEnd.service.video.SubscribeVideoRequestService;
+import Baetube_backEnd.service.video.VideoInsertService;
+import Baetube_backEnd.service.video.VideoUpdateService;
+import Baetube_backEnd.service.video.VideoViewService;
+
 
 @Configuration
 public class VideoConfig
 {
-	@Bean
-	public VideoInsertService videoInsertService()
-	{
-		return new VideoInsertService();
-	}
-	
-	@Bean
-	public VideoUpdateService videoUpdateService()
-	{
-		return new VideoUpdateService();
-	}
-	
-	@Bean
-	public VideoUpdateViewService videoUpdateViewService()
-	{
-		return new VideoUpdateViewService();
-	}
-	
-	@Bean 
-	public MainVideoRequestService mainVideoRequestService()
-	{
-		return new MainVideoRequestService();
-	}
-	
-	@Bean
-	public SubscriveVideoRequestService subscriveVideoRequestService()
-	{
-		return new SubscriveVideoRequestService();
-	}
-	
 	@Bean
 	public ChannelVideoRequestService channelVideoRequestService()
 	{
@@ -58,8 +29,38 @@ public class VideoConfig
 	}
 	
 	@Bean
+	public MainVideoRequestService mainVideoRequestService()
+	{
+		return new MainVideoRequestService();
+	}
+	
+	@Bean
 	public PlaylistVideoRequestService playlistVideoRequestService()
 	{
 		return new PlaylistVideoRequestService();
+	}
+	
+	@Bean
+	public SubscribeVideoRequestService subscribeVideoRequestService()
+	{
+		return new SubscribeVideoRequestService();
+	}
+	
+	@Bean
+	public VideoInsertService videoInsertService()
+	{
+		return new VideoInsertService();
+	}
+	
+	@Bean
+	public VideoUpdateService videoUpdateService()
+	{
+		return new VideoUpdateService();
+	}
+	
+	@Bean
+	public VideoViewService videoViewService()
+	{
+		return videoViewService();
 	}
 }

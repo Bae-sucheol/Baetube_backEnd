@@ -11,7 +11,7 @@
 			VALUES(
 				#{channel.userId},
 				#{channel.name},
-				#{channel.regDate}	
+				NOW()
 			)
 		</insert>
 		

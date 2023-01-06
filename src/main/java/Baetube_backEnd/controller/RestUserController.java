@@ -22,6 +22,7 @@ import Baetube_backEnd.dto.ChangePasswordRequest;
 import Baetube_backEnd.dto.User;
 import Baetube_backEnd.exception.DuplicateUserException;
 import Baetube_backEnd.exception.WrongIdPasswordException;
+import Baetube_backEnd.mapper.UserMapper;
 import Baetube_backEnd.service.user.ChangePasswordService;
 import Baetube_backEnd.service.user.UserLoginService;
 import Baetube_backEnd.service.user.UserRegisterService;
@@ -162,6 +163,28 @@ public class RestUserController
 		try
 		{
 			userUpdateService.update(request);
+			return ResponseEntity.status(HttpStatus.OK).build();
+		} 
+		catch (WrongIdPasswordException e)
+		{
+			
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+		}
+	}
+	
+	@GetMapping("/api/user/all")
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<Object> all(Errors errors, HttpServletResponse response) throws IOException
+	{
+		if(errors.hasErrors())
+		{
+			String errorCodes = errors.getAllErrors().stream().map(error -> error.getCodes()[0]).collect(Collectors.joining(","));
+			
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse("errorCodes = " + errorCodes));
+		}
+		                                                 
+		try
+		{
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
 		catch (WrongIdPasswordException e)
