@@ -1,4 +1,4 @@
-package Baetube_backEnd.service.nestedReply;
+package Baetube_backEnd.service.nestedreply;
 
 import org.springframework.beans.factory.annotation.Autowired;
 

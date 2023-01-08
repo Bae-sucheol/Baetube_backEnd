@@ -19,11 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import Baetube_backEnd.ErrorResponse;
 import Baetube_backEnd.dto.NestedReply;
-import Baetube_backEnd.dto.Reply;
 import Baetube_backEnd.exception.WrongIdPasswordException;
-import Baetube_backEnd.service.nestedReply.NestedReplyInsertService;
-import Baetube_backEnd.service.nestedReply.NestedReplySelectService;
-import Baetube_backEnd.service.nestedReply.NestedReplyUpdateService;
+import Baetube_backEnd.service.nestedreply.NestedReplyInsertService;
+import Baetube_backEnd.service.nestedreply.NestedReplySelectService;
+import Baetube_backEnd.service.nestedreply.NestedReplyUpdateService;
 
 @RestController
 public class RestNestedReplyController

@@ -18,12 +18,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import Baetube_backEnd.ErrorResponse;
-import Baetube_backEnd.dto.User;
 import Baetube_backEnd.dto.Video;
 import Baetube_backEnd.dto.VideoViewRequest;
 import Baetube_backEnd.exception.DuplicateUserException;
 import Baetube_backEnd.service.video.ChannelVideoRequestService;
-import Baetube_backEnd.service.video.HistoryVideoRequestServiceTest;
+import Baetube_backEnd.service.video.HistoryVideoRequestService;
 import Baetube_backEnd.service.video.MainVideoRequestService;
 import Baetube_backEnd.service.video.PlaylistVideoRequestService;
 import Baetube_backEnd.service.video.SubscribeVideoRequestService;
@@ -37,7 +36,7 @@ public class RestVideoController
 	@Autowired
 	private ChannelVideoRequestService channelVideoRequestService;
 	@Autowired
-	private HistoryVideoRequestServiceTest historyVideoRequestServiceTest;
+	private HistoryVideoRequestService historyVideoRequestService;
 	@Autowired
 	private MainVideoRequestService mainVideoRequestService;
 	@Autowired

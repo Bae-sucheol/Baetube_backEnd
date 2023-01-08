@@ -39,6 +39,7 @@ public class MvcConfig implements WebMvcConfigurer
 		WebMvcConfigurer.super.configureViewResolvers(registry);
 	}
 	
+	/*
 	@Override
 	public void extendMessageConverters(List<HttpMessageConverter<?>> converters)
 	{
@@ -52,4 +53,5 @@ public class MvcConfig implements WebMvcConfigurer
 		
 		converters.add(0, new MappingJackson2HttpMessageConverter(objectMapper));
 	}
+	*/
 }

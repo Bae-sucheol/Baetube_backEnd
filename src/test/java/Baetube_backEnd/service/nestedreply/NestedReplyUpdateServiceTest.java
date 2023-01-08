@@ -3,7 +3,6 @@ package Baetube_backEnd.service.nestedreply;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,11 +11,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import Baetube_backEnd.dto.NestedReply;
-import Baetube_backEnd.dto.Reply;
 import Baetube_backEnd.mapper.NestedReplyMapper;
-import Baetube_backEnd.mapper.ReplyMapper;
-import Baetube_backEnd.service.nestedReply.NestedReplyInsertService;
-import Baetube_backEnd.service.nestedReply.NestedReplyUpdateService;
+import Baetube_backEnd.service.nestedreply.NestedReplyUpdateService;
 
 public class NestedReplyUpdateServiceTest
 {

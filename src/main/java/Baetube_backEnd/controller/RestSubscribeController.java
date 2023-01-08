@@ -21,9 +21,9 @@ import Baetube_backEnd.ErrorResponse;
 import Baetube_backEnd.dto.Subscribers;
 import Baetube_backEnd.dto.User;
 import Baetube_backEnd.exception.WrongIdPasswordException;
-import Baetube_backEnd.service.Subscribe.SubscribeDeleteService;
-import Baetube_backEnd.service.Subscribe.SubscribeInsertService;
-import Baetube_backEnd.service.Subscribe.SubscribeSelectService;
+import Baetube_backEnd.service.subscribe.SubscribeDeleteService;
+import Baetube_backEnd.service.subscribe.SubscribeInsertService;
+import Baetube_backEnd.service.subscribe.SubscribeSelectService;
 
 @RestController
 public class RestSubscribeController

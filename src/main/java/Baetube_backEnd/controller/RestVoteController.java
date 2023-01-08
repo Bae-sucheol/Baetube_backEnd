@@ -22,7 +22,7 @@ import Baetube_backEnd.dto.Channel;
 import Baetube_backEnd.dto.Vote;
 import Baetube_backEnd.exception.DuplicateUserException;
 import Baetube_backEnd.service.vote.VoteDeleteOptionMultiService;
-import Baetube_backEnd.service.vote.VoteDeleteOptionTest;
+import Baetube_backEnd.service.vote.VoteDeleteOptionService;
 import Baetube_backEnd.service.vote.VoteDeleteService;
 import Baetube_backEnd.service.vote.VoteInsertOptionMultiService;
 import Baetube_backEnd.service.vote.VoteInsertOptionService;
@@ -42,7 +42,7 @@ public class RestVoteController
 	@Autowired
 	private VoteDeleteService voteDeleteService;
 	@Autowired
-	private VoteDeleteOptionTest voteDeleteOptionTest;
+	private VoteDeleteOptionService voteDeleteOptionService;
 	@Autowired
 	private VoteDeleteOptionMultiService voteDeleteOptionMultiService;
 	@Autowired

@@ -32,7 +32,8 @@
 	</bean>
 	
 	<mybatis-spring:scan base-package="Baetube_backEnd.mapper"/>
-	<context:component-scan base-package="Baetube_backEnd"/>
+	<context:component-scan base-package="Baetube_backEnd" />
+	
 </beans>
 
 	

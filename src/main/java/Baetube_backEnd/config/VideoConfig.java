@@ -61,6 +61,6 @@ public class VideoConfig
 	@Bean
 	public VideoViewService videoViewService()
 	{
-		return videoViewService();
+		return new VideoViewService();
 	}
 }

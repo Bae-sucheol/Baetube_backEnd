@@ -11,10 +11,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import Baetube_backEnd.dto.NestedReply;
-import Baetube_backEnd.dto.Reply;
 import Baetube_backEnd.mapper.NestedReplyMapper;
-import Baetube_backEnd.mapper.ReplyMapper;
-import Baetube_backEnd.service.nestedReply.NestedReplyInsertService;
+import Baetube_backEnd.service.nestedreply.NestedReplyInsertService;
 
 public class NestedReplyInsertServiceTest
 {

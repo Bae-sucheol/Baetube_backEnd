@@ -5,7 +5,6 @@ import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import org.checkerframework.checker.units.qual.s;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -15,7 +14,7 @@ import org.mockito.MockitoAnnotations;
 import Baetube_backEnd.dto.Subscribers;
 import Baetube_backEnd.exception.NullSubscriberException;
 import Baetube_backEnd.mapper.SubscribeMapper;
-import Baetube_backEnd.service.Subscribe.SubscribeDeleteService;
+import Baetube_backEnd.service.subscribe.SubscribeDeleteService;
 
 public class SubscribeDeleteServiceTest
 {

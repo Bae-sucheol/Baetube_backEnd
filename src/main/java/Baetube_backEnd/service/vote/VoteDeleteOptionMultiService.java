@@ -1,6 +1,5 @@
 package Baetube_backEnd.service.vote;
 
-import static org.junit.Assert.format;
 
 import java.util.List;
 
