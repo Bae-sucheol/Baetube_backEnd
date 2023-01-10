@@ -10,11 +10,6 @@ public class RateService
 {	
 	@Autowired
 	private RateMapper rateMapper;
-
-	public void setRateMapper(RateMapper rateMapper)
-	{
-		this.rateMapper = rateMapper;
-	}
 	
 	public Integer rate(Rate request)
 	{

@@ -17,12 +17,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import Baetube_backEnd.ErrorResponse;
 import Baetube_backEnd.dto.Channel;
 import Baetube_backEnd.dto.User;
 import Baetube_backEnd.exception.DuplicateUserException;
+import Baetube_backEnd.exception.NullChannelException;
 import Baetube_backEnd.service.channel.ChannelDeleteService;
 import Baetube_backEnd.service.channel.ChannelInsertService;
 import Baetube_backEnd.service.channel.ChannelSubscribersService;
@@ -44,8 +46,8 @@ public class RestChannelController
 	private ChannelSubscribersService channelSubscribersService;
 	
 	@PostMapping("/api/channel/delete")
-	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<Object> deleteChannel(@RequestBody @Valid Integer request, Errors errors, HttpServletResponse response) throws IOException
+	//@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<Object> deleteChannel(@RequestBody @Valid Channel request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		
 		if(errors.hasErrors())
@@ -57,19 +59,20 @@ public class RestChannelController
 		                                                 
 		try
 		{
+			channelDeleteService.deleteChannel(request.getChannelId());
 			
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
-		catch (DuplicateUserException e)
+		catch (NullChannelException e)
 		{
 			
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
-		
+	
 	}
 	
 	@PostMapping("/api/channel/insert")
-	@ExceptionHandler(MethodArgumentNotValidException.class)
+	//@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Object> insertChannel(@RequestBody @Valid Channel request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		
@@ -82,6 +85,7 @@ public class RestChannelController
 		                                                 
 		try
 		{
+			channelInsertService.insertChannel(request);
 			
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
@@ -94,7 +98,7 @@ public class RestChannelController
 	}
 	
 	@PostMapping("/api/channel/update")
-	@ExceptionHandler(MethodArgumentNotValidException.class)
+	//@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Object> updateChannel(@RequestBody @Valid Channel request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		
@@ -107,10 +111,11 @@ public class RestChannelController
 		                                                 
 		try
 		{
+			channelUpdateService.updateChannel(request);
 			
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
-		catch (DuplicateUserException e)
+		catch (Exception e)
 		{
 			
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
@@ -118,9 +123,11 @@ public class RestChannelController
 		
 	}
 	
+	
+	
 	@GetMapping("/api/channel/visit")
-	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<Object> selectChannel(@RequestBody @Valid Integer request, Errors errors, HttpServletResponse response) throws IOException
+	//@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<Object> selectChannel(@RequestBody @Valid Channel request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		
 		if(errors.hasErrors())
@@ -132,10 +139,10 @@ public class RestChannelController
 		                                                 
 		try
 		{
-			
+			channelVisitService.selectChannel(request.getChannelId());
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
-		catch (DuplicateUserException e)
+		catch (NullChannelException e)
 		{
 			
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
@@ -144,8 +151,8 @@ public class RestChannelController
 	}
 	
 	@GetMapping("/api/channel/subscribers")
-	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<Object> selectSubscribers(@RequestBody @Valid Integer request, Errors errors, HttpServletResponse response) throws IOException
+	//@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<Object> selectSubscribers(@RequestBody @Valid Channel request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		
 		if(errors.hasErrors())
@@ -157,10 +164,10 @@ public class RestChannelController
 		                                                 
 		try
 		{
-			
+			channelSubscribersService.selectSubscribers(request.getChannelId());
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
-		catch (DuplicateUserException e)
+		catch (NullChannelException e)
 		{
 			
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();

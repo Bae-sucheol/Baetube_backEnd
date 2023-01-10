@@ -9,11 +9,6 @@ public class SearchHistoryInsertService
 {
 	@Autowired
 	private SearchHistoryMapper searchHistoryMapper;
-
-	public void setSearchHistoryMapper(SearchHistoryMapper searchHistoryMapper)
-	{
-		this.searchHistoryMapper = searchHistoryMapper;
-	}
 	
 	public boolean insert(SearchHistory request)
 	{

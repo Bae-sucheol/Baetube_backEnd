@@ -14,11 +14,6 @@ public class VoteDeleteOptionMultiService
 {
 	@Autowired
 	private VoteMapper voteMapper;
-
-	public void setVoteMapper(VoteMapper voteMapper)
-	{
-		this.voteMapper = voteMapper;
-	}
 	
 	@Transactional
 	public boolean deleteOptionMulti(List<Vote> request)

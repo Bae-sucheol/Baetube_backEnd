@@ -32,9 +32,6 @@ public class VoteInsertOptionServiceTest
 	@Before
 	public void setUp()
 	{
-		voteInsertOptionService = new VoteInsertOptionService();
-		voteInsertOptionService.setVoteMapper(voteMapper);
-		
 		MockitoAnnotations.initMocks(this);
 		
 		requestVote = new Vote(1, 1, "test", 0);

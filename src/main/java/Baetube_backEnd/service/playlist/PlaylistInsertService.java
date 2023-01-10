@@ -9,11 +9,6 @@ public class PlaylistInsertService
 {
 	@Autowired
 	private PlaylistMapper playlistMapper;
-
-	public void setPlaylistMapper(PlaylistMapper playlistMapper)
-	{
-		this.playlistMapper = playlistMapper;
-	}
 	
 	public boolean insert(Playlist request)
 	{

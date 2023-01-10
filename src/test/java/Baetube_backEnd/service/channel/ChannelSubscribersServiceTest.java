@@ -15,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import Baetube_backEnd.dto.Channel;
+import Baetube_backEnd.exception.NullChannelException;
 import Baetube_backEnd.mapper.ChannelMapper;
 
 public class ChannelSubscribersServiceTest
@@ -28,9 +29,6 @@ public class ChannelSubscribersServiceTest
 	@Before
 	public void setUp()
 	{
-		channelSubscribersService = new ChannelSubscribersService();
-		channelSubscribersService.setChannelMapper(channelMapper);
-		
 		MockitoAnnotations.initMocks(this);
 	}
 	
@@ -40,11 +38,16 @@ public class ChannelSubscribersServiceTest
 		ArrayList<Channel> channelList = new ArrayList<>();
 		channelList.add(any());
 		
-		when(channelMapper.selectSubscribers(0)).thenReturn(null);
 		when(channelMapper.selectSubscribers(1)).thenReturn(channelList);
 		
 		assertEquals(channelList, channelSubscribersService.selectSubscribers(1));
 		verify(channelMapper, atLeastOnce()).selectSubscribers(1);
+	}
+	
+	@Test(expected = NullChannelException.class)
+	public void WrongTest()
+	{
+		when(channelMapper.selectSubscribers(0)).thenReturn(null);
 		
 		assertEquals(null, channelSubscribersService.selectSubscribers(0));
 		verify(channelMapper, atLeastOnce()).selectSubscribers(0);

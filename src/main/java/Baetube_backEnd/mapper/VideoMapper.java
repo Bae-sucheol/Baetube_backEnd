@@ -10,12 +10,12 @@ import Baetube_backEnd.dto.Video;
 public interface VideoMapper
 {
 	public void insert(@Param("video") Video video);
-	public List<Video> selectMainVideo(Integer userId);
-	public List<Video> selectSubscribeVideo(Integer channelId);
-	public List<Video> selectChannelVideo(Integer channelId);
-	public List<Video> selectHistoryVideo(Integer userId);
-	public List<Video> selectPlaylistVideo(Integer playlistId);
-	public Video selectByVideoId(Integer videoId);
+	public List<Video> selectMainVideo(@Param("userId") Integer userId);
+	public List<Video> selectSubscribeVideo(@Param("channelId") Integer channelId);
+	public List<Video> selectChannelVideo(@Param("channelId") Integer channelId);
+	public List<Video> selectHistoryVideo(@Param("userId") Integer userId);
+	public List<Video> selectPlaylistVideo(@Param("playlistId") Integer playlistId);
+	public Video selectByVideoId(@Param("videoId") Integer videoId);
 	public void update(@Param("oldVideo") Video oldVideo, @Param("newVideo") Video newVideo);
-	public void updateViews(Integer videoId, Integer value);
+	public void updateViews(@Param("videoId") Integer videoId, @Param("value") Integer value);
 }

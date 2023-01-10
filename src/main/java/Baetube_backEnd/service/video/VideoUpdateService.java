@@ -11,11 +11,6 @@ public class VideoUpdateService
 {
 	@Autowired
 	private VideoMapper videoMapper;
-
-	public void setVideoMapper(VideoMapper videoMapper)
-	{
-		this.videoMapper = videoMapper;
-	}
 	
 	@Transactional
 	public boolean update(Video request)

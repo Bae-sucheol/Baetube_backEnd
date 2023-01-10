@@ -14,11 +14,6 @@ public class UserUnregisterService
 	@Autowired
 	private UserMapper userMapper;
 	
-	public void setUserMapper(UserMapper userMapper)
-	{
-		this.userMapper = userMapper;
-	}
-	
 	@Transactional
 	public boolean unRegist(User request)
 	{

@@ -25,9 +25,6 @@ public class ReplyUpdateServiceTest
 	@Before
 	public void setUp()
 	{
-		replyUpdateService = new ReplyUpdateService();
-		replyUpdateService.setReplyMapper(replyMapper);
-		
 		MockitoAnnotations.initMocks(this);
 	}
 	

@@ -9,11 +9,6 @@ public class ReplyUpdateService
 {
 	@Autowired
 	private ReplyMapper replyMapper;
-
-	public void setReplyMapper(ReplyMapper replyMapper)
-	{
-		this.replyMapper = replyMapper;
-	}
 	
 	public boolean updateReply(Reply request)
 	{

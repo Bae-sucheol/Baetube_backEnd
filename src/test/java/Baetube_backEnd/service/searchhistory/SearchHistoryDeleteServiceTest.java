@@ -28,9 +28,6 @@ public class SearchHistoryDeleteServiceTest
 	@Before
 	public void setUp()
 	{
-		searchHistoryDeleteService = new SearchHistoryDeleteService();
-		searchHistoryDeleteService.setSearchHistoryMapper(searchHistoryMapper);
-		
 		MockitoAnnotations.initMocks(this);
 		
 		searchHistory = new SearchHistory(1, "test");

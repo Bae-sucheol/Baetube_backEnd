@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import Baetube_backEnd.ErrorResponse;
+import Baetube_backEnd.dto.Channel;
 import Baetube_backEnd.dto.Community;
 import Baetube_backEnd.exception.DuplicateUserException;
+import Baetube_backEnd.exception.NullCommunityException;
 import Baetube_backEnd.service.community.CommunityChannelVisitService;
 import Baetube_backEnd.service.community.CommunityDeleteService;
 import Baetube_backEnd.service.community.CommunityInsertService;
@@ -33,9 +35,9 @@ public class RestCommunityController
 	private CommunityDeleteService communityDeleteService;
 	@Autowired
 	private CommunityInsertService communityInsertService;
-	
+
 	@GetMapping("/api/community/channel_visit")
-	public ResponseEntity<Object> getChannelCommunity(@RequestBody @Valid Integer request, Errors errors, HttpServletResponse response) throws IOException
+	public ResponseEntity<Object> getChannelCommunity(@RequestBody @Valid Channel request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		
 		if(errors.hasErrors())
@@ -47,10 +49,10 @@ public class RestCommunityController
 		                                                 
 		try
 		{
-			
+			communityChannelVisitService.selectCommunity(request.getChannelId());
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
-		catch (DuplicateUserException e)
+		catch (NullCommunityException e)
 		{
 			
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
@@ -59,7 +61,7 @@ public class RestCommunityController
 	}
 	
 	@PostMapping("/api/community/delete")	
-	public ResponseEntity<Object> deleteCommunity(@RequestBody @Valid Integer request, Errors errors, HttpServletResponse response) throws IOException
+	public ResponseEntity<Object> deleteCommunity(@RequestBody @Valid Community request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		
 		if(errors.hasErrors())
@@ -71,10 +73,10 @@ public class RestCommunityController
 		                                                 
 		try
 		{
-			
+			communityDeleteService.deleteCommunity(request.getCommunityId());
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
-		catch (DuplicateUserException e)
+		catch (NullCommunityException e)
 		{
 			
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
@@ -96,7 +98,7 @@ public class RestCommunityController
 		                                                 
 		try
 		{
-			
+			communityInsertService.insertCommunity(request);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
 		catch (DuplicateUserException e)

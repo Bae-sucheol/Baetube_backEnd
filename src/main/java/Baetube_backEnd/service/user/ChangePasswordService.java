@@ -13,11 +13,6 @@ public class ChangePasswordService
 	@Autowired
 	private UserMapper userMapper;
 	
-	public void setUserMapper(UserMapper userMapper)
-	{
-		this.userMapper = userMapper;
-	}
-	
 	@Transactional
 	public boolean changePassword(ChangePasswordRequest request)
 	{

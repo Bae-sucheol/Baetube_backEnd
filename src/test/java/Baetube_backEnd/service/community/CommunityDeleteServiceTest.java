@@ -25,9 +25,6 @@ public class CommunityDeleteServiceTest
 	@Before
 	public void setUp()
 	{
-		communityDeleteService = new CommunityDeleteService();
-		communityDeleteService.setCommunityMapper(communityMapper);
-		
 		MockitoAnnotations.initMocks(this);
 	}
 	

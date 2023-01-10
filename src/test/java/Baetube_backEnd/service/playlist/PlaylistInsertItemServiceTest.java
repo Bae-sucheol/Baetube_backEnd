@@ -29,9 +29,6 @@ public class PlaylistInsertItemServiceTest
 	@Before
 	public void setUP()
 	{
-		playlistInsertItemService = new PlaylistInsertItemService();
-		playlistInsertItemService.setPlaylistMapper(playlistMapper);
-		
 		MockitoAnnotations.initMocks(this);
 		
 		playlistItem = new PlaylistItem(1, 1);

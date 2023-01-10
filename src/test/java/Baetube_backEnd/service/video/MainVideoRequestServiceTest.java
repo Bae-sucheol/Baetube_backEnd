@@ -29,9 +29,6 @@ public class MainVideoRequestServiceTest
 	@Before
 	public void setUp()
 	{
-		mainVideoRequestService = new MainVideoRequestService();
-		mainVideoRequestService.setVideoMapper(videoMapper);
-		
 		MockitoAnnotations.initMocks(this);
 	}
 	

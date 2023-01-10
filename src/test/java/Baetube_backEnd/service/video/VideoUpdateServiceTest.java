@@ -25,9 +25,6 @@ public class VideoUpdateServiceTest
 	@Before
 	public void setUp()
 	{
-		videoUpdateService = new VideoUpdateService();
-		videoUpdateService.setVideoMapper(videoMapper);
-		
 		MockitoAnnotations.initMocks(this);
 	}
 	

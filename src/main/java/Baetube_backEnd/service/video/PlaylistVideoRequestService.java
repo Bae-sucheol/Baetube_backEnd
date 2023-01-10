@@ -18,16 +18,6 @@ public class PlaylistVideoRequestService implements VideoRequestService
 	@Autowired
 	private PlaylistMapper playlistMapper;
 	
-	public void setVideoMapper(VideoMapper videoMapper)
-	{
-		this.videoMapper = videoMapper;
-	}
-	
-	public void setPlaylistMapper(PlaylistMapper playlistMapper)
-	{
-		this.playlistMapper = playlistMapper;
-	}
-	
 	@Override
 	@Transactional
 	public List<Video> requestVideo(Integer playlistId)

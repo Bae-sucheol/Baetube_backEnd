@@ -9,11 +9,6 @@ public class VideoInsertService
 {
 	@Autowired
 	private VideoMapper videoMaper;
-
-	public void setVideoMaper(VideoMapper videoMaper)
-	{
-		this.videoMaper = videoMaper;
-	}
 	
 	public boolean insert(Video request)
 	{

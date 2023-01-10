@@ -12,11 +12,6 @@ public class SubscribeInsertService
 {
 	@Autowired
 	private SubscribeMapper subscribeMapper;
-
-	public void setSubscribeMapper(SubscribeMapper subscribeMapper)
-	{
-		this.subscribeMapper = subscribeMapper;
-	}
 	
 	@Transactional
 	public boolean insert(Subscribers request)

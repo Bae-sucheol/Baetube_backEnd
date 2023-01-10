@@ -29,9 +29,6 @@ public class SubscribeInsertServiceTest
 	@Before
 	public void setUp()
 	{
-		subscribeInsertService = new SubscribeInsertService();
-		subscribeInsertService.setSubscribeMapper(subscribeMapper);
-		
 		MockitoAnnotations.initMocks(this);
 		
 		subscribers = new Subscribers(1, 2);

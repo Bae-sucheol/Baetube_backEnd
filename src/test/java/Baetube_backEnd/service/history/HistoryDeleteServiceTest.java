@@ -23,9 +23,6 @@ public class HistoryDeleteServiceTest
 	@Before
 	public void setUp()
 	{
-		historyDeleteService = new HistoryDeleteService();
-		historyDeleteService.setHistoryMapper(historyMapper);
-		
 		MockitoAnnotations.initMocks(this);
 	}
 	

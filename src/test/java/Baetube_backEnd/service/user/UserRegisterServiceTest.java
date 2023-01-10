@@ -42,8 +42,6 @@ public class UserRegisterServiceTest
 	@Before
 	public void setUp()
 	{
-		userRegisterService = new UserRegisterService();
-		userRegisterService.setUserMapper(userMapper);
 		MockitoAnnotations.initMocks(this);
 	}
 	

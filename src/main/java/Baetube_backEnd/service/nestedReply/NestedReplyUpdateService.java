@@ -9,11 +9,6 @@ public class NestedReplyUpdateService
 {
 	@Autowired
 	private NestedReplyMapper nestedReplyMapper;
-
-	public void setNestedReplyMapper(NestedReplyMapper nestedReplyMapper)
-	{
-		this.nestedReplyMapper = nestedReplyMapper;
-	}
 	
 	public boolean updateNestedReply(NestedReply request)
 	{

@@ -11,11 +11,6 @@ public class PlaylistDeleteItemService
 {
 	@Autowired
 	private PlaylistMapper playlistMapper;
-
-	public void setPlaylistMapper(PlaylistMapper playlistMapper)
-	{
-		this.playlistMapper = playlistMapper;
-	}
 	
 	@Transactional
 	public boolean deleteItem(PlaylistItem request)

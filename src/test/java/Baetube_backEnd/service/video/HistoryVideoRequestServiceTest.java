@@ -29,9 +29,6 @@ public class HistoryVideoRequestServiceTest
 	@Before
 	public void setUp()
 	{
-		historyVideoRequestService = new HistoryVideoRequestService();
-		historyVideoRequestService.setVideoMapper(videoMapper);
-		
 		MockitoAnnotations.initMocks(this);
 	}
 	

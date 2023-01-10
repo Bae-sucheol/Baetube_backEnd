@@ -135,7 +135,7 @@ public class RestUserController
 		                                                 
 		try
 		{
-			//changePasswordService.changePassword(request);
+			changePasswordService.changePassword(request);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
 		catch (WrongIdPasswordException e)
@@ -171,7 +171,7 @@ public class RestUserController
 	public ResponseEntity<Object> all() throws IOException
 	{
                           
-		return ResponseEntity.status(HttpStatus.OK).build();
+		return ResponseEntity.status(HttpStatus.OK).body(new ErrorResponse("errorCodes = "));
 	}
 	
 	@GetMapping("/api/members")

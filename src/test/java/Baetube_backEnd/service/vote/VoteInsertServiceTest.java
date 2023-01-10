@@ -24,9 +24,6 @@ public class VoteInsertServiceTest
 	@Before
 	public void setUp()
 	{
-		voteInsertService = new VoteInsertService();
-		voteInsertService.setVoteMapper(voteMapper);
-		
 		MockitoAnnotations.initMocks(this);
 	}
 	

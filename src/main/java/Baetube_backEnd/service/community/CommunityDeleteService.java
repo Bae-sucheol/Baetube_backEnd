@@ -11,11 +11,6 @@ public class CommunityDeleteService
 {
 	@Autowired
 	private CommunityMapper communityMapper;
-
-	public void setCommunityMapper(CommunityMapper communityMapper)
-	{
-		this.communityMapper = communityMapper;
-	}
 	
 	@Transactional
 	public boolean deleteCommunity(Integer request)

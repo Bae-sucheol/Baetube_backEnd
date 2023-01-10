@@ -12,11 +12,6 @@ public class ReplySelectService
 {
 	@Autowired
 	private ReplyMapper replyMapper;
-
-	public void setReplyMapper(ReplyMapper replyMapper)
-	{
-		this.replyMapper = replyMapper;
-	}
 	
 	public List<Reply> selectReply(Long request)
 	{

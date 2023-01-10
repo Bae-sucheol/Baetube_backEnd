@@ -25,9 +25,6 @@ public class NestedReplyInsertServiceTest
 	@Before
 	public void setUp()
 	{
-		nestedReplyInsertService = new NestedReplyInsertService();
-		nestedReplyInsertService.setNestedReplyMapper(nestedReplyMapper);
-		
 		MockitoAnnotations.initMocks(this);
 	}
 	

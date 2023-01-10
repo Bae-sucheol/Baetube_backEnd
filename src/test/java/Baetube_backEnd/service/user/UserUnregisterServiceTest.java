@@ -39,8 +39,6 @@ public class UserUnregisterServiceTest
 	@Before
 	public void setUp()
 	{
-		userUnregisterService = new UserUnregisterService();
-		userUnregisterService.setUserMapper(userMapper);
 		MockitoAnnotations.initMocks(this);
 		
 		newEmail = "new@naver.com";

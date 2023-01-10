@@ -29,9 +29,6 @@ public class SearchHistorySelectServiceTest
 	@Before
 	public void setUp()
 	{
-		searchHistorySelectService = new SearchHistorySelectService();
-		searchHistorySelectService.setSearchHistoryMapper(searchHistoryMapper);
-		
 		MockitoAnnotations.initMocks(this);
 	}
 	

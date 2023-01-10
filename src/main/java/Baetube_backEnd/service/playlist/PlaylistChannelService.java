@@ -12,11 +12,6 @@ public class PlaylistChannelService
 {
 	@Autowired
 	private PlaylistMapper playlistMapper;
-
-	public void setPlaylistMapper(PlaylistMapper playlistMapper)
-	{
-		this.playlistMapper = playlistMapper;
-	}
 	
 	public List<Playlist> select(Integer request)
 	{

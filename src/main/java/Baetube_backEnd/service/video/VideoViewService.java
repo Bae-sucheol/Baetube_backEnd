@@ -16,16 +16,6 @@ public class VideoViewService
 	@Autowired
 	private HistoryMapper historyMapper;
 	
-	public void setVideoMapper(VideoMapper videoMapper)
-	{
-		this.videoMapper = videoMapper;
-	}
-	
-	public void setHistoryMapper(HistoryMapper historyMapper)
-	{
-		this.historyMapper = historyMapper;
-	}
-	
 	@Transactional
 	public Video selectVideo(VideoViewRequest request)
 	{

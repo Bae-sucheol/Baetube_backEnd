@@ -13,11 +13,6 @@ public class ChannelVideoRequestService implements VideoRequestService
 	
 	@Autowired
 	private VideoMapper videoMapper;
-	
-	public void setVideoMapper(VideoMapper videoMapper)
-	{
-		this.videoMapper = videoMapper;
-	}
 
 	@Override
 	public List<Video> requestVideo(Integer channelId)

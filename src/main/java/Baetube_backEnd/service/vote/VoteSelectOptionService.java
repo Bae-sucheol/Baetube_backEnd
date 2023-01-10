@@ -12,11 +12,6 @@ public class VoteSelectOptionService
 {
 	@Autowired
 	private VoteMapper voteMapper;
-
-	public void setVoteMapper(VoteMapper voteMapper)
-	{
-		this.voteMapper = voteMapper;
-	}
 	
 	public List<Vote> select(Integer request)
 	{

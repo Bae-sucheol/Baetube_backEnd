@@ -20,6 +20,7 @@ import Baetube_backEnd.ErrorResponse;
 import Baetube_backEnd.dto.Community;
 import Baetube_backEnd.dto.Contents;
 import Baetube_backEnd.exception.DuplicateUserException;
+import Baetube_backEnd.exception.NullContentsException;
 import Baetube_backEnd.service.contents.ContentsDeleteService;
 
 @RestController
@@ -29,7 +30,7 @@ public class RestContentsController
 	private ContentsDeleteService contentsDeleteService;
 	
 	@PostMapping("/api/contents/delete")
-	@ExceptionHandler(MethodArgumentNotValidException.class)
+	//@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Object> deleteContents(@RequestBody @Valid Contents request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		
@@ -42,10 +43,10 @@ public class RestContentsController
 		                                                 
 		try
 		{
-			
+			contentsDeleteService.deleteContents(request);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
-		catch (DuplicateUserException e)
+		catch (NullContentsException e)
 		{
 			
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();

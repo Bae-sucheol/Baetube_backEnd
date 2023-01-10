@@ -13,9 +13,9 @@ import Baetube_backEnd.dto.User;
 
 public interface UserMapper
 {
-	public User selectByEmail(String email);
+	public User selectByEmail(@Param("email") String email);
 	public void insert(@Param("user") User user);
 	public void update(@Param("oldUser") User oldUser, @Param("newUser") User newUser);
-	public void changePassword(String email, String newPassword);
-	public void delete(Integer userId);
+	public void changePassword(@Param("email") String email, @Param("newPassword") String newPassword);
+	public void delete(@Param("userId") Integer userId);
 }

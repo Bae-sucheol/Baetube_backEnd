@@ -10,6 +10,6 @@ public interface SearchHistoryMapper
 {
 	public void insert(@Param("searchHistory") SearchHistory searchHistory);
 	public void delete(@Param("searchHistory") SearchHistory searchHistory);
-	public List<SearchHistory> selectAll(Integer userId);
+	public List<SearchHistory> selectAll(@Param("userId") Integer userId);
 	public SearchHistory select(@Param("searchHistory") SearchHistory searchHistory);
 }

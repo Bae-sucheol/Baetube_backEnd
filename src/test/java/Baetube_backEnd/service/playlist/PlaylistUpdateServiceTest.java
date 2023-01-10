@@ -29,9 +29,6 @@ public class PlaylistUpdateServiceTest
 	@Before
 	public void setUP()
 	{
-		playlistUpdateService = new PlaylistUpdateService();
-		playlistUpdateService.setPlaylistMapper(playlistMapper);
-		
 		MockitoAnnotations.initMocks(this);
 		
 		oldPlaylist = new Playlist(1, 1, "test", 1, 0, null);

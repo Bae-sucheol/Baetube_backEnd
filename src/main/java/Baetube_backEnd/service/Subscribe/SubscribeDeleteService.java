@@ -11,11 +11,6 @@ public class SubscribeDeleteService
 {
 	@Autowired
 	private SubscribeMapper subscribeMapper;
-
-	public void setSubscribeMapper(SubscribeMapper subscribeMapper)
-	{
-		this.subscribeMapper = subscribeMapper;
-	}
 	
 	@Transactional
 	public boolean delete(Subscribers request)

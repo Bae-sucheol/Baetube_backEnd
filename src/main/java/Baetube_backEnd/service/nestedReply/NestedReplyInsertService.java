@@ -10,11 +10,6 @@ public class NestedReplyInsertService
 	@Autowired
 	private NestedReplyMapper nestedReplyMapper;
 	
-	public void setNestedReplyMapper(NestedReplyMapper nestedReplyMapper)
-	{
-		this.nestedReplyMapper = nestedReplyMapper;
-	}
-	
 	public boolean insertNestedReply(NestedReply request)
 	{
 		nestedReplyMapper.insert(request);

@@ -12,11 +12,6 @@ public class NestedReplySelectService
 {
 	@Autowired
 	private NestedReplyMapper nestedReplyMapper;
-
-	public void setNestedReplyMapper(NestedReplyMapper nestedReplyMapper)
-	{
-		this.nestedReplyMapper = nestedReplyMapper;
-	}
 	
 	public List<NestedReply> selectNestedReply(Integer request)
 	{

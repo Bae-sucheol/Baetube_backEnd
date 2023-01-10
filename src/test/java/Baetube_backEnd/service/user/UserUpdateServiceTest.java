@@ -35,8 +35,6 @@ public class UserUpdateServiceTest
 	@Before
 	public void setUp()
 	{
-		userUpdateService = new UserUpdateService();
-		userUpdateService.setUserMapper(userMapper);
 		MockitoAnnotations.initMocks(this);
 		
 		newEmail = "new@naver.com";

@@ -9,11 +9,6 @@ public class CommunityInsertService
 {
 	@Autowired
 	private CommunityMapper communityMapper;
-
-	public void setCommunityMapper(CommunityMapper communityMapper)
-	{
-		this.communityMapper = communityMapper;
-	}
 	
 	public boolean insertCommunity(Community request)
 	{

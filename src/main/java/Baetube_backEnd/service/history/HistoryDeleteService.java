@@ -9,11 +9,6 @@ public class HistoryDeleteService
 {
 	@Autowired
 	private HistoryMapper historyMapper;
-
-	public void setHistoryMapper(HistoryMapper historyMapper)
-	{
-		this.historyMapper = historyMapper;
-	}
 	
 	public boolean deleteHistory(DeleteHistoryRequest request)
 	{

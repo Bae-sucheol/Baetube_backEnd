@@ -6,6 +6,13 @@ public class ChangePasswordRequest
 	private String password;
 	private String newPassword;
 	
+	
+	
+	public ChangePasswordRequest()
+	{
+		super();
+	}
+
 	public ChangePasswordRequest(String email, String password, String newPassword)
 	{
 		super();

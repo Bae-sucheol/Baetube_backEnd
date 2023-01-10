@@ -11,11 +11,6 @@ public class SearchHistorySelectService
 {
 	@Autowired
 	private SearchHistoryMapper searchHistoryMapper;
-
-	public void setSearchHistoryMapper(SearchHistoryMapper searchHistoryMapper)
-	{
-		this.searchHistoryMapper = searchHistoryMapper;
-	}
 	
 	public List<SearchHistory> select(Integer request)
 	{

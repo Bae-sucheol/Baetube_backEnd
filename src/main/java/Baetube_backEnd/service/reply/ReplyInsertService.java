@@ -9,11 +9,6 @@ public class ReplyInsertService
 {
 	@Autowired
 	private ReplyMapper replyMapper;
-
-	public void setReplyMapper(ReplyMapper replyMapper)
-	{
-		this.replyMapper = replyMapper;
-	}
 	
 	public boolean insertReply(Reply request)
 	{

@@ -28,9 +28,6 @@ public class RateServiceTest
 	@Before
 	public void setUp()
 	{
-		rateService = new RateService();
-		rateService.setRateMapper(rateMapper);
-		
 		MockitoAnnotations.initMocks(this);
 	}
 	

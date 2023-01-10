@@ -27,9 +27,6 @@ public class ChannelInsertServiceTest
 	@Before
 	public void setUp()
 	{
-		channelInsertService = new ChannelInsertService();
-		channelInsertService.setChannelMapper(channelMapper);
-		
 		MockitoAnnotations.initMocks(this);
 	}
 	

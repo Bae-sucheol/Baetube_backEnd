@@ -11,11 +11,6 @@ public class SearchHistoryDeleteService
 {
 	@Autowired
 	private SearchHistoryMapper searchHistoryMapper;
-
-	public void setSearchHistoryMapper(SearchHistoryMapper searchHistoryMapper)
-	{
-		this.searchHistoryMapper = searchHistoryMapper;
-	}
 	
 	@Transactional
 	public boolean delete(SearchHistory request)

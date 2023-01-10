@@ -28,9 +28,6 @@ public class PlaylistDeleteItemServiceTest
 	@Before
 	public void setUP()
 	{
-		playlistDeleteItemService = new PlaylistDeleteItemService();
-		playlistDeleteItemService.setPlaylistMapper(playlistMapper);
-		
 		MockitoAnnotations.initMocks(this);
 		
 		playlistItem = new PlaylistItem(1, 1);

@@ -11,11 +11,6 @@ public class ChannelUpdateService
 {
 	@Autowired
 	private ChannelMapper channelMapper;
-
-	public void setChannelMapper(ChannelMapper channelMapper)
-	{
-		this.channelMapper = channelMapper;
-	}
 	
 	@Transactional
 	public boolean updateChannel(Channel request)

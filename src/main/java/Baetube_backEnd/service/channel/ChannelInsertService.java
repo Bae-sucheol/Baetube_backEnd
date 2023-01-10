@@ -10,10 +10,6 @@ public class ChannelInsertService
 	@Autowired
 	private ChannelMapper channelMapper;
 
-	public void setChannelMapper(ChannelMapper channelMapper)
-	{
-		this.channelMapper = channelMapper;
-	}
 	
 	public boolean insertChannel(Channel request)
 	{

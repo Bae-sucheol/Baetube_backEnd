@@ -28,15 +28,11 @@ public class ChangePasswordServiceTest
 	private String dupleEmail;
 	private String duplePassword;
 	private String dupleWrongPassowrd;
-	private User newUser;
 	private User dupleUser;
-	private User dupleUserWrongPassword;
 	
 	@Before
 	public void setUp()
 	{
-		changePasswordService = new ChangePasswordService();
-		changePasswordService.setUserMapper(userMapper);
 		MockitoAnnotations.initMocks(this);
 		
 		newEmail = "new@naver.com";
@@ -44,11 +40,7 @@ public class ChangePasswordServiceTest
 		duplePassword = "1234";
 		dupleWrongPassowrd = "12345";
 		
-		newUser = new User(0, newEmail, "1234", "1234", 1, new Timestamp(System.currentTimeMillis()), "1234",
-				"1234", "1234", new Timestamp(System.currentTimeMillis()));
 		dupleUser = new User(1, dupleEmail, duplePassword, "1234", 1, new Timestamp(System.currentTimeMillis()), "1234",
-				"1234", "1234", new Timestamp(System.currentTimeMillis()));
-		dupleUserWrongPassword = new User(1, dupleEmail, dupleWrongPassowrd, "1234", 1, new Timestamp(System.currentTimeMillis()), "1234",
 				"1234", "1234", new Timestamp(System.currentTimeMillis()));
 		
 		when(userMapper.selectByEmail(newEmail)).thenReturn(null);

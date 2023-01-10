@@ -11,11 +11,6 @@ public class SubscribeSelectService
 {
 	@Autowired
 	private SubscribeMapper subscribeMapper;
-
-	public void setSubscribeMapper(SubscribeMapper subscribeMapper)
-	{
-		this.subscribeMapper = subscribeMapper;
-	}
 	
 	@Transactional
 	public Subscribers select(Subscribers request)

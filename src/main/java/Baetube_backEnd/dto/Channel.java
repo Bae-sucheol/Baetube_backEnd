@@ -2,8 +2,10 @@ package Baetube_backEnd.dto;
 
 import java.sql.Timestamp;
 
+
 public class Channel
 {
+	
 	private Integer channelId;
 	private Integer userId;
 	private Integer subs;
@@ -26,6 +28,12 @@ public class Channel
 	 * @param regDate
 	 * @param profile
 	 */
+
+	public Channel()
+	{
+		super();
+	}
+
 	public Channel(Integer channelId, Integer userId, Integer subs, Integer videoCount, String name, String description,
 			String arts, Timestamp regDate)
 	{

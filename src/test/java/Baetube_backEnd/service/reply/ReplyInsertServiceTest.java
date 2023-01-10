@@ -24,9 +24,6 @@ public class ReplyInsertServiceTest
 	@Before
 	public void setUp()
 	{
-		replyInsertService = new ReplyInsertService();
-		replyInsertService.setReplyMapper(replyMapper);
-		
 		MockitoAnnotations.initMocks(this);
 	}
 	

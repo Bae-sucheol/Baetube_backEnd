@@ -1,38 +1,30 @@
 package Baetube_backEnd.service.file;
 
 import java.io.File;
-import java.util.Iterator;
+import java.io.IOException;
+import java.io.InputStream;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 public class FileUploadService
 {
-	private static String BASE_FILE_PATH = "G:\\baetube";
+	private static String BASE_FILE_PATH = "G:\\baetube\\";
 	
-	public boolean upload(MultipartHttpServletRequest request) throws Exception
+	public boolean upload(MultipartFile request) throws Exception
 	{
-		Iterator<String> fileNames = request.getFileNames();
 		
-		while(fileNames.hasNext())
+		File storageFile = new File(BASE_FILE_PATH + request.getOriginalFilename());
+		
+		try
 		{
-			String fileName = fileNames.next();
-			MultipartFile mFile = request.getFile(fileName);
-			File file = new File(BASE_FILE_PATH + "test");
-			
-			if(mFile.getSize() != 0) // 파일 체크
-			{
-				if(!file.exists()) // 파일 존재 여부 확인
-				{
-					if(file.getParentFile().mkdir()) // 디렉토리 생성
-					{
-						file.createNewFile(); // 파일 생성
-					}
-				}
-				
-				mFile.transferTo(file); // 임시 저장된 multipartFile을 실제 파일로 전송
-				
-			}
+			InputStream fileStream = request.getInputStream();
+			FileUtils.copyInputStreamToFile(fileStream, storageFile);
+		} 
+		catch (IOException e)
+		{
+			FileUtils.deleteQuietly(storageFile);
+			e.printStackTrace();
 		}
 		
 		return true;

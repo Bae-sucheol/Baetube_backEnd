@@ -10,14 +10,14 @@ public interface VoteMapper
 {
 	public Integer insertVote(@Param("vote") Vote vote);
 	public Integer insertVoteOption(@Param("voteOption") Vote voteOption);
-	public void insertVoteOptionMulti(List<Vote> voteOptionList);
+	public void insertVoteOptionMulti(@Param("voteOptionList") List<Vote> voteOptionList);
 	public void updateVote(@Param("oldVote") Vote oldVote, @Param("newVote") Vote newVote);
 	public void updateVoteOption(@Param("oldVoteOption") Vote oldVoteOption, @Param("newVoteOption") Vote newVoteOption);
 	public void updateVoteOptionCount(@Param("vote") Vote vote);
-	public void deleteVote(Integer voteId);
+	public void deleteVote(@Param("voteId") Integer voteId);
 	public void deleteVoteOption(@Param("vote") Vote vote);
-	public void deleteVoteOptionMulti(List<Vote> voteOptionList);
-	public List<Vote> selectVoteOptions(Integer voteId);
-	public Vote selectVote(Integer voteId);
-	public Vote selectVoteOption(Integer voteOptionId);
+	public void deleteVoteOptionMulti(@Param("voteOptionList") List<Vote> voteOptionList);
+	public List<Vote> selectVoteOptions(@Param("voteId") Integer voteId);
+	public Vote selectVote(@Param("voteId") Integer voteId);
+	public Vote selectVoteOption(@Param("voteOptionId") Integer voteOptionId);
 }

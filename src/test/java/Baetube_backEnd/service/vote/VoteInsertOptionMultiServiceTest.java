@@ -34,9 +34,6 @@ public class VoteInsertOptionMultiServiceTest
 	@Before
 	public void setUp()
 	{
-		voteInsertOptionMultiService = new VoteInsertOptionMultiService();
-		voteInsertOptionMultiService.setVoteMapper(voteMapper);
-		
 		MockitoAnnotations.initMocks(this);
 		
 		requestVoteA = new Vote(1, 1, "testa", 0);

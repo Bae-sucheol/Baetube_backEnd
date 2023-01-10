@@ -35,9 +35,6 @@ public class VoteDeleteOptionMultiServiceTest
 	@Before
 	public void setUp()
 	{
-		voteDeleteOptionMultiService = new VoteDeleteOptionMultiService();
-		voteDeleteOptionMultiService.setVoteMapper(voteMapper);
-		
 		MockitoAnnotations.initMocks(this);
 		
 		requestVoteA = new Vote(1, 1, "testa", 0);

@@ -26,9 +26,6 @@ public class ChannelVisitServiceTest
 	@Before
 	public void setUp()
 	{
-		channelVisitService = new ChannelVisitService();
-		channelVisitService.setChannelMapper(channelMapper);
-		
 		MockitoAnnotations.initMocks(this);
 	}
 	

@@ -17,11 +17,6 @@ public class UserRegisterService
 	@Autowired
 	private UserMapper userMapper;
 	
-	public void setUserMapper(UserMapper userMapper)
-	{
-		this.userMapper = userMapper;
-	}
-	
 	@Transactional
 	public Integer regist(User request)
 	{

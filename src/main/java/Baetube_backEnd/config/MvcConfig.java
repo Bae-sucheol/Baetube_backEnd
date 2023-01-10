@@ -16,7 +16,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
 @Configuration
 @EnableWebMvc
@@ -39,7 +38,6 @@ public class MvcConfig implements WebMvcConfigurer
 		WebMvcConfigurer.super.configureViewResolvers(registry);
 	}
 	
-	/*
 	@Override
 	public void extendMessageConverters(List<HttpMessageConverter<?>> converters)
 	{
@@ -53,5 +51,5 @@ public class MvcConfig implements WebMvcConfigurer
 		
 		converters.add(0, new MappingJackson2HttpMessageConverter(objectMapper));
 	}
-	*/
+	
 }

@@ -24,9 +24,6 @@ public class CommunityInsertServiceTest
 	@Before
 	public void setUp()
 	{
-		communityInsertService = new CommunityInsertService();
-		communityInsertService.setCommunityMapper(communityMapper);
-		
 		MockitoAnnotations.initMocks(this);
 	}
 	

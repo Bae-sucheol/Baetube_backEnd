@@ -29,9 +29,6 @@ public class SubscribeDeleteServiceTest
 	@Before
 	public void setUp()
 	{
-		subscribeDeleteService = new SubscribeDeleteService();
-		subscribeDeleteService.setSubscribeMapper(subscribeMapper);
-		
 		MockitoAnnotations.initMocks(this);
 		
 		subscribers = new Subscribers(1, 2);

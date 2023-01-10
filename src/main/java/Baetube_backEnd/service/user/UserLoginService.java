@@ -13,11 +13,6 @@ public class UserLoginService
 	@Autowired
 	private UserMapper userMapper;
 	
-	public void setUserMapper(UserMapper userMapper)
-	{
-		this.userMapper = userMapper;
-	}
-	
 	@Transactional
 	public User login(User request)
 	{

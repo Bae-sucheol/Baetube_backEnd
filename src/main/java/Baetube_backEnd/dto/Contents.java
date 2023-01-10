@@ -8,6 +8,11 @@ public class Contents
 	private Integer hate;
 	private Integer replyCount;
 	
+	public Contents()
+	{
+		super();
+	}
+
 	public Contents(Long contentsId, Integer type, Integer like, Integer hate, Integer replyCount)
 	{
 		super();

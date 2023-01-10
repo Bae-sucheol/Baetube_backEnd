@@ -15,6 +15,12 @@ public class Community
 	    private Timestamp date;
 	    
 	    // constructor
+	    
+	    public Community()
+		{
+			super();
+		}
+	    
 	    public Community(Integer communityId, Long contentsId, Integer channelId, Integer likeCount,
 				Integer hateCount, Integer replyCount, String imageUrl, String comment, Timestamp date)
 		{
@@ -29,8 +35,7 @@ public class Community
 			this.comment = comment;
 			this.date = date;
 		}
-	    
- 
+
 		public Community(Integer channelId, String imageUrl, String comment, Timestamp date)
 		{
 			super();

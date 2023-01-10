@@ -28,9 +28,6 @@ public class VoteUpdateOptionServiceTest
 	@Before
 	public void setUp()
 	{
-		voteUpdateOptionService = new VoteUpdateOptionService();
-		voteUpdateOptionService.setVoteMapper(voteMapper);
-		
 		MockitoAnnotations.initMocks(this);
 		
 		requestVote = new Vote(1, 1, "test", 0);

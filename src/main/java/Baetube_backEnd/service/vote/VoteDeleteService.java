@@ -11,11 +11,6 @@ public class VoteDeleteService
 {
 	@Autowired
 	private VoteMapper voteMapper;
-
-	public void setVoteMapper(VoteMapper voteMapper)
-	{
-		this.voteMapper = voteMapper;
-	}
 	
 	@Transactional
 	public boolean delete(Integer request)

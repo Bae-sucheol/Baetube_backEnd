@@ -28,9 +28,6 @@ public class VoteDeleteOptionServiceTest
 	@Before
 	public void setUp()
 	{
-		voteDeleteOptionService = new VoteDeleteOptionService();
-		voteDeleteOptionService.setVoteMapper(voteMapper);
-		
 		MockitoAnnotations.initMocks(this);
 		
 		requestVote = new Vote(1, 1, "test", 0);

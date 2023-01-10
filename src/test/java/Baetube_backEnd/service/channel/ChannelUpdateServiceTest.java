@@ -26,9 +26,6 @@ public class ChannelUpdateServiceTest
 	@Before
 	public void setUp()
 	{
-		channelUpdateService = new ChannelUpdateService();
-		channelUpdateService.setChannelMapper(channelMapper);
-		
 		MockitoAnnotations.initMocks(this);
 	}
 	

@@ -10,11 +10,6 @@ public class ChannelVisitService
 {
 	@Autowired
 	private ChannelMapper channelMapper;
-
-	public void setChannelMapper(ChannelMapper channelMapper)
-	{
-		this.channelMapper = channelMapper;
-	}
 	
 	public Channel selectChannel(Integer channelId)
 	{

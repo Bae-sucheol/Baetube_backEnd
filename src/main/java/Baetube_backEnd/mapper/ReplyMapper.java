@@ -14,6 +14,6 @@ import Baetube_backEnd.dto.Reply;
 public interface ReplyMapper
 {
 	public void insert(@Param("reply") Reply reply);
-	public void updateComment(Integer replyId, String comment);
-	public List<Reply> selectByContentsId(Long contentsId);
+	public void updateComment(@Param("replyId") Integer replyId, @Param("comment") String comment);
+	public List<Reply> selectByContentsId(@Param("contentsId") Long contentsId);
 }

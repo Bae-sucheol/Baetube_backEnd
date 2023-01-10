@@ -23,9 +23,6 @@ public class ContentsDeleteServiceTest
 	@Before
 	public void setUp()
 	{
-		contentsDeleteService = new ContentsDeleteService();
-		contentsDeleteService.setContentsMapper(contentsMapper);
-		
 		MockitoAnnotations.initMocks(this);
 	}
 	

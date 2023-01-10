@@ -28,9 +28,6 @@ public class NestedReplySelectServiceTest
 	@Before
 	public void setUp()
 	{
-		nestedReplySelectService = new NestedReplySelectService();
-		nestedReplySelectService.setNestedReplyMapper(nestedReplyMapper);
-		
 		MockitoAnnotations.initMocks(this);
 	}
 	

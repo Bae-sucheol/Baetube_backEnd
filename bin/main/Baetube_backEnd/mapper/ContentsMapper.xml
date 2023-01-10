@@ -15,4 +15,10 @@
 		
 		</delete>
 		
+		<select id="selectByContentsId" resultType="contentsDto">
+		
+			SELECT contents_id, `type`, `like`, hate, reply_count FROM contents WHERE contents_id = #{contentsId} 
+		
+		</select>
+		
 	</mapper>

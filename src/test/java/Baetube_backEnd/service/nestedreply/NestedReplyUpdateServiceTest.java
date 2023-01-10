@@ -25,9 +25,6 @@ public class NestedReplyUpdateServiceTest
 	@Before
 	public void setUp()
 	{
-		nestedReplyUpdateService = new NestedReplyUpdateService();
-		nestedReplyUpdateService.setNestedReplyMapper(nestedReplyMapper);
-		
 		MockitoAnnotations.initMocks(this);
 	}
 	

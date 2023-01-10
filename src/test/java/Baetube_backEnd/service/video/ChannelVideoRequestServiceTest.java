@@ -29,9 +29,6 @@ public class ChannelVideoRequestServiceTest
 	@Before
 	public void setUp()
 	{
-		channelVideoRequestService = new ChannelVideoRequestService();
-		channelVideoRequestService.setVideoMapper(videoMapper);
-		
 		MockitoAnnotations.initMocks(this);
 	}
 	

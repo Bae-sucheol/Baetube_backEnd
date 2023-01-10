@@ -3,15 +3,18 @@ package Baetube_backEnd.controller;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.codec.multipart.Part;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -28,22 +31,14 @@ public class RestFileController
 	private FileUploadService fileUploadService;
 	
 	@PostMapping("/api/file/upload")
-	public ResponseEntity<Object>  deleteContents(@RequestBody MultipartHttpServletRequest request, Errors errors, HttpServletResponse response) throws IOException
+	public ResponseEntity<Object>  deleteContents(@RequestParam String type, @RequestParam MultipartFile file, HttpServletResponse response) throws IOException
 	{
-		
-		if(errors.hasErrors())
-		{
-			String errorCodes = errors.getAllErrors().stream().map(error -> error.getCodes()[0]).collect(Collectors.joining(","));
-			
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse("errorCodes = " + errorCodes));
-		}
-		                                                 
+		                                    
 		try
 		{
 			try
 			{
-				System.out.println("파일 업로드 요청이 들어왔습니다.");
-				fileUploadService.upload(request);
+				fileUploadService.upload(file);
 			} 
 			catch (Exception e)
 			{

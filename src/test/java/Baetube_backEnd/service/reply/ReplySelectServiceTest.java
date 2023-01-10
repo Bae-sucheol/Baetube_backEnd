@@ -30,9 +30,6 @@ public class ReplySelectServiceTest
 	@Before
 	public void setUp()
 	{
-		replySelectService = new ReplySelectService();
-		replySelectService.setReplyMapper(replyMapper);
-		
 		MockitoAnnotations.initMocks(this);
 	}
 	

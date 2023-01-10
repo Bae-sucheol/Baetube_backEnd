@@ -34,10 +34,6 @@ public class PlaylistVideoRequestServiceTest
 	@Before
 	public void setUp()
 	{
-		playlistVideoRequestService = new PlaylistVideoRequestService();
-		playlistVideoRequestService.setVideoMapper(videoMapper);
-		playlistVideoRequestService.setPlaylistMapper(playlistMapper);
-		
 		MockitoAnnotations.initMocks(this);
 	}
 	

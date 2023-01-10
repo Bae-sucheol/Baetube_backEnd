@@ -15,14 +15,7 @@ public class CommunityChannelVisitService
 {
 	@Autowired
 	private CommunityMapper communityMapper;
-	@Autowired
-	private ChannelMapper channelMapper;
 
-	public void setCommunityMapper(CommunityMapper communityMapper)
-	{
-		this.communityMapper = communityMapper;
-	}
-	
 	public List<Community> selectCommunity(Integer request)
 	{
 		List<Community> communityList = communityMapper.selectByChannel(request);

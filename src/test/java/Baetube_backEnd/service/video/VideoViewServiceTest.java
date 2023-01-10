@@ -36,9 +36,6 @@ public class VideoViewServiceTest
 	@Before
 	public void setUp()
 	{
-		videoViewService = new VideoViewService();
-		videoViewService.setVideoMapper(videoMapper);
-		videoViewService.setHistoryMapper(historyMapper);
 		MockitoAnnotations.initMocks(this);
 		
 		correctVideo = new Video(1, 1L, 1, "1234", 1, "1234", "1234", "1234", "1234", 1, 100, 0, 0, 0, 

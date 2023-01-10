@@ -29,9 +29,6 @@ public class CommunityChannelVisitServiceTest
 	@Before
 	public void setUp()
 	{
-		communityChannelVisitService = new CommunityChannelVisitService();
-		communityChannelVisitService.setCommunityMapper(communityMapper);
-		
 		MockitoAnnotations.initMocks(this);
 	}
 	
