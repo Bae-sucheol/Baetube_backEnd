@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import Baetube_backEnd.dto.Video;
+import Baetube_backEnd.exception.NullVideoException;
 import Baetube_backEnd.mapper.VideoMapper;
 
 public class HistoryVideoRequestService implements VideoRequestService
@@ -15,7 +16,14 @@ public class HistoryVideoRequestService implements VideoRequestService
 	@Override
 	public List<Video> requestVideo(Integer userId)
 	{
-		return videoMapper.selectHistoryVideo(userId);
+		List<Video> videoList = videoMapper.selectHistoryVideo(userId);
+		
+		if(videoList == null)
+		{
+			throw new NullVideoException();
+		}
+		
+		return videoList;
 	}
 
 }

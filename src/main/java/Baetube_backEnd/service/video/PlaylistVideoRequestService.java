@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import Baetube_backEnd.dto.Playlist;
 import Baetube_backEnd.dto.Video;
 import Baetube_backEnd.exception.NullPlaylistException;
+import Baetube_backEnd.exception.NullVideoException;
 import Baetube_backEnd.mapper.PlaylistMapper;
 import Baetube_backEnd.mapper.VideoMapper;
 
@@ -29,7 +30,14 @@ public class PlaylistVideoRequestService implements VideoRequestService
 			throw new NullPlaylistException();
 		}
 		
-		return videoMapper.selectPlaylistVideo(playlistId);
+		List<Video> videoList = videoMapper.selectPlaylistVideo(playlistId);
+		
+		if(videoList == null)
+		{
+			throw new NullVideoException();
+		}
+		
+		return videoList;
 	}
 
 	

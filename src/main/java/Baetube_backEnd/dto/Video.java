@@ -26,6 +26,11 @@ public class Video
 	private Integer playlistId;
 	
 	// constructor
+	public Video()
+	{
+		super();
+	}
+	
 	public Video(Integer videoId, Long contentsId, Integer channelId, String url, Integer visible, String thumbnail, String title,
 			String info, String location, Integer age, Integer views, Integer like, Integer hate, Integer replyCount,
 			Timestamp date, Integer categoryId, String profile)
@@ -153,6 +158,20 @@ public class Video
 		this.historyDate = historyDate;
 	}
 	
+	public Video(Integer channelId, Integer visible, String thumbnail, String title, String info, String location,
+			Integer age, Integer categoryId)
+	{
+		super();
+		this.channelId = channelId;
+		this.visible = visible;
+		this.thumbnail = thumbnail;
+		this.title = title;
+		this.info = info;
+		this.location = location;
+		this.age = age;
+		this.categoryId = categoryId;
+	}
+
 	// getter
 	public Integer getVideoId()
 	{

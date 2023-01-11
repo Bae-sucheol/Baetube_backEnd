@@ -17,6 +17,11 @@ public class Reply
 	private String profile;
 	
 	// constructor
+	public Reply()
+	{
+		super();
+	}
+	
 	public Reply(Integer replyId, Long contentsId, Long attachedId, Integer channelId, String comment, Integer like,
 			Integer hate, Timestamp date, Integer nestedCount, String name, String profile)
 	{
@@ -33,7 +38,7 @@ public class Reply
 		this.name = name;
 		this.profile = profile;
 	}
-	
+
 	public Reply(Long attachedId, Integer channelId, String comment, Timestamp date)
 	{
 		super();

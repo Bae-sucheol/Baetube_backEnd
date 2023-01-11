@@ -13,7 +13,7 @@ public interface PlaylistMapper
 	public void delete(@Param("playlist") Playlist playlist);
 	public List<Playlist> selectByChannelId(@Param("channelId") Integer channelId);
 	public Playlist selectByPlaylistId(@Param("playlistId") Integer playlistId);
-	public PlaylistItem selectPlaylistItem(@Param("playlistItem") PlaylistItem playlistItem);
+	public PlaylistItem selectPlaylistItem(@Param("playlistId") Integer playlistId, @Param("videoId") Integer videoId);
 	public void update(@Param("oldPlaylist") Playlist oldPlaylist, @Param("newPlaylist") Playlist newPlaylist);
 	
 	public void insertItem(@Param("playlistItem") PlaylistItem playlistItem);

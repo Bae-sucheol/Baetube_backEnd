@@ -21,14 +21,20 @@ public class VoteInsertOptionService
 	{
 		List<Vote> voteList = voteMapper.selectVoteOptions(request.getVoteId());
 		
-		for(int i = 0; i < voteList.size(); i++)
+		if(voteList != null)
 		{
-			if(request.getOption().equals(voteList.get(i).getOption()))
+			
+			for(int i = 0; i < voteList.size(); i++)
 			{
-				throw new DuplicateVoteOptionException();
+				if(request.getOption().equals(voteList.get(i).getOption()))
+				{
+					System.out.println("request : " + request.getOption() + " , voteList : " + voteList.get(i).getOption());
+					throw new DuplicateVoteOptionException();
+				}
 			}
+			
 		}
-		
+
 		voteMapper.insertVoteOption(request);
 		
 		return true;

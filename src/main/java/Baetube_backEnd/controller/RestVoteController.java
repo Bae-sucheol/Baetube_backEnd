@@ -16,11 +16,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import Baetube_backEnd.ErrorResponse;
 import Baetube_backEnd.dto.Channel;
 import Baetube_backEnd.dto.Vote;
 import Baetube_backEnd.exception.DuplicateUserException;
+import Baetube_backEnd.exception.DuplicateVoteOptionException;
+import Baetube_backEnd.exception.NullVoteException;
 import Baetube_backEnd.service.vote.VoteDeleteOptionMultiService;
 import Baetube_backEnd.service.vote.VoteDeleteOptionService;
 import Baetube_backEnd.service.vote.VoteDeleteService;
@@ -31,6 +34,7 @@ import Baetube_backEnd.service.vote.VoteSelectOptionService;
 import Baetube_backEnd.service.vote.VoteUpdateOptionService;
 import Baetube_backEnd.service.vote.VoteUpdateService;
 
+@RestController
 public class RestVoteController
 {
 	@Autowired
@@ -53,7 +57,6 @@ public class RestVoteController
 	private VoteSelectOptionService VoteSelectOptionService;
 	
 	@PostMapping("/api/vote/insert")
-	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Object> insertVote(@RequestBody @Valid Vote request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		
@@ -66,19 +69,17 @@ public class RestVoteController
 		                                                 
 		try
 		{
-			
+			voteInsertService.insert(request);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
-		catch (DuplicateUserException e)
+		catch (Exception e)
 		{
-			
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
 		
 	}
 	
 	@PostMapping("/api/vote/insert_option")
-	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Object> insertVoteOption(@RequestBody @Valid Vote request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		
@@ -91,19 +92,17 @@ public class RestVoteController
 		                                                 
 		try
 		{
-			
+			voteInsertOptionService.insertOption(request);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
-		catch (DuplicateUserException e)
+		catch (DuplicateVoteOptionException e)
 		{
-			
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
 		
 	}
 	
 	@PostMapping("/api/vote/insert_option_multi")
-	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Object> insertVoteOptionMulti(@RequestBody @Valid List<Vote> request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		
@@ -116,10 +115,10 @@ public class RestVoteController
 		                                                 
 		try
 		{
-			
+			voteInsertOptionMultiService.insertOptionMulti(request);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
-		catch (DuplicateUserException e)
+		catch (DuplicateVoteOptionException e)
 		{
 			
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
@@ -128,7 +127,6 @@ public class RestVoteController
 	}
 	
 	@PostMapping("/api/vote/delete")
-	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Object> deleteVote(@RequestBody @Valid Vote request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		
@@ -141,10 +139,10 @@ public class RestVoteController
 		                                                 
 		try
 		{
-			
+			voteDeleteService.delete(request.getVoteId());
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
-		catch (DuplicateUserException e)
+		catch (NullVoteException e)
 		{
 			
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
@@ -153,7 +151,6 @@ public class RestVoteController
 	}
 	
 	@PostMapping("/api/vote/delete_option")
-	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Object> deleteVoteOption(@RequestBody @Valid Vote request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		
@@ -166,10 +163,10 @@ public class RestVoteController
 		                                                 
 		try
 		{
-			
+			voteDeleteOptionService.deleteOption(request);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
-		catch (DuplicateUserException e)
+		catch (NullVoteException e)
 		{
 			
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
@@ -178,7 +175,6 @@ public class RestVoteController
 	}
 	
 	@PostMapping("/api/vote/delete_option_multi")
-	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Object> deleteVoteOptionMulti(@RequestBody @Valid List<Vote> request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		
@@ -191,10 +187,10 @@ public class RestVoteController
 		                                                 
 		try
 		{
-			
+			voteDeleteOptionMultiService.deleteOptionMulti(request);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
-		catch (DuplicateUserException e)
+		catch (NullVoteException e)
 		{
 			
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
@@ -203,7 +199,6 @@ public class RestVoteController
 	}
 	
 	@PostMapping("/api/vote/update")
-	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Object> updateVote(@RequestBody @Valid Vote request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		
@@ -216,10 +211,10 @@ public class RestVoteController
 		                                                 
 		try
 		{
-			
+			voteUpdateService.update(request);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
-		catch (DuplicateUserException e)
+		catch (NullVoteException e)
 		{
 			
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
@@ -228,7 +223,6 @@ public class RestVoteController
 	}
 	
 	@PostMapping("/api/vote/update_option")
-	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Object> updateVoteOption(@RequestBody @Valid Vote request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		
@@ -241,10 +235,10 @@ public class RestVoteController
 		                                                 
 		try
 		{
-			
+			voteUpdateOptionService.updateOption(request);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
-		catch (DuplicateUserException e)
+		catch (NullVoteException e)
 		{
 			
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
@@ -253,8 +247,7 @@ public class RestVoteController
 	}
 	
 	@GetMapping("/api/vote/select_vote_options")
-	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<Object> selectVoteOptions(@RequestBody @Valid Integer request, Errors errors, HttpServletResponse response) throws IOException
+	public ResponseEntity<Object> selectVoteOptions(@RequestBody @Valid Vote request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		
 		if(errors.hasErrors())
@@ -266,10 +259,10 @@ public class RestVoteController
 		                                                 
 		try
 		{
-			
+			VoteSelectOptionService.select(request.getVoteOptionId());
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
-		catch (DuplicateUserException e)
+		catch (NullVoteException e)
 		{
 			
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();

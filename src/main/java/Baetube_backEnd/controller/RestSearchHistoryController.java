@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import Baetube_backEnd.ErrorResponse;
 import Baetube_backEnd.dto.Reply;
 import Baetube_backEnd.dto.SearchHistory;
+import Baetube_backEnd.dto.User;
+import Baetube_backEnd.exception.NullSearchHistoryException;
 import Baetube_backEnd.exception.WrongIdPasswordException;
 import Baetube_backEnd.service.searchhistory.SearchHistoryDeleteService;
 import Baetube_backEnd.service.searchhistory.SearchHistoryInsertService;
@@ -35,8 +37,8 @@ public class RestSearchHistoryController
 	@Autowired
 	private SearchHistorySelectService searchHistorySelectService;
 	
-	@PostMapping("/api/searchHistory/insert")
-	@ExceptionHandler(MethodArgumentNotValidException.class)
+	@PostMapping("/api/search_history/insert")
+	//@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Object> insertSearchHistory(@RequestBody @Valid SearchHistory request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		if(errors.hasErrors())
@@ -48,7 +50,7 @@ public class RestSearchHistoryController
 		                                                 
 		try
 		{
-			
+			searchHistoryInsertService.insert(request);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
 		catch (WrongIdPasswordException e)
@@ -58,8 +60,7 @@ public class RestSearchHistoryController
 		}
 	}
 	
-	@PostMapping("/api/searchHistory/delete")
-	@ExceptionHandler(MethodArgumentNotValidException.class)
+	@PostMapping("/api/search_history/delete")
 	public ResponseEntity<Object> deleteSearchHistory(@RequestBody @Valid SearchHistory request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		if(errors.hasErrors())
@@ -71,19 +72,19 @@ public class RestSearchHistoryController
 		                                                 
 		try
 		{
-			
+			searchHistoryDeleteService.delete(request); 
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
-		catch (WrongIdPasswordException e)
+		catch (NullSearchHistoryException e)
 		{
 			
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
 	}
 	
-	@GetMapping("/api/searchHistory/select")
-	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<Object> selectSearchHistory(@RequestBody @Valid Integer request, Errors errors, HttpServletResponse response) throws IOException
+	@GetMapping("/api/search_history/select")
+	//@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<Object> selectSearchHistory(@RequestBody @Valid User request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		if(errors.hasErrors())
 		{
@@ -94,10 +95,10 @@ public class RestSearchHistoryController
 		                                                 
 		try
 		{
-			
+			searchHistorySelectService.select(request.getUserId());
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
-		catch (WrongIdPasswordException e)
+		catch (NullSearchHistoryException e)
 		{
 			
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();

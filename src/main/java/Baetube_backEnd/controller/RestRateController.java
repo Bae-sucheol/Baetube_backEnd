@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import Baetube_backEnd.ErrorResponse;
 import Baetube_backEnd.dto.Rate;
 import Baetube_backEnd.dto.Reply;
+import Baetube_backEnd.exception.NullRateResultException;
 import Baetube_backEnd.exception.WrongIdPasswordException;
 import Baetube_backEnd.service.rate.RateService;
 
@@ -30,7 +31,7 @@ public class RestRateController
 	private RateService rateService;
 	
 	@PostMapping("/api/rate/rate_contents")
-	@ExceptionHandler(MethodArgumentNotValidException.class)
+	//@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Object> rateContents(@RequestBody @Valid Rate request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		if(errors.hasErrors())
@@ -42,10 +43,10 @@ public class RestRateController
 		                                                 
 		try
 		{
-			
+			rateService.rate(request);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
-		catch (WrongIdPasswordException e)
+		catch (NullRateResultException e)
 		{
 			
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();

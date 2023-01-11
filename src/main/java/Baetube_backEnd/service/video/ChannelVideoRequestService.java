@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import Baetube_backEnd.dto.Channel;
 import Baetube_backEnd.dto.Video;
+import Baetube_backEnd.exception.NullVideoException;
 import Baetube_backEnd.mapper.VideoMapper;
 
 public class ChannelVideoRequestService implements VideoRequestService
@@ -17,8 +18,14 @@ public class ChannelVideoRequestService implements VideoRequestService
 	@Override
 	public List<Video> requestVideo(Integer channelId)
 	{
+		List<Video> videoList = videoMapper.selectChannelVideo(channelId);
 		
-		return videoMapper.selectChannelVideo(channelId);
+		if(videoList == null)
+		{
+			throw new NullVideoException();
+		}
+		
+		return videoList;
 	}
 
 }

@@ -36,7 +36,7 @@ public class PlaylistDeleteItemServiceTest
 	@Test
 	public void correctTest()
 	{
-		when(playlistMapper.selectPlaylistItem(playlistItem)).thenReturn(playlistItem);
+		when(playlistMapper.selectPlaylistItem(1, 1)).thenReturn(playlistItem);
 		
 		assertEquals(true, playlistDeleteItemService.deleteItem(playlistItem));
 		verify(playlistMapper, atLeastOnce()).deleteItem(playlistItem);
@@ -45,7 +45,7 @@ public class PlaylistDeleteItemServiceTest
 	@Test(expected = NullPlaylistItemException.class)
 	public void wrongTest()
 	{
-		when(playlistMapper.selectPlaylistItem(playlistItem)).thenReturn(null);
+		when(playlistMapper.selectPlaylistItem(1, 1)).thenReturn(null);
 		
 		assertEquals(true, playlistDeleteItemService.deleteItem(playlistItem));
 		verify(playlistMapper, atLeastOnce()).deleteItem(playlistItem);

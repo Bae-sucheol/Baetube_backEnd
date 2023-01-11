@@ -14,5 +14,6 @@
     	<typeAlias type="Baetube_backEnd.dto.SearchHistory" alias="searchHistoryDto"/>
     	<typeAlias type="Baetube_backEnd.dto.Vote" alias="voteDto"/>
     	<typeAlias type="Baetube_backEnd.dto.Contents" alias="contentsDto"/>
+    	<typeAlias type="Baetube_backEnd.dto.History" alias="historyDto"/>
     </typeAliases>
 </configuration>

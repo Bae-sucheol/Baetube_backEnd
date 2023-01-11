@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import Baetube_backEnd.dto.Vote;
+import Baetube_backEnd.exception.NullVoteException;
 import Baetube_backEnd.mapper.VoteMapper;
 
 public class VoteSelectOptionService
@@ -16,6 +17,11 @@ public class VoteSelectOptionService
 	public List<Vote> select(Integer request)
 	{
 		List<Vote> voteOptionList = voteMapper.selectVoteOptions(request);
+		
+		if(voteOptionList == null)
+		{
+			throw new NullVoteException();
+		}
 		
 		return voteOptionList;
 	}

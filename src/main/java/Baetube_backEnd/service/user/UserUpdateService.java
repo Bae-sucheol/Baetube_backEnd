@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import Baetube_backEnd.dto.User;
+import Baetube_backEnd.exception.NullUserException;
 import Baetube_backEnd.exception.WrongIdPasswordException;
 import Baetube_backEnd.mapper.UserMapper;
 
@@ -19,10 +20,8 @@ public class UserUpdateService
 		
 		if (user == null)
 		{
-			throw new WrongIdPasswordException();
+			throw new NullUserException();
 		}
-		
-		// 기타 입력에 대한 검증을 해야한다.
 		
 		userMapper.update(user, request);;
 		

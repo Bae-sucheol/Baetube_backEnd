@@ -7,6 +7,11 @@ public class Rate
 	private Integer value;
 	private Integer result;
 	
+	public Rate()
+	{
+		super();
+	}
+
 	public Rate(Long contentsId, Integer channelId, Integer value, Integer result)
 	{
 		super();

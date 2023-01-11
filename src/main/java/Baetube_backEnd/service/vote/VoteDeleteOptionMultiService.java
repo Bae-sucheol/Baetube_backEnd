@@ -20,7 +20,7 @@ public class VoteDeleteOptionMultiService
 	{
 		List<Vote> voteOptionList = voteMapper.selectVoteOptions(request.get(0).getVoteId());
 		
-		if(!checkMatched(request, voteOptionList))
+		if(voteOptionList != null && !checkMatched(request, voteOptionList))
 		{
 			throw new NullVoteException();
 		}

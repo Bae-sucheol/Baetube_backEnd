@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import Baetube_backEnd.dto.User;
 import Baetube_backEnd.exception.DuplicateUserException;
+import Baetube_backEnd.exception.NullUserException;
 import Baetube_backEnd.exception.WrongIdPasswordException;
 import Baetube_backEnd.mapper.UserMapper;
 
@@ -21,12 +22,7 @@ public class UserUnregisterService
 		
 		if (user == null)
 		{
-			throw new WrongIdPasswordException();
-		}
-		
-		if (!user.getPassword().equals(request.getPassword()))
-		{
-			throw new WrongIdPasswordException();
+			throw new NullUserException();
 		}
 			
 		userMapper.delete(user.getUserId());

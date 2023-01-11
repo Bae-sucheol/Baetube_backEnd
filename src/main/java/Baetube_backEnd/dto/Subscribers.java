@@ -5,6 +5,11 @@ public class Subscribers
 	private Integer channelId;
 	private Integer subscriberId;
 	
+	public Subscribers()
+	{
+		super();
+	}
+
 	public Subscribers(Integer channelId, Integer subscriberId)
 	{
 		super();

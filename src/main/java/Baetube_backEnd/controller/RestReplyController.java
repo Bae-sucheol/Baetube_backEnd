@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import Baetube_backEnd.ErrorResponse;
 import Baetube_backEnd.dto.Reply;
+import Baetube_backEnd.exception.NullReplyException;
 import Baetube_backEnd.exception.WrongIdPasswordException;
 import Baetube_backEnd.service.reply.ReplyInsertService;
 import Baetube_backEnd.service.reply.ReplySelectService;
@@ -35,7 +36,7 @@ public class RestReplyController
 	private ReplyUpdateService replyUpdateService;
 	
 	@PostMapping("/api/reply/insert")
-	@ExceptionHandler(MethodArgumentNotValidException.class)
+	//@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Object> insertReply(@RequestBody @Valid Reply request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		if(errors.hasErrors())
@@ -47,7 +48,7 @@ public class RestReplyController
 		                                                 
 		try
 		{
-			
+			replyInsertService.insertReply(request);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
 		catch (WrongIdPasswordException e)
@@ -58,8 +59,8 @@ public class RestReplyController
 	}
 	
 	@GetMapping("/api/reply/select")
-	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<Object> selectReply(@RequestBody @Valid Long request, Errors errors, HttpServletResponse response) throws IOException
+	//@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<Object> selectReply(@RequestBody @Valid Reply request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		if(errors.hasErrors())
 		{
@@ -70,10 +71,10 @@ public class RestReplyController
 		                                                 
 		try
 		{
-			
+			replySelectService.selectReply(request.getContentsId());
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
-		catch (WrongIdPasswordException e)
+		catch (NullReplyException e)
 		{
 			
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
@@ -81,7 +82,7 @@ public class RestReplyController
 	}
 	
 	@PostMapping("/api/reply/update")
-	@ExceptionHandler(MethodArgumentNotValidException.class)
+	//@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Object> updateReply(@RequestBody @Valid Reply request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		if(errors.hasErrors())
@@ -93,10 +94,10 @@ public class RestReplyController
 		                                                 
 		try
 		{
-			
+			replyUpdateService.updateReply(request);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
-		catch (WrongIdPasswordException e)
+		catch (NullReplyException e)
 		{
 			
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();

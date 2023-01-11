@@ -19,5 +19,11 @@
 			DELETE FROM history WHERE user_id = #{userId} AND video_id = #{videoId}
 		
 		</delete>
+		
+		<select id="select" resultType="historyDto">
+		
+			SELECT user_id, video_id, `date` FROM history WHERE user_id = #{userId} AND video_id = #{videoId}
+		
+		</select>
 
 	</mapper>

@@ -15,7 +15,7 @@ public class PlaylistDeleteItemService
 	@Transactional
 	public boolean deleteItem(PlaylistItem request)
 	{
-		PlaylistItem playlistItem = playlistMapper.selectPlaylistItem(request);
+		PlaylistItem playlistItem = playlistMapper.selectPlaylistItem(request.getPlaylistId(), request.getVideoId());
 		
 		if(playlistItem == null)
 		{

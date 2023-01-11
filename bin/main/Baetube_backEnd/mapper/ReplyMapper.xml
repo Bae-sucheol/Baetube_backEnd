@@ -28,5 +28,12 @@
 			WHERE attached_id = #{contentsId};
 		
 		</select>
+		
+		<select id="selectByReplyId" resultType="replyDto">
+		
+			SELECT reply_id, contents_id, attached_id, channel_id, commnet, `like`, hate, `date`
+			FROM reply WHERE reply_id = #{replyId}
+		
+		</select>
 
 	</mapper>

@@ -10,7 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import Baetube_backEnd.dto.DeleteHistoryRequest;
+import Baetube_backEnd.dto.History;
 import Baetube_backEnd.mapper.HistoryMapper;
 
 public class HistoryDeleteServiceTest
@@ -29,10 +29,10 @@ public class HistoryDeleteServiceTest
 	@Test
 	public void correctTest()
 	{
-		DeleteHistoryRequest deleteHistoryRequest = new DeleteHistoryRequest(1, 1);
+		History history = new History(1, 1);
 		
-		assertEquals(true, historyDeleteService.deleteHistory(deleteHistoryRequest));
-		verify(historyMapper, atLeastOnce()).delete(deleteHistoryRequest.getUserId(), deleteHistoryRequest.getVideoId());
+		assertEquals(true, historyDeleteService.deleteHistory(history));
+		verify(historyMapper, atLeastOnce()).delete(history.getUserId(), history.getVideoId());
 	}
 	
 }

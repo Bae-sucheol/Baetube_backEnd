@@ -5,6 +5,11 @@ public class PlaylistItem
 	private Integer playlistId;
 	private Integer videoId;
 	
+	public PlaylistItem()
+	{
+		super();
+	}
+
 	public PlaylistItem(Integer playlistId, Integer videoId)
 	{
 		super();

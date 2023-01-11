@@ -19,6 +19,7 @@ import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 
+import Baetube_backEnd.dto.Channel;
 import Baetube_backEnd.dto.Playlist;
 import Baetube_backEnd.exception.NullPlaylistException;
 import Baetube_backEnd.mapper.PlaylistMapper;
@@ -31,10 +32,13 @@ public class PlaylistChannelServiceTest
 	@Mock
 	private PlaylistMapper playlistMapper;
 	
+	private Channel channel;
+	
 	@Before
 	public void setUP()
 	{
 		MockitoAnnotations.initMocks(this);
+		channel = new Channel(1, 1, 0, 0, "test", "test", "test", null);
 	}
 	
 	@Test
@@ -45,7 +49,7 @@ public class PlaylistChannelServiceTest
 		
 		when(playlistMapper.selectByChannelId(1)).thenReturn(playlistList);
 		
-		assertEquals(playlistList, playlistChannelService.select(1));
+		assertEquals(playlistList, playlistChannelService.select(channel));
 		verify(playlistMapper, atLeastOnce()).selectByChannelId(1);
 	}
 	
@@ -54,7 +58,7 @@ public class PlaylistChannelServiceTest
 	{
 		when(playlistMapper.selectByChannelId(1)).thenReturn(null);
 		
-		assertEquals(null, playlistChannelService.select(1));
+		assertEquals(null, playlistChannelService.select(channel));
 		verify(playlistMapper, atLeastOnce()).selectByChannelId(1);
 	}
 }

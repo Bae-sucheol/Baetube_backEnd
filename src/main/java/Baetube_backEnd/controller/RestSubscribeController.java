@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import Baetube_backEnd.ErrorResponse;
 import Baetube_backEnd.dto.Subscribers;
 import Baetube_backEnd.dto.User;
+import Baetube_backEnd.exception.DuplicateSubscriberException;
+import Baetube_backEnd.exception.NullSubscriberException;
 import Baetube_backEnd.exception.WrongIdPasswordException;
 import Baetube_backEnd.service.subscribe.SubscribeDeleteService;
 import Baetube_backEnd.service.subscribe.SubscribeInsertService;
@@ -36,7 +38,6 @@ public class RestSubscribeController
 	private SubscribeSelectService subscribeSelectService;
 	
 	@PostMapping("/api/subscribe/subscribe")
-	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Object> subscribe(@RequestBody @Valid Subscribers request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		if(errors.hasErrors())
@@ -47,10 +48,11 @@ public class RestSubscribeController
 		}
 		                                                 
 		try
-		{
+		{	
+			subscribeInsertService.insert(request);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
-		catch (WrongIdPasswordException e)
+		catch (DuplicateSubscriberException e)
 		{
 			
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
@@ -70,9 +72,10 @@ public class RestSubscribeController
 		                                                 
 		try
 		{
+			subscribeDeleteService.delete(request);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
-		catch (WrongIdPasswordException e)
+		catch (NullSubscriberException e)
 		{
 			
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
@@ -80,7 +83,6 @@ public class RestSubscribeController
 	}
 	
 	@GetMapping("/api/subscribe/select")
-	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Object> selectSubscriber(@RequestBody @Valid Subscribers request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		if(errors.hasErrors())
@@ -92,11 +94,11 @@ public class RestSubscribeController
 		                                                 
 		try
 		{
+			subscribeSelectService.select(request);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
-		catch (WrongIdPasswordException e)
+		catch (NullSubscriberException e)
 		{
-			
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
 	}

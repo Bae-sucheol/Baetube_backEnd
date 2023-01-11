@@ -5,6 +5,11 @@ public class SearchHistory
 	private Integer userId;
 	private String keywords;
 	
+	public SearchHistory()
+	{
+		super();
+	}
+
 	public SearchHistory(Integer userId, String keywords)
 	{
 		super();

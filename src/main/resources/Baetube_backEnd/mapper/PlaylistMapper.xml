@@ -51,7 +51,7 @@
 		
 		<select id="selectPlaylistItem" resultType="playlistItemDto">
 		
-			SELECT * FROM playlistItem WHERE playlist_id = #{playlistItem.playlistId} AND video_id = #{playlistItem.videoId}
+			SELECT * FROM playlistItem WHERE playlist_id = #{playlistId} AND video_id = #{videoId}
 		
 		</select>
 		

@@ -6,6 +6,11 @@ public class VideoViewRequest
 	private Integer userId;
 	private Integer value;
 	
+	public VideoViewRequest()
+	{
+		super();
+	}
+
 	public VideoViewRequest(Integer videoId, Integer userId, Integer value)
 	{
 		super();

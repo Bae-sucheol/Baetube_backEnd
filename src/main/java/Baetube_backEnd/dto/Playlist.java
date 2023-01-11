@@ -10,6 +10,11 @@ public class Playlist
 	private String thumbnail;
 	
 	// constructor
+	public Playlist()
+	{
+		super();
+	}
+	
 	public Playlist(Integer playlistId, Integer channelId, String name, Integer visible, Integer videoCount,
 			String thumbnail)
 	{

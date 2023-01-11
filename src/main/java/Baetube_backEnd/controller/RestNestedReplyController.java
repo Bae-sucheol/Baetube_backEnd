@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import Baetube_backEnd.ErrorResponse;
 import Baetube_backEnd.dto.NestedReply;
+import Baetube_backEnd.exception.NullReplyException;
 import Baetube_backEnd.exception.WrongIdPasswordException;
 import Baetube_backEnd.service.nestedreply.NestedReplyInsertService;
 import Baetube_backEnd.service.nestedreply.NestedReplySelectService;
@@ -35,7 +36,7 @@ public class RestNestedReplyController
 	private NestedReplyUpdateService nestedReplyUpdateService;
 	
 	@PostMapping("/api/nestedreply/insert")
-	@ExceptionHandler(MethodArgumentNotValidException.class)
+	//@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Object> insertNestedReply(@RequestBody @Valid NestedReply request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		if(errors.hasErrors())
@@ -50,7 +51,7 @@ public class RestNestedReplyController
 			
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
-		catch (WrongIdPasswordException e)
+		catch (NullReplyException e)
 		{
 			
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
@@ -58,7 +59,7 @@ public class RestNestedReplyController
 	}
 	
 	@GetMapping("/api/nestedreply/select")
-	@ExceptionHandler(MethodArgumentNotValidException.class)
+	//@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Object> selectNestedReply(@RequestBody @Valid Integer request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		if(errors.hasErrors())
@@ -73,7 +74,7 @@ public class RestNestedReplyController
 			
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
-		catch (WrongIdPasswordException e)
+		catch (NullReplyException e)
 		{
 			
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
@@ -96,7 +97,7 @@ public class RestNestedReplyController
 			
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
-		catch (WrongIdPasswordException e)
+		catch (NullReplyException e)
 		{
 			
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();

@@ -37,18 +37,18 @@ public class PlaylistInsertItemServiceTest
 	@Test
 	public void correctTest()
 	{
-		when(playlistMapper.selectPlaylistItem(playlistItem)).thenReturn(null);
+		when(playlistMapper.selectPlaylistItem(1, 1)).thenReturn(null);
 		
 		assertEquals(true, playlistInsertItemService.insertItem(playlistItem));
-		verify(playlistMapper, atLeastOnce()).selectPlaylistItem(playlistItem);
+		verify(playlistMapper, atLeastOnce()).selectPlaylistItem(1, 1);
 	}
 	
 	@Test(expected = DuplicatePlaylistItemException.class)
 	public void wrongTest()
 	{
-		when(playlistMapper.selectPlaylistItem(playlistItem)).thenReturn(playlistItem);
+		when(playlistMapper.selectPlaylistItem(1, 1)).thenReturn(playlistItem);
 		
 		assertEquals(true, playlistInsertItemService.insertItem(playlistItem));
-		verify(playlistMapper, atLeastOnce()).selectPlaylistItem(playlistItem);
+		verify(playlistMapper, atLeastOnce()).selectPlaylistItem(1, 1);
 	}
 }

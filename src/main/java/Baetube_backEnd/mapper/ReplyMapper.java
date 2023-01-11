@@ -16,4 +16,5 @@ public interface ReplyMapper
 	public void insert(@Param("reply") Reply reply);
 	public void updateComment(@Param("replyId") Integer replyId, @Param("comment") String comment);
 	public List<Reply> selectByContentsId(@Param("contentsId") Long contentsId);
+	public Reply selectByReplyId(@Param("replyId") Integer replyId);
 }

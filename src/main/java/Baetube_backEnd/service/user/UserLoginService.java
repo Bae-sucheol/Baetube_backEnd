@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import Baetube_backEnd.dto.User;
+import Baetube_backEnd.exception.NullUserException;
 import Baetube_backEnd.exception.WrongIdPasswordException;
 import Baetube_backEnd.mapper.UserMapper;
 
@@ -20,7 +21,7 @@ public class UserLoginService
 		
 		if(user == null)
 		{
-			throw new WrongIdPasswordException();
+			throw new NullUserException();
 		}
 		
 		if(!user.getPassword().equals(request.getPassword()))

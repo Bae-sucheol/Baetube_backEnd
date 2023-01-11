@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import Baetube_backEnd.dto.SearchHistory;
+import Baetube_backEnd.exception.NullSearchHistoryException;
 import Baetube_backEnd.mapper.SearchHistoryMapper;
 
 public class SearchHistorySelectService
@@ -15,6 +16,11 @@ public class SearchHistorySelectService
 	public List<SearchHistory> select(Integer request)
 	{
 		List<SearchHistory> searchHistoryList = searchHistoryMapper.selectAll(request);
+		
+		if(searchHistoryList == null)
+		{
+			throw new NullSearchHistoryException();
+		}
 		
 		return searchHistoryList;
 	}

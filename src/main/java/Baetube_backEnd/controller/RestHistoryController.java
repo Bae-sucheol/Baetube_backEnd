@@ -14,20 +14,22 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import Baetube_backEnd.ErrorResponse;
-import Baetube_backEnd.dto.DeleteHistoryRequest;
+import Baetube_backEnd.dto.History;
 import Baetube_backEnd.exception.DuplicateUserException;
+import Baetube_backEnd.exception.NullHistoryException;
 import Baetube_backEnd.service.history.HistoryDeleteService;
 
+@RestController
 public class RestHistoryController
 {
 	@Autowired
 	private HistoryDeleteService historyDeleteService;
 	
 	@PostMapping("/api/history/delete")
-	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<Object> deleteHistory(@RequestBody @Valid DeleteHistoryRequest request, Errors errors, HttpServletResponse response) throws IOException
+	public ResponseEntity<Object> deleteHistory(@RequestBody @Valid History request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		
 		if(errors.hasErrors())
@@ -39,10 +41,10 @@ public class RestHistoryController
 		                                                 
 		try
 		{
-			
+			//historyDeleteService.deleteHistory(request);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
-		catch (DuplicateUserException e)
+		catch (NullHistoryException e)
 		{
 			
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();

@@ -8,6 +8,7 @@ import Baetube_backEnd.controller.RestCommunityController;
 import Baetube_backEnd.controller.RestContentsController;
 import Baetube_backEnd.controller.RestFileController;
 import Baetube_backEnd.controller.RestHistoryController;
+import Baetube_backEnd.controller.RestHistoryControllerTest;
 import Baetube_backEnd.controller.RestNestedReplyController;
 import Baetube_backEnd.controller.RestPlaylistController;
 import Baetube_backEnd.controller.RestRateController;

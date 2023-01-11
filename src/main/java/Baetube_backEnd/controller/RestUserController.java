@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import Baetube_backEnd.dto.ChangePasswordRequest;
 import Baetube_backEnd.dto.User;
 import Baetube_backEnd.exception.DuplicateUserException;
+import Baetube_backEnd.exception.NullUserException;
 import Baetube_backEnd.exception.WrongIdPasswordException;
 import Baetube_backEnd.service.user.ChangePasswordService;
 import Baetube_backEnd.service.user.UserLoginService;
@@ -68,12 +69,11 @@ public class RestUserController
 		                                                 
 		try
 		{
-			//Integer newUserId = userRegisterService.regist(request);
+			userRegisterService.regist(request);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
 		catch (DuplicateUserException e)
 		{
-			
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
 		
@@ -91,12 +91,15 @@ public class RestUserController
 		                                                 
 		try
 		{
-			//userLoginService.login(request);
+			userLoginService.login(request);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
+		catch (NullUserException e)
+		{
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+		}
 		catch (WrongIdPasswordException e)
 		{
-			
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
 	}
@@ -113,12 +116,11 @@ public class RestUserController
 		                                                 
 		try
 		{
-			//userUnregisterService.unRegist(request);
+			userUnregisterService.unRegist(request);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
-		catch (WrongIdPasswordException e)
+		catch (NullUserException e)
 		{
-			
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
 	}
@@ -138,9 +140,12 @@ public class RestUserController
 			changePasswordService.changePassword(request);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
+		catch (NullUserException e)
+		{
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+		}
 		catch (WrongIdPasswordException e)
 		{
-			
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
 	}
@@ -157,23 +162,16 @@ public class RestUserController
 		                                                 
 		try
 		{
-			//userUpdateService.update(request);
+			userUpdateService.update(request);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
-		catch (WrongIdPasswordException e)
+		catch (NullUserException e)
 		{
 			
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
 	}
-	
-	@GetMapping("/api/user/all")
-	public ResponseEntity<Object> all() throws IOException
-	{
-                          
-		return ResponseEntity.status(HttpStatus.OK).body(new ErrorResponse("errorCodes = "));
-	}
-	
+
 	@GetMapping("/api/members")
 	public List<User> member()
 	{

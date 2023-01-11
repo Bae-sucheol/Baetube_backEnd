@@ -11,6 +11,11 @@ public class Vote
 	private Integer count;
 	
 	// constructor
+	public Vote()
+	{
+		super();
+	}
+	
 	public Vote(Integer voteId, Integer communityId, String title, String comment, Integer voteOptionId, String option,
 			Integer count)
 	{
@@ -23,7 +28,7 @@ public class Vote
 		this.option = option;
 		this.count = count;
 	}
-	
+
 	public Vote(Integer communityId, String title, String comment)
 	{
 		super();

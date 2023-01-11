@@ -12,8 +12,6 @@ public class ReplyInsertService
 	
 	public boolean insertReply(Reply request)
 	{
-		// ´ñ±Û °Ë»ç
-		
 		replyMapper.insert(request);
 		
 		return true;

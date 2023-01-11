@@ -16,7 +16,7 @@ public class PlaylistInsertItemService
 	@Transactional
 	public boolean insertItem(PlaylistItem request)
 	{
-		PlaylistItem playlistItem = playlistMapper.selectPlaylistItem(request);
+		PlaylistItem playlistItem = playlistMapper.selectPlaylistItem(request.getPlaylistId(), request.getVideoId());
 		
 		if(playlistItem != null)
 		{

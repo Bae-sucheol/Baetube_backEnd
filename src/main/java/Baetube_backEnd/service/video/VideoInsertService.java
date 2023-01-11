@@ -14,7 +14,7 @@ public class VideoInsertService
 	{
 		// 동영상 URL 생성하는 부분
 		
-		// 동영상 파일 
+		// 동영상 파일
 		
 		
 		videoMaper.insert(request);

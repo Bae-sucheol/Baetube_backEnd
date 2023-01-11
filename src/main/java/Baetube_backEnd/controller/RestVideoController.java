@@ -18,9 +18,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import Baetube_backEnd.ErrorResponse;
+import Baetube_backEnd.dto.Channel;
+import Baetube_backEnd.dto.Playlist;
+import Baetube_backEnd.dto.User;
 import Baetube_backEnd.dto.Video;
 import Baetube_backEnd.dto.VideoViewRequest;
 import Baetube_backEnd.exception.DuplicateUserException;
+import Baetube_backEnd.exception.NullPlaylistException;
+import Baetube_backEnd.exception.NullVideoException;
 import Baetube_backEnd.service.video.ChannelVideoRequestService;
 import Baetube_backEnd.service.video.HistoryVideoRequestService;
 import Baetube_backEnd.service.video.MainVideoRequestService;
@@ -51,7 +56,7 @@ public class RestVideoController
 	private VideoViewService videoViewService;
 	
 	@GetMapping("/api/video/channel_video")
-	public ResponseEntity<Object> getChannelVideo(@RequestBody @Valid Integer request, Errors errors, HttpServletResponse response) throws IOException
+	public ResponseEntity<Object> getChannelVideo(@RequestBody @Valid Channel request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		
 		if(errors.hasErrors())
@@ -63,10 +68,10 @@ public class RestVideoController
 		                                                 
 		try
 		{
-			
+			channelVideoRequestService.requestVideo(request.getChannelId());
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
-		catch (DuplicateUserException e)
+		catch (NullVideoException e)
 		{
 			
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
@@ -75,7 +80,7 @@ public class RestVideoController
 	}
 	
 	@GetMapping("/api/video/history_video")
-	public ResponseEntity<Object> getHistoryVideo(@RequestBody @Valid Integer request, Errors errors, HttpServletResponse response) throws IOException
+	public ResponseEntity<Object> getHistoryVideo(@RequestBody @Valid User request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		
 		if(errors.hasErrors())
@@ -87,10 +92,10 @@ public class RestVideoController
 		                                                 
 		try
 		{
-			
+			historyVideoRequestService.requestVideo(request.getUserId());
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
-		catch (DuplicateUserException e)
+		catch (NullVideoException e)
 		{
 			
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
@@ -99,7 +104,7 @@ public class RestVideoController
 	}
 	
 	@GetMapping("/api/video/main_video")
-	public ResponseEntity<Object> getMainVideo(@RequestBody @Valid Integer request, Errors errors, HttpServletResponse response) throws IOException
+	public ResponseEntity<Object> getMainVideo(@RequestBody @Valid User request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		
 		if(errors.hasErrors())
@@ -111,10 +116,10 @@ public class RestVideoController
 		                                                 
 		try
 		{
-			
+			mainVideoRequestService.requestVideo(request.getUserId());
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
-		catch (DuplicateUserException e)
+		catch (NullVideoException e)
 		{
 			
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
@@ -123,7 +128,7 @@ public class RestVideoController
 	}
 	
 	@GetMapping("/api/video/playlist_video")
-	public ResponseEntity<Object> getPlaylistVideo(@RequestBody @Valid Integer request, Errors errors, HttpServletResponse response) throws IOException
+	public ResponseEntity<Object> getPlaylistVideo(@RequestBody @Valid Playlist request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		
 		if(errors.hasErrors())
@@ -135,19 +140,22 @@ public class RestVideoController
 		                                                 
 		try
 		{
-			
+			playlistVideoRequestService.requestVideo(request.getPlaylistId());
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
-		catch (DuplicateUserException e)
+		catch (NullPlaylistException e)
 		{
-			
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+		}
+		catch (NullVideoException e)
+		{
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
 		
 	}
 	
 	@GetMapping("/api/video/subscribe_video")
-	public ResponseEntity<Object> getSubscribeVideo(@RequestBody @Valid Integer request, Errors errors, HttpServletResponse response) throws IOException
+	public ResponseEntity<Object> getSubscribeVideo(@RequestBody @Valid Channel request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		
 		if(errors.hasErrors())
@@ -159,10 +167,10 @@ public class RestVideoController
 		                                                 
 		try
 		{
-			
+			subscribeVideoRequestService.requestVideo(request.getChannelId());
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
-		catch (DuplicateUserException e)
+		catch (NullVideoException e)
 		{
 			
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
@@ -171,7 +179,6 @@ public class RestVideoController
 	}
 	
 	@PostMapping("/api/video/insert")
-	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Object> insertVideo(@RequestBody @Valid Video request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		
@@ -184,10 +191,10 @@ public class RestVideoController
 		                                                 
 		try
 		{
-			
+			videoInsertService.insert(request);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
-		catch (DuplicateUserException e)
+		catch (Exception e)
 		{
 			
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
@@ -196,7 +203,6 @@ public class RestVideoController
 	}
 	
 	@PostMapping("/api/video/update")
-	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Object> updateVideo(@RequestBody @Valid Video request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		
@@ -209,10 +215,10 @@ public class RestVideoController
 		                                                 
 		try
 		{
-			
+			videoUpdateService.update(request);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
-		catch (DuplicateUserException e)
+		catch (NullVideoException e)
 		{
 			
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
@@ -221,7 +227,6 @@ public class RestVideoController
 	}
 	
 	@GetMapping("/api/video/view_video")
-	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Object> viewVideo(@RequestBody @Valid VideoViewRequest request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		
@@ -234,10 +239,10 @@ public class RestVideoController
 		                                                 
 		try
 		{
-			
+			videoViewService.selectVideo(request);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
-		catch (DuplicateUserException e)
+		catch (NullVideoException e)
 		{
 			
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
