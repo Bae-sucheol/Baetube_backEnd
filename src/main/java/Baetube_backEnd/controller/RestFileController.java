@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import Baetube_backEnd.ErrorResponse;
 import Baetube_backEnd.dto.Contents;
 import Baetube_backEnd.exception.DuplicateUserException;
+import Baetube_backEnd.exception.NotSupportUploadException;
 import Baetube_backEnd.service.file.FileUploadService;
 
 @RestController
@@ -31,26 +32,22 @@ public class RestFileController
 	private FileUploadService fileUploadService;
 	
 	@PostMapping("/api/file/upload")
-	public ResponseEntity<Object>  deleteContents(@RequestParam String type, @RequestParam MultipartFile file, HttpServletResponse response) throws IOException
+	public ResponseEntity<Object>  deleteContents(@RequestParam String type, @RequestParam String purpose,
+			@RequestParam String id, @RequestParam MultipartFile file, HttpServletResponse response) throws IOException
 	{
 		                                    
 		try
 		{
-			try
-			{
-				fileUploadService.upload(file);
-			} 
-			catch (Exception e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
+			fileUploadService.valid(type, purpose);
+			fileUploadService.upload(type, purpose, id, file);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
-		catch (DuplicateUserException e)
+		catch (IOException e)
 		{
-			
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+		}
+		catch (NotSupportUploadException e)
+		{
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
 		
