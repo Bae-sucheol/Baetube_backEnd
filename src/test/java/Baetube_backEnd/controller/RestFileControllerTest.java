@@ -110,6 +110,7 @@ public class RestFileControllerTest
 		.andDo(print());
 	}
 	
+	@Ignore
 	@Test
 	public void uploadVideoTest() throws Exception
 	{
@@ -143,4 +144,22 @@ public class RestFileControllerTest
 		.andDo(print());
 	}
 	
+	@Test
+	public void uploadVideo2Test() throws Exception
+	{
+		String originPath = Paths.get("G:", "baetube", "test", "testVideo.mp4").toString();
+		String filePath = "testVideo.mp4";
+		FileInputStream fileInputStream = new FileInputStream(originPath);
+		MockMultipartFile file = new MockMultipartFile("file", filePath, "mp4", fileInputStream);
+			
+		mockMvc.perform(multipart("/api/file/upload")
+				.file(file)
+				.param("type", "video")
+				.param("purpose", "video")
+				.param("id", "1"))
+		.andExpect(status().isOk())
+		.andDo(print());
+
+	}
+
 }

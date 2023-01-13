@@ -15,6 +15,7 @@ import javax.imageio.ImageIO;
 import org.apache.commons.io.FileUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import Baetube_backEnd.FFmpegWrapper;
 import Baetube_backEnd.exception.NotSupportUploadException;
 
 public class FileUploadService
@@ -35,8 +36,9 @@ public class FileUploadService
 		String uuid = UUID.randomUUID().toString();
 		String prefix = request.getOriginalFilename().substring(request.getOriginalFilename().lastIndexOf(".") + 1,
 				request.getOriginalFilename().length());
-		String fileName = uuid + "_" + id + "." + prefix;
-		String destinationPath = Paths.get(baseFolderPath, fileName).toString();
+		String fileName = uuid + "_" + id;
+		String fileNamePrefix = fileName + "." + prefix;
+		String destinationPath = Paths.get(baseFolderPath, fileNamePrefix).toString();
 		
 		File baseFolder = new File(baseFolderPath);
 		File storageFile = new File(destinationPath);
@@ -59,6 +61,8 @@ public class FileUploadService
 			else // 동영상 저장
 			{
 				FileUtils.copyInputStreamToFile(fileStream, storageFile);
+				FFmpegWrapper wrapper = new FFmpegWrapper();
+				wrapper.convert(destinationPath, fileName);
 			}
 		
 		} 

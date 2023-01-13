@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import Baetube_backEnd.ErrorResponse;
+import Baetube_backEnd.FFmpegWrapper;
 import Baetube_backEnd.dto.Contents;
 import Baetube_backEnd.exception.DuplicateUserException;
 import Baetube_backEnd.exception.NotSupportUploadException;
@@ -40,6 +41,7 @@ public class RestFileController
 		{
 			fileUploadService.valid(type, purpose);
 			fileUploadService.upload(type, purpose, id, file);
+			
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
 		catch (IOException e)
