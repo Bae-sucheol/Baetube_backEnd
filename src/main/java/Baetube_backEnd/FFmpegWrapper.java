@@ -10,20 +10,23 @@ import net.bramp.ffmpeg.FFmpeg;
 import net.bramp.ffmpeg.FFmpegExecutor;
 import net.bramp.ffmpeg.FFprobe;
 import net.bramp.ffmpeg.builder.FFmpegBuilder;
+import net.bramp.ffmpeg.builder.FFmpegOutputBuilder;
 import net.bramp.ffmpeg.probe.FFmpegProbeResult;
 import net.bramp.ffmpeg.probe.FFmpegStream;
+
 
 public class FFmpegWrapper
 {
 	private static final String ffmpegPath = Paths.get("G:", "baetube", "ffmpeg", "bin", "ffmpeg").toString();
 	private static final String ffprobePath = Paths.get("G:", "baetube", "ffmpeg", "bin", "ffprobe").toString();
 	private static final String basePath = Paths.get("G:", "baetube", "temp").toString();
-	private static final String prefix = ".mp4";
+	//private static final String prefix = ".mp4";
+	private static final String prefix = ".m3u8";
 	private static FFmpeg ffmpeg;
 	private static FFprobe ffprobe;
 	private static final int resolutions[][] = {{1920, 1080}, {1280, 720}, {854, 480}};
-	private static final int bitrates[] = {12000, 7500, 4000};
-	private static final int bitrateUnit = 1000;
+	private static final long bitrates[] = {12000L, 7500L, 4000L};
+	private static final long bitrateUnit = 1000L;
 	
 	public FFmpegWrapper()
 	{
@@ -43,6 +46,7 @@ public class FFmpegWrapper
 		FFmpegProbeResult probeResult = ffprobe.probe(filePath);
 		FFmpegStream stream = probeResult.getStreams().get(0);
 		
+		long sourceBitrate = stream.bit_rate;
 		int width = stream.width;
 		int height = stream.height;
 		
@@ -53,7 +57,7 @@ public class FFmpegWrapper
 			outputFile.mkdirs();
 		}
 		
-		List<FFmpegBuilder> builderList = makeBuilders(probeResult, fileName, height);
+		List<FFmpegBuilder> builderList = makeBuilders(probeResult, fileName, height, sourceBitrate);
 		
 		FFmpegExecutor executor = new FFmpegExecutor(ffmpeg, ffprobe);
 		
@@ -69,11 +73,11 @@ public class FFmpegWrapper
 		
 	}
 	
-	private List<FFmpegBuilder> makeBuilders(FFmpegProbeResult probeResult, String fileName, int height)
+	private List<FFmpegBuilder> makeBuilders(FFmpegProbeResult probeResult, String fileName, int height, long sourceBitrate)
 	{
 		ArrayList<FFmpegBuilder> builderList = new ArrayList<>();
 		
-		for (int i = 0; i < resolutions.length; i++)
+		for (int i = 0; i < 1; i++)
 		{
 			int resolutionWidth = resolutions[i][0];
 			int resolutionHeight = resolutions[i][1];
@@ -82,7 +86,9 @@ public class FFmpegWrapper
 			{
 				String fileNamePrefix = fileName + "_" + String.valueOf(resolutionHeight) + prefix;
 				String destinationPath = Paths.get(basePath, fileNamePrefix).toString();
-				FFmpegBuilder ffmpegBuilder = new FFmpegBuilder().setInput(probeResult)
+				/*
+				FFmpegBuilder ffmpegBuilder = new FFmpegBuilder()
+						.setInput(probeResult)
 						.overrideOutputFiles(true)
 						.addOutput(destinationPath)
 						.setFormat("mp4")
@@ -93,6 +99,28 @@ public class FFmpegWrapper
 						.setVideoBitrate(bitrates[i] * bitrateUnit)
 						.setStrict(FFmpegBuilder.Strict.EXPERIMENTAL)
 						.done();
+				*/
+
+				
+				FFmpegOutputBuilder ffmpegOutputBuilder = new FFmpegBuilder()
+						.setInput(probeResult)
+						.overrideOutputFiles(true)
+						.addOutput(destinationPath);
+						
+				FFmpegBuilder ffmpegBuilder = ffmpegOutputBuilder
+						.disableSubtitle()
+						.setAudioChannels(2)
+						.setVideoResolution(resolutionWidth, resolutionHeight)
+						.setVideoBitRate(Math.min(sourceBitrate , bitrates[i] * bitrateUnit))
+						.setStrict(FFmpegBuilder.Strict.EXPERIMENTAL)
+						.addExtraArgs("-profile:v", "baseline")
+	        			.addExtraArgs("-level:v", "4.0")
+	        			.addExtraArgs("-start_number", "0")
+	        			.addExtraArgs("-hls_time", "2")
+	        			.addExtraArgs("-hls_list_size", "0")
+	        			.addExtraArgs("-f", "hls")
+	        			.addExtraArgs("-threads", "4")
+						.done();
 				
 				builderList.add(ffmpegBuilder);
 			}
@@ -100,6 +128,5 @@ public class FFmpegWrapper
 		
 		return builderList;
 	}
-
 
 }
