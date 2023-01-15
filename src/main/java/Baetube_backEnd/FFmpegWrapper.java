@@ -6,6 +6,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import net.bramp.ffmpeg.FFmpeg;
 import net.bramp.ffmpeg.FFmpegExecutor;
 import net.bramp.ffmpeg.FFprobe;
@@ -14,12 +16,11 @@ import net.bramp.ffmpeg.builder.FFmpegOutputBuilder;
 import net.bramp.ffmpeg.probe.FFmpegProbeResult;
 import net.bramp.ffmpeg.probe.FFmpegStream;
 
-
 public class FFmpegWrapper
 {
 	private static final String ffmpegPath = Paths.get("G:", "baetube", "ffmpeg", "bin", "ffmpeg").toString();
 	private static final String ffprobePath = Paths.get("G:", "baetube", "ffmpeg", "bin", "ffprobe").toString();
-	private static final String basePath = Paths.get("G:", "baetube", "temp").toString();
+	private static final String basePath = Paths.get("G:", "baetube", "video").toString();
 	//private static final String prefix = ".mp4";
 	private static final String prefix = ".m3u8";
 	private static FFmpeg ffmpeg;
@@ -50,14 +51,16 @@ public class FFmpegWrapper
 		int width = stream.width;
 		int height = stream.height;
 		
-		File outputFile = new File(basePath);
+		String fileBasePath = Paths.get(basePath, fileName).toString();
+		
+		File outputFile = new File(fileBasePath);
 		
 		if(!outputFile.exists())
 		{
 			outputFile.mkdirs();
 		}
 		
-		List<FFmpegBuilder> builderList = makeBuilders(probeResult, fileName, height, sourceBitrate);
+		List<FFmpegBuilder> builderList = makeBuilders(probeResult, fileName, fileBasePath, height, sourceBitrate);
 		
 		FFmpegExecutor executor = new FFmpegExecutor(ffmpeg, ffprobe);
 		
@@ -73,7 +76,7 @@ public class FFmpegWrapper
 		
 	}
 	
-	private List<FFmpegBuilder> makeBuilders(FFmpegProbeResult probeResult, String fileName, int height, long sourceBitrate)
+	private List<FFmpegBuilder> makeBuilders(FFmpegProbeResult probeResult, String fileName, String fileBasePath, int height, long sourceBitrate)
 	{
 		ArrayList<FFmpegBuilder> builderList = new ArrayList<>();
 		
@@ -84,8 +87,20 @@ public class FFmpegWrapper
 			
 			if(resolutionHeight <= height)
 			{
-				String fileNamePrefix = fileName + "_" + String.valueOf(resolutionHeight) + prefix;
-				String destinationPath = Paths.get(basePath, fileNamePrefix).toString();
+				//String fileBaseResolutionPath = Paths.get(fileBasePath, String.valueOf(resolutionHeight)).toString();
+				String fileBaseResolutionPath = Paths.get(fileBasePath).toString();
+				
+				File baseResolutionFile = new File(fileBaseResolutionPath);
+				
+				if(!baseResolutionFile.exists())
+				{
+					baseResolutionFile.mkdirs();
+				}
+				
+				//String fileNamePrefix = fileName + "_" + prefix;
+				//String fileNamePrefix = fileName + "_" + String.valueOf(resolutionHeight) + "_" + prefix;
+				String fileNamePrefix = fileName + prefix;
+				String destinationPath = Paths.get(fileBaseResolutionPath, fileNamePrefix).toString();
 				/*
 				FFmpegBuilder ffmpegBuilder = new FFmpegBuilder()
 						.setInput(probeResult)

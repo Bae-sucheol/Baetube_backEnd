@@ -9,6 +9,7 @@ import Baetube_backEnd.controller.RestContentsController;
 import Baetube_backEnd.controller.RestFileController;
 import Baetube_backEnd.controller.RestHistoryController;
 import Baetube_backEnd.controller.RestHistoryControllerTest;
+import Baetube_backEnd.controller.RestHlsController;
 import Baetube_backEnd.controller.RestNestedReplyController;
 import Baetube_backEnd.controller.RestPlaylistController;
 import Baetube_backEnd.controller.RestRateController;
@@ -106,5 +107,11 @@ public class ControllerConfig
 	public RestFileController restFileController()
 	{
 		return new RestFileController();
+	}
+	
+	@Bean
+	public RestHlsController restHlsController()
+	{
+		return new RestHlsController();
 	}
 }
