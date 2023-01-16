@@ -13,6 +13,7 @@ import net.bramp.ffmpeg.FFmpegExecutor;
 import net.bramp.ffmpeg.FFprobe;
 import net.bramp.ffmpeg.builder.FFmpegBuilder;
 import net.bramp.ffmpeg.builder.FFmpegOutputBuilder;
+import net.bramp.ffmpeg.job.FFmpegJob;
 import net.bramp.ffmpeg.probe.FFmpegProbeResult;
 import net.bramp.ffmpeg.probe.FFmpegStream;
 
@@ -39,9 +40,6 @@ public class FFmpegWrapper
 	 */
 	public void convert(String filePath, String fileName) throws IOException
 	{
-		/*
-		 * 싱글톤으로 만드는게 좋을 것 같다. 테스트 후 리펙토링 한다.
-		 */
 		ffmpeg = new FFmpeg(ffmpegPath);
 		ffprobe = new FFprobe(ffprobePath);
 		FFmpegProbeResult probeResult = ffprobe.probe(filePath);
@@ -88,7 +86,7 @@ public class FFmpegWrapper
 			if(resolutionHeight <= height)
 			{
 				//String fileBaseResolutionPath = Paths.get(fileBasePath, String.valueOf(resolutionHeight)).toString();
-				String fileBaseResolutionPath = Paths.get(fileBasePath).toString();
+				String fileBaseResolutionPath = Paths.get(fileBasePath, String.valueOf(resolutionHeight)).toString();
 				
 				File baseResolutionFile = new File(fileBaseResolutionPath);
 				
@@ -115,29 +113,72 @@ public class FFmpegWrapper
 						.setStrict(FFmpegBuilder.Strict.EXPERIMENTAL)
 						.done();
 				*/
-
+				
 				
 				FFmpegOutputBuilder ffmpegOutputBuilder = new FFmpegBuilder()
 						.setInput(probeResult)
 						.overrideOutputFiles(true)
-						.addOutput(destinationPath);
-						
-				FFmpegBuilder ffmpegBuilder = ffmpegOutputBuilder
+						.addOutput(destinationPath)
 						.disableSubtitle()
 						.setAudioChannels(2)
-						.setVideoResolution(resolutionWidth, resolutionHeight)
-						.setVideoBitRate(Math.min(sourceBitrate , bitrates[i] * bitrateUnit))
+						//.setVideoResolution(resolutionWidth, resolutionHeight)
+						//.setVideoBitRate(Math.min(sourceBitrate , bitrates[i] * bitrateUnit))
+						.setVideoResolution(480, 360)
+						.setVideoBitRate(1000)
 						.setStrict(FFmpegBuilder.Strict.EXPERIMENTAL)
+						.addExtraArgs("-threads", "4")
 						.addExtraArgs("-profile:v", "baseline")
 	        			.addExtraArgs("-level:v", "4.0")
+	        			.addExtraArgs("-f", "hls")
+	        			.addExtraArgs("-map", "0:v:0")
+	        			.addExtraArgs("-map", "0:a:0")
+	        			.addExtraArgs("-map", "0:v:0")
+	        			.addExtraArgs("-map", "0:a:0")
+	        			.addExtraArgs("-map", "0:v:0")
+	        			.addExtraArgs("-map", "0:a:0")
+	        			.addExtraArgs("-filter:v:0", "scale=w=480:h=360")
+	        			.addExtraArgs("-maxrate:v:0", "10k")
+	        			.addExtraArgs("-b:a:0", "64k")
+	        			.addExtraArgs("-filter:v:1", "scale=w=854:h=480")
+	        			.addExtraArgs("-maxrate:v:1", "10k")
+	        			.addExtraArgs("-b:a:1", "64k")
+	        			.addExtraArgs("-filter:v:2", "scale=w=1280:h=720")
+	        			.addExtraArgs("-maxrate:v:2", "10k")
+	        			.addExtraArgs("-b:a:2", "64k")
+	        			.addExtraArgs("-var_stream_map", "v:0,a:0,name:360p v:1,a:1,name:480p v:2,a:2,name:720p")
+						.addExtraArgs("-master_pl_name", fileName + "_master" + prefix)
+						.addExtraArgs("-y", Paths.get(fileBaseResolutionPath, fileName + "-%v" + prefix).toString());
+				
+			
+				FFmpegBuilder ffmpegBuilder = ffmpegOutputBuilder.done();
+						
+				/*
+				FFmpegBuilder ffmpegBuilder = new FFmpegBuilder()
+						.addExtraArgs("-threads", "4")
+						.addExtraArgs("-profile:v", "baseline")
+	        			.addExtraArgs("-level:v", "4.0")
+	        			.addExtraArgs("-map", "0:v:0")
+	        			.addExtraArgs("-map", "0:a:0")
+	        			.addExtraArgs("-filter:v:0", "scale=w=480:h=360")
+	        			.addExtraArgs("-maxrate:v:0", "600k")
+	        			.addExtraArgs("-b:a:0", "64k")
+	        			.addExtraArgs("-var_stream_map", "v:0,a:0,name:360p")
 	        			.addExtraArgs("-start_number", "0")
 	        			.addExtraArgs("-hls_time", "2")
 	        			.addExtraArgs("-hls_list_size", "0")
 	        			.addExtraArgs("-f", "hls")
-	        			.addExtraArgs("-threads", "4")
+	        			.addExtraArgs("-hls_flags", "independent_segments")
+	        			.addExtraArgs("-master_pl_name",  "livestream.m3u8")
+	        			.addExtraArgs("-y", "livestream-%v.m3u8")
+	        			//.addExtraArgs("-master_pl_name", destinationPath)
+	        			//.addExtraArgs("-y", Paths.get(fileBaseResolutionPath, fileName + "-%v" + prefix).toString())
+						.addInput(probeResult)
+						.addOutput(destinationPath)
 						.done();
+				*/
 				
 				builderList.add(ffmpegBuilder);
+				
 			}
 		}
 		

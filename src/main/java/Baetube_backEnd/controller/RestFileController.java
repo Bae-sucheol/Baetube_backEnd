@@ -39,7 +39,6 @@ public class RestFileController
 		                                    
 		try
 		{
-			fileUploadService.valid(type, purpose);
 			fileUploadService.upload(type, purpose, id, file);
 			
 			return ResponseEntity.status(HttpStatus.OK).build();
