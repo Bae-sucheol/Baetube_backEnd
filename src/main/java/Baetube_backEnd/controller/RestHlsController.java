@@ -25,13 +25,13 @@ public class RestHlsController
 	
 	private static final String basePath = Paths.get("G:", "baetube", "video").toString();
 	
-	@GetMapping("/hls/{fileName}/{fileName}.m3u8")
-	public ResponseEntity<Resource> getVideoHlsM3U8(@PathVariable String fileName) throws IOException
+	@GetMapping("/hls/{fileName}/{resolution}/{fileName}.m3u8")
+	public ResponseEntity<Resource> getVideoHlsM3U8(@PathVariable String fileName, @PathVariable String resolution) throws IOException
 	{
 		                                                
 		try
 		{	
-			String fileFullPath = Paths.get(basePath, fileName, fileName + ".m3u8").toString();
+			String fileFullPath = Paths.get(basePath, fileName, resolution, fileName + ".m3u8").toString();
 			Resource resource = new FileSystemResource(fileFullPath); 
 			
 			HttpHeaders headers = new HttpHeaders();
@@ -48,13 +48,13 @@ public class RestHlsController
 	
 	}
 	
-	@GetMapping("/hls/{fileName}/{tsName}.ts")
-	public ResponseEntity<Resource> getVideoHlsTs(@PathVariable String fileName, @PathVariable String tsName) throws IOException
+	@GetMapping("/hls/{fileName}/{resolution}/{tsName}.ts")
+	public ResponseEntity<Resource> getVideoHlsTs(@PathVariable String fileName, @PathVariable String resolution, @PathVariable String tsName) throws IOException
 	{
 		
 		try
 		{	
-			String fileFullPath = Paths.get(basePath, fileName, tsName + ".ts").toString();
+			String fileFullPath = Paths.get(basePath, fileName, resolution, tsName + ".ts").toString();
 			Resource resource = new FileSystemResource(fileFullPath); 
 			
 			HttpHeaders headers = new HttpHeaders();
