@@ -1,4 +1,4 @@
-package Baetube_backEnd.service.user;
+package Baetube_backEnd.service.jwt;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -8,25 +8,19 @@ import org.springframework.transaction.annotation.Transactional;
 
 import Baetube_backEnd.JwtTokenProvider;
 import Baetube_backEnd.dto.TokenInfo;
-import Baetube_backEnd.dto.User;
-import Baetube_backEnd.mapper.UserMapper;
 
-
-public class UserLoginService
+public class JwtLoginService
 {
-	@Autowired
-	private UserMapper userMapper;
+	private AuthenticationManagerBuilder authenticationManagerBuilder;
 	@Autowired
 	private JwtTokenProvider jwtTokenProvider;
-	@Autowired
-	private AuthenticationManagerBuilder authenticationManagerBuilder;
 	
 	@Transactional
-	public TokenInfo login(User user)
+	public TokenInfo login(String email, String password)
 	{
 		// Authentication 객체 생성
 		// 인증 여부(authenticated 값)는 false
-		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword());
+		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email, password);
 		
 		// 실제 검증
 		// authenticate 매서드가 실행될 때 CustomUserDetailsService 에서 만든 loadUserByUsername 메서드가 실행
@@ -37,24 +31,4 @@ public class UserLoginService
 		
 		return tokenInfo;
 	}
-	
-	/*
-	@Transactional
-	public User login(User request)
-	{
-		User user = userMapper.selectByEmail(request.getEmail());
-		
-		if(user == null)
-		{
-			throw new NullUserException();
-		}
-		
-		if(!user.getPassword().equals(request.getPassword()))
-		{
-			throw new WrongIdPasswordException();
-		}
-		
-		return user;
-	}
-	*/
 }

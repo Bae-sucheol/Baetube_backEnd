@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import Baetube_backEnd.dto.ChangePasswordRequest;
+import Baetube_backEnd.dto.TokenInfo;
 import Baetube_backEnd.dto.User;
 import Baetube_backEnd.exception.DuplicateUserException;
 import Baetube_backEnd.exception.NullUserException;
@@ -50,11 +51,6 @@ public class RestUserController
 	
 	@Autowired
 	private UserUpdateService userUpdateService;
-	
-	public void setUserRegisterService(UserRegisterService userRegisterService)
-	{
-		this.userRegisterService = userRegisterService;
-	}
 
 	@PostMapping("/api/user/regist")
 	public ResponseEntity<Object> newUser(@RequestBody User request, Errors errors, HttpServletResponse response) throws IOException
@@ -91,8 +87,8 @@ public class RestUserController
 		                                                 
 		try
 		{
-			userLoginService.login(request);
-			return ResponseEntity.status(HttpStatus.OK).build();
+			TokenInfo tokenInfo = userLoginService.login(request);
+			return ResponseEntity.status(HttpStatus.OK).body(tokenInfo);
 		} 
 		catch (NullUserException e)
 		{

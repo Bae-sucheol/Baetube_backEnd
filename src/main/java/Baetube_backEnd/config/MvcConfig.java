@@ -10,6 +10,8 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -21,6 +23,15 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 @EnableWebMvc
 public class MvcConfig implements WebMvcConfigurer
 {
+	
+	private static final String CLASSPATH_RESOURCE_LOCATIONS[] = {
+			"classpath:/static/",
+			"classpath:/public/",
+			"classpath:/",
+			"classpath:/resources/",
+			"classpath:/META-INF/resources/",
+			"classpath:/META-INF/resources/webjars"
+	};
 	
 	@Override
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer)
@@ -50,6 +61,21 @@ public class MvcConfig implements WebMvcConfigurer
 				.build();
 		
 		converters.add(0, new MappingJackson2HttpMessageConverter(objectMapper));
+	}
+	
+	@Override
+	public void addViewControllers(ViewControllerRegistry registry)
+	{
+		// TODO Auto-generated method stub
+		WebMvcConfigurer.super.addViewControllers(registry);
+	}
+
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry)
+	{
+		// TODO Auto-generated method stub
+		WebMvcConfigurer.super.addResourceHandlers(registry);
+		registry.addResourceHandler("/**").addResourceLocations(CLASSPATH_RESOURCE_LOCATIONS);
 	}
 	
 }

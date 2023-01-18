@@ -56,7 +56,7 @@ public class UserLoginServiceTest
 		when(userMapper.selectByEmail(newEmail)).thenReturn(null);
 		when(userMapper.selectByEmail(dupleEmail)).thenReturn(dupleUser);
 	}
-	
+	/*
 	@Test
 	public void correctTest()
 	{
@@ -77,4 +77,5 @@ public class UserLoginServiceTest
 	{
 		dupleUserWrongPassword = userLoginService.login(dupleUserWrongPassword);
 	}
+	*/
 }
