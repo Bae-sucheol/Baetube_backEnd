@@ -6,6 +6,8 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -24,11 +26,15 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SecurityException;
 
+@PropertySource("classpath:application.properties")
 public class JwtTokenProvider
 {
 	private final Key key;
-	private static final String secret = "VlwEyVBsYt9V7zq57TejMnVUyzblYcfPQye08f7MGVA9XkHa";
-	private static final int expTime = 24 * 60 * 60 * 1000;
+	@Value("${jwt.secret}")
+	private static String secret;
+	private static final int day = 24 * 60 * 60 * 1000; // 窍风
+	private static final int accessTokenTime = 1; // 1老
+	private static final int refreshTokenTime = 60; // 60老 
 	
 	public JwtTokenProvider()
 	{
@@ -46,7 +52,7 @@ public class JwtTokenProvider
 		long now = (new Date()).getTime();
 		
 		// Access Token 积己
-		Date accessTokenExpiresIn = new Date(now + expTime);
+		Date accessTokenExpiresIn = new Date(now + day * accessTokenTime);
 		String accessToken = Jwts.builder()
 				.setSubject(authentication.getName())
 				.claim("auth", authorities)
@@ -56,7 +62,7 @@ public class JwtTokenProvider
 		
 		// Refresh Token 积己
 		String refreshToken = Jwts.builder()
-				.setExpiration(new Date(now + expTime))
+				.setExpiration(new Date(now + day * refreshTokenTime))
 				.signWith(key, SignatureAlgorithm.HS256)
 				.compact();
 		
