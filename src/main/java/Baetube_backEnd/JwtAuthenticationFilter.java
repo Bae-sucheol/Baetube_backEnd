@@ -7,39 +7,55 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.GenericFilterBean;
+import org.springframework.web.filter.OncePerRequestFilter;
 
-public class JwtAuthenticationFilter extends GenericFilterBean
+import Baetube_backEnd.exception.ExpiredAccessTokenException;
+import Baetube_backEnd.mapper.UserMapper;
+import io.jsonwebtoken.ExpiredJwtException;
+
+public class JwtAuthenticationFilter extends OncePerRequestFilter 
 {
 	@Autowired
 	private JwtTokenProvider jwtTokenProvider;
+	@Autowired
+	private UserMapper userMapper;
 	
 	public JwtAuthenticationFilter(JwtTokenProvider jwtTokenProvider)
 	{
 		super();
 		this.jwtTokenProvider = jwtTokenProvider;
 	}
-
+	
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-			throws IOException, ServletException
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+			throws ServletException, IOException
 	{
 		// request Header에서 토큰 추출
-		String token = resolveToken((HttpServletRequest) request);
+		String token = resolveToken(request);
 		
-		// validateToken 으로 토큰 유효성 검사
-		if(token != null && jwtTokenProvider.validateToken(token))
+		try
 		{
-			Authentication authentication = jwtTokenProvider.getAuthentication(token);
-			SecurityContextHolder.getContext().setAuthentication(authentication);
+			// validateToken 으로 토큰 유효성 검사
+			if(token != null && jwtTokenProvider.validateToken(token) != null)
+			{
+				Authentication authentication = jwtTokenProvider.getAuthentication(token);
+				SecurityContextHolder.getContext().setAuthentication(authentication);
+			}
+		} 
+		catch (ExpiredJwtException e) // accessToken이 만료되었을 경우.
+		{
+			System.out.println("만료되었슴둥.");
+			throw new ExpiredAccessTokenException();
 		}
 		
-		chain.doFilter(request, response);
+		filterChain.doFilter(request, response);
 	}
 	
 	// Request Header 에서 토큰 정보 추출
@@ -54,4 +70,5 @@ public class JwtAuthenticationFilter extends GenericFilterBean
 		
 		return null;
 	}
+	
 }

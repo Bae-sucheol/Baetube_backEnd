@@ -35,6 +35,9 @@ public class UserLoginService
 		// 인증 정보를 기반으로 토큰 생성
 		TokenInfo tokenInfo = jwtTokenProvider.generateToken(authentication);
 		
+		// 생성된 refreshToken은 db에 저장한다.
+		userMapper.updateRefreshToken(user.getEmail(), tokenInfo.getRefreshToken());
+		
 		return tokenInfo;
 	}
 	

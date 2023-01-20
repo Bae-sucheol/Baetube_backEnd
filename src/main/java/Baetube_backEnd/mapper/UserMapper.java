@@ -18,4 +18,6 @@ public interface UserMapper
 	public void update(@Param("oldUser") User oldUser, @Param("newUser") User newUser);
 	public void changePassword(@Param("email") String email, @Param("newPassword") String newPassword);
 	public void delete(@Param("userId") Integer userId);
+	public void updateRefreshToken(@Param("email") String email , @Param("refreshToken") String refreshToken);
+	public String selectRefreshToken(@Param("email") String email);
 }

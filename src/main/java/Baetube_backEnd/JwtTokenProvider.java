@@ -1,6 +1,7 @@
 package Baetube_backEnd;
 
 import java.security.Key;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
@@ -14,6 +15,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import Baetube_backEnd.dto.TokenInfo;
 import io.jsonwebtoken.Claims;
@@ -30,12 +32,17 @@ import io.jsonwebtoken.security.SecurityException;
 public class JwtTokenProvider
 {
 	private final Key key;
-	@Value("${jwt.secret}")
-	private static String secret;
+	//@Value("${jwt.secret}")
+	private static String secret = "VlwEyVBsYt9V7zq57TejMnVUyzblYcfPQye08f7MGVA9XkHa";
+	// 테스트용으로 짧게 
+	private static final int day = 60 * 1000; // 1분
+	private static final int accessTokenTime = 5; // 5분
+	private static final int refreshTokenTime = 10; // 10분 
+	/*
 	private static final int day = 24 * 60 * 60 * 1000; // 하루
 	private static final int accessTokenTime = 1; // 1일
 	private static final int refreshTokenTime = 60; // 60일 
-	
+	*/
 	public JwtTokenProvider()
 	{
 		byte keyBytes[] = Decoders.BASE64.decode(secret);
@@ -52,28 +59,47 @@ public class JwtTokenProvider
 		long now = (new Date()).getTime();
 		
 		// Access Token 생성
-		Date accessTokenExpiresIn = new Date(now + day * accessTokenTime);
-		String accessToken = Jwts.builder()
-				.setSubject(authentication.getName())
-				.claim("auth", authorities)
-				.setExpiration(accessTokenExpiresIn)
-				.signWith(key, SignatureAlgorithm.HS256)
-				.compact();
+		String accessToken = generateAccessToken(now, authentication, authorities);
 		
 		// Refresh Token 생성
-		String refreshToken = Jwts.builder()
-				.setExpiration(new Date(now + day * refreshTokenTime))
-				.signWith(key, SignatureAlgorithm.HS256)
-				.compact();
+		String refreshToken = generateRefreshToken(now, authentication, authorities);
 		
 		return new TokenInfo("Bearer", accessToken, refreshToken);
 	}
 	
+	// 유저 정보로 AccessToken 생성
+	public String generateAccessToken(long now, Authentication authentication, String authorities)
+	{
+		Date accessTokenExpriesIn = new Date(now + day * accessTokenTime);
+		
+		String accessToken = Jwts.builder()
+				.setSubject(authentication.getName())
+				.claim("auth", authorities)
+				.setExpiration(accessTokenExpriesIn)
+				.signWith(key, SignatureAlgorithm.HS256)
+				.compact();
+		
+		return accessToken;
+	}	
+	
+	// 유저 정보로 RefreshToken 생성 
+	public String generateRefreshToken(long now, Authentication authentication, String authorities)
+	{
+		Date refreshTokenExpriesIn = new Date(now + day * refreshTokenTime);
+		
+		String refreshToken = Jwts.builder()
+				.setExpiration(refreshTokenExpriesIn)
+				.signWith(key, SignatureAlgorithm.HS256)
+				.compact();
+		
+		return refreshToken;
+	}
+	
 	// JWT 토큰을 복호화하여 토큰에 들어있는 정보를 꺼내는 메서드
-    public Authentication getAuthentication(String accessToken) 
+    public Authentication getAuthentication(String accessToken) throws ExpiredJwtException
     {
         // 토큰 복호화
-        Claims claims = parseClaims(accessToken);
+        Claims claims = validateToken(accessToken);
  
         if (claims.get("auth") == null) 
         {
@@ -91,13 +117,12 @@ public class JwtTokenProvider
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
     
- // 토큰 정보를 검증하는 메서드
-    public boolean validateToken(String token) 
+    // 토큰 정보를 검증하는 메서드
+    public Claims validateToken(String token) throws ExpiredJwtException
     {
         try 
         {
-            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
-            return true;
+            return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
         } 
         catch (SecurityException | MalformedJwtException e) 
         {
@@ -105,7 +130,8 @@ public class JwtTokenProvider
         }
         catch (ExpiredJwtException e)
         {
-        	e.printStackTrace();
+        	throw new ExpiredJwtException(e.getHeader(), e.getClaims(), e.getMessage());
+        	//e.printStackTrace();
         } 
         catch (UnsupportedJwtException e) 
         {
@@ -116,18 +142,20 @@ public class JwtTokenProvider
         	e.printStackTrace();
         }
         
-        return false;
+        return null;
     }
- 
-    private Claims parseClaims(String accessToken) 
+    
+    // 토큰이 유효하던 아니던 무조건 파싱해서 데이터를 넘겨주는 메소드.
+    public Claims parseToken(String token)
     {
-        try 
+    	try 
         {
-            return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(accessToken).getBody();
+            return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
         } 
-        catch (ExpiredJwtException e) 
+        catch (ExpiredJwtException e)
         {
-            return e.getClaims();
-        }
+        	return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
+        } 
     }
+    
 }

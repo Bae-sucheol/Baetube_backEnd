@@ -45,6 +45,12 @@
 		
 		</update>
 		
+		<update id="updateRefreshToken">
+		
+			UPDATE user SET refresh_token = #{refreshToken} WHERE email = #{email}
+		
+		</update>
+		
 		<delete id="delete">
 		
 			DELETE FROM user WHERE user_id = #{userId}

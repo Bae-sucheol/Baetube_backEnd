@@ -34,8 +34,9 @@ public class User implements UserDetails
     private String phone;
     private String address;
     private Timestamp regDate;
-  
-    private List<String> roles = new ArrayList<>();
+    private String refreshToken;
+
+	private List<String> roles = new ArrayList<>();
     
    	@Override
    	public Collection<? extends GrantedAuthority> getAuthorities()
@@ -162,6 +163,11 @@ public class User implements UserDetails
     {
         return gender;
     }
+    
+    public String getRefreshToken()
+   	{
+   		return refreshToken;
+   	}
 
     // setter
     public void setUserId(int userId)
@@ -245,6 +251,11 @@ public class User implements UserDetails
 	{
 		// TODO Auto-generated method stub
 		return true;
+	}
+	
+	public void setRefreshToken(String refreshToken)
+	{
+		this.refreshToken = refreshToken;
 	}
 
 	public String[] getRoles()

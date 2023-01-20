@@ -24,8 +24,11 @@ import Baetube_backEnd.dto.ChangePasswordRequest;
 import Baetube_backEnd.dto.TokenInfo;
 import Baetube_backEnd.dto.User;
 import Baetube_backEnd.exception.DuplicateUserException;
+import Baetube_backEnd.exception.ExpiredAccessTokenException;
+import Baetube_backEnd.exception.ExpiredRefreshTokenException;
 import Baetube_backEnd.exception.NullUserException;
 import Baetube_backEnd.exception.WrongIdPasswordException;
+import Baetube_backEnd.service.jwt.JwtAccessTokenService;
 import Baetube_backEnd.service.user.ChangePasswordService;
 import Baetube_backEnd.service.user.UserLoginService;
 import Baetube_backEnd.service.user.UserRegisterService;
@@ -51,6 +54,9 @@ public class RestUserController
 	
 	@Autowired
 	private UserUpdateService userUpdateService;
+	
+	@Autowired
+	private JwtAccessTokenService JwtAccessTokenService;
 
 	@PostMapping("/api/user/regist")
 	public ResponseEntity<Object> newUser(@RequestBody User request, Errors errors, HttpServletResponse response) throws IOException
@@ -167,7 +173,51 @@ public class RestUserController
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
 	}
+	
+	@PostMapping("/api/test")
+	public ResponseEntity<Object> usertest(@RequestBody User request, Errors errors, HttpServletResponse response) throws IOException
+	{
+		if(errors.hasErrors())
+		{
+			String errorCodes = errors.getAllErrors().stream().map(error -> error.getCodes()[0]).collect(Collectors.joining(","));
+			
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse("errorCodes = " + errorCodes));
+		}
+		                                                 
+		try
+		{
+			
+			return ResponseEntity.status(HttpStatus.OK).build();
+		} 
+		catch (ExpiredAccessTokenException e)
+		{
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("ExpiredAccessTokenException");
+		}
 
+	}
+	
+	@PostMapping("/api/generate/access")
+	public ResponseEntity<Object> generateAccessToken(@RequestBody TokenInfo request, Errors errors, HttpServletResponse response) throws IOException
+	{
+		if(errors.hasErrors())
+		{
+			String errorCodes = errors.getAllErrors().stream().map(error -> error.getCodes()[0]).collect(Collectors.joining(","));
+			
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse("errorCodes = " + errorCodes));
+		}
+		                                                 
+		try
+		{
+			TokenInfo tokenInfo = JwtAccessTokenService.generateToken(request);
+			return ResponseEntity.status(HttpStatus.OK).body(tokenInfo);
+		} 
+		catch (ExpiredRefreshTokenException e)
+		{
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("ExpiredRefreshTokenException");
+		}
+
+	}
+	
 	@GetMapping("/api/members")
 	public List<User> member()
 	{
