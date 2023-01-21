@@ -64,8 +64,8 @@ public class WebSecurityConfig
 			.csrf().disable()
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and().authorizeRequests()
-			.antMatchers(HttpMethod.GET, "/**").permitAll()
-			.antMatchers(HttpMethod.POST, "/**").permitAll() // 화이트 리스트 허용
+			//.antMatchers(HttpMethod.GET, "/**").permitAll()
+			//.antMatchers(HttpMethod.POST, "/**").permitAll() // 화이트 리스트 허용
 			.anyRequest().authenticated() // 나머지는 인증 요구
 			.and().formLogin().disable()
 			.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);

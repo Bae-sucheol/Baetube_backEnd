@@ -186,7 +186,7 @@ public class RestUserController
 		                                                 
 		try
 		{
-			
+			System.out.println("요구가 도착했습니다.");
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
 		catch (ExpiredAccessTokenException e)
@@ -213,7 +213,7 @@ public class RestUserController
 		} 
 		catch (ExpiredRefreshTokenException e)
 		{
-			return ResponseEntity.status(HttpStatus.CONFLICT).body("ExpiredRefreshTokenException");
+			return ResponseEntity.status(HttpStatus.CONFLICT).header("Exception", "ExpiredRefreshTokenException").build();
 		}
 
 	}

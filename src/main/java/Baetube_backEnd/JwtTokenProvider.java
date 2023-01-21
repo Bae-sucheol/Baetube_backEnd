@@ -96,10 +96,10 @@ public class JwtTokenProvider
 	}
 	
 	// JWT 토큰을 복호화하여 토큰에 들어있는 정보를 꺼내는 메서드
-    public Authentication getAuthentication(String accessToken) throws ExpiredJwtException
+    public Authentication getAuthentication(String token) throws ExpiredJwtException
     {
         // 토큰 복호화
-        Claims claims = validateToken(accessToken);
+        Claims claims = validateToken(token);
  
         if (claims.get("auth") == null) 
         {

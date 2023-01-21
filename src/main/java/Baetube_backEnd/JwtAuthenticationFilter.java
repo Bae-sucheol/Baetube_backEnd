@@ -16,6 +16,9 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.filter.GenericFilterBean;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import Baetube_backEnd.dto.TokenInfo;
 import Baetube_backEnd.exception.ExpiredAccessTokenException;
 import Baetube_backEnd.mapper.UserMapper;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -39,7 +42,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter
 	{
 		// request Header에서 토큰 추출
 		String token = resolveToken(request);
-		
+
 		try
 		{
 			// validateToken 으로 토큰 유효성 검사
@@ -51,10 +54,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter
 		} 
 		catch (ExpiredJwtException e) // accessToken이 만료되었을 경우.
 		{
-			System.out.println("만료되었슴둥.");
-			throw new ExpiredAccessTokenException();
+			// 헤더에 엑세스 토큰 만료 메시지를 추가하여 보낸다.
+			response.setHeader("Exception", "ExpiredAccessToken");
 		}
-		
+
 		filterChain.doFilter(request, response);
 	}
 	
