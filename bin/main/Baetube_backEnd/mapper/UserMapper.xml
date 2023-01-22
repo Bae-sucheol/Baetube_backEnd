@@ -10,6 +10,10 @@
 			SELECT * from user WHERE email = #{email}
 		</select>
 		
+		<select id="selectRefreshToken" parameterType="string" resultType="string">
+			SELECT refresh_token from user WHERE email = #{email}
+		</select>
+		
 		<insert id="insert" parameterType="userDto" useGeneratedKeys="true" keyProperty="user.userId" keyColumn="user_id">
 			INSERT INTO user(email, password, name, gender, birth, fcm_token, phone, address, reg_date)
 			VALUES(

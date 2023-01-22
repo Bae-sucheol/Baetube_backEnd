@@ -20,7 +20,6 @@ import io.jsonwebtoken.Jwts;
 
 public class JwtAccessTokenService
 {
-	private AuthenticationManagerBuilder authenticationManagerBuilder;
 	@Autowired
 	private JwtTokenProvider jwtTokenProvider;
 	@Autowired
@@ -64,7 +63,7 @@ public class JwtAccessTokenService
 		{
 			throw new ExpiredRefreshTokenException();
 		}
-
+		
 		try
 		{
 			// 검증을 실행 검증이 실패했다면 익셉션

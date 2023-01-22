@@ -20,7 +20,12 @@ public class UserLoginService
 	private JwtTokenProvider jwtTokenProvider;
 	@Autowired
 	private AuthenticationManagerBuilder authenticationManagerBuilder;
-	
+
+	public void setAuthenticationManagerBuilder(AuthenticationManagerBuilder authenticationManagerBuilder)
+	{
+		this.authenticationManagerBuilder = authenticationManagerBuilder;
+	}
+
 	@Transactional
 	public TokenInfo login(User user)
 	{
