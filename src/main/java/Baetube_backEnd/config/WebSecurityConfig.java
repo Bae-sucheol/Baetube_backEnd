@@ -66,6 +66,7 @@ public class WebSecurityConfig
 			.and().authorizeRequests()
 			//.antMatchers(HttpMethod.GET, "/**").permitAll()
 			.antMatchers(HttpMethod.POST, "/api/user/login").permitAll() // 화이트 리스트 허용
+			.antMatchers(HttpMethod.POST, "/api/user/regist").permitAll() // 화이트 리스트 허용
 			.antMatchers(HttpMethod.POST, "/api/generate/access").permitAll() // 화이트 리스트 허용
 			.anyRequest().authenticated() // 나머지는 인증 요구
 			.and().formLogin().disable()

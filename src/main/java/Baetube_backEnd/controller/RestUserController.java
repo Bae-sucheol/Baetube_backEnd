@@ -71,6 +71,7 @@ public class RestUserController
 		                                                 
 		try
 		{
+			System.out.println("요청이 들어왔습니다.");
 			userRegisterService.regist(request);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
