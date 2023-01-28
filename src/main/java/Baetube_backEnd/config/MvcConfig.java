@@ -52,7 +52,7 @@ public class MvcConfig implements WebMvcConfigurer
 	@Override
 	public void extendMessageConverters(List<HttpMessageConverter<?>> converters)
 	{
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy hh:mm:ss");
 		
 		ObjectMapper objectMapper = Jackson2ObjectMapperBuilder.json()
 				.featuresToEnable(SerializationFeature.INDENT_OUTPUT)

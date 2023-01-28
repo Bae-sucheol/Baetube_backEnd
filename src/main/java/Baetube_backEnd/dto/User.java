@@ -32,7 +32,6 @@ public class User implements UserDetails
     private String password;
     private String name;
     private Integer gender;
-    @JsonFormat(timezone = "Asia/Seoul")
     private Timestamp birth;
     private String fcmToken;
     private String phone;
