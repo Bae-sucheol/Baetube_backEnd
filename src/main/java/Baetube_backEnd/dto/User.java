@@ -1,6 +1,7 @@
 package Baetube_backEnd.dto;
 
 import java.lang.annotation.Annotation;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,10 +16,12 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 /*
  * sql 반환형이 TinyInt Integer로 반환.
  * int 도 Integer 로 반환되며
- * DateTime은 TimeStamp로 변환되기 때문에 이부분에 대해서 해결법을 찾아야 할 것 같다.
+ * DateTime은 Date로 변환되기 때문에 이부분에 대해서 해결법을 찾아야 할 것 같다.
  */
 public class User implements UserDetails
 {
@@ -29,6 +32,7 @@ public class User implements UserDetails
     private String password;
     private String name;
     private Integer gender;
+    @JsonFormat(timezone = "Asia/Seoul")
     private Timestamp birth;
     private String fcmToken;
     private String phone;

@@ -30,8 +30,8 @@ public class UserRegisterService
 		// 이 부분에 fcm 토큰을 생성해야 한다.
 		String fcmToken = "token";
 		
-		User newUser = new User(request.getUserId(), request.getEmail(), request.getPassword(), request.getName(),
-				request.getGender(), request.getBirth(), fcmToken, request.getPhone(), request.getAddress(), request.getRegDate());
+		User newUser = new User(request.getEmail(), request.getPassword(), request.getName(),
+				request.getGender(), request.getBirth(), fcmToken, request.getPhone(), request.getAddress());
 		
 		userMapper.insert(newUser);
 		

@@ -1,6 +1,7 @@
 package Baetube_backEnd.dto;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 public class History
 {
