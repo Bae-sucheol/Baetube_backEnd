@@ -94,6 +94,7 @@ public class RestUserController
 		                                                 
 		try
 		{
+			System.out.println("요청이 들어왔습니다.");
 			TokenInfo tokenInfo = userLoginService.login(request);
 			return ResponseEntity.status(HttpStatus.OK).body(tokenInfo);
 		} 
