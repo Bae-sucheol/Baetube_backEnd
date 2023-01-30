@@ -110,6 +110,11 @@ public class User implements UserDetails
 		this.regDate = regDate;
 		this.roles = roles;
 	}
+	
+	public User(String email)
+	{
+		this.email = email;
+	}
 
 	public User()
 	{

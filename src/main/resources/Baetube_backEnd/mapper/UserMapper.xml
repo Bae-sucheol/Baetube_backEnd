@@ -7,7 +7,8 @@
 	<mapper namespace="Baetube_backEnd.mapper.UserMapper">
 	
 		<select id="selectByEmail" parameterType="string" resultType="userDto">
-			SELECT * from user WHERE email = #{email}
+			SELECT user_id as userId, email, password, name, gender, birth, fcm_token as fcmToken,
+				phone, address, reg_date as regDate from user WHERE email = #{email}
 		</select>
 		
 		<select id="selectRefreshToken" parameterType="string" resultType="string">

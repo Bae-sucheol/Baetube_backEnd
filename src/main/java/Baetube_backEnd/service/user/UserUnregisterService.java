@@ -18,6 +18,7 @@ public class UserUnregisterService
 	@Transactional
 	public boolean unRegist(User request)
 	{
+		
 		User user = userMapper.selectByEmail(request.getEmail());
 		
 		if (user == null)
