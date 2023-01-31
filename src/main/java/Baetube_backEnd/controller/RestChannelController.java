@@ -1,6 +1,7 @@
 package Baetube_backEnd.controller;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletResponse;
@@ -15,6 +16,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -125,22 +127,16 @@ public class RestChannelController
 	
 	
 	
-	@GetMapping("/api/channel/visit")
+	@GetMapping("/api/channel/visit/{channelId}")
 	//@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<Object> selectChannel(@RequestBody @Valid Channel request, Errors errors, HttpServletResponse response) throws IOException
+	public ResponseEntity<Object> selectChannel(@PathVariable Integer channelId, HttpServletResponse response) throws IOException
 	{
-		
-		if(errors.hasErrors())
-		{
-			String errorCodes = errors.getAllErrors().stream().map(error -> error.getCodes()[0]).collect(Collectors.joining(","));
-			
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse("errorCodes = " + errorCodes));
-		}
-		                                                 
+		                            
 		try
 		{
-			channelVisitService.selectChannel(request.getChannelId());
-			return ResponseEntity.status(HttpStatus.OK).build();
+			System.out.println("요청이 들어왔습니다.");
+			Channel channel = channelVisitService.selectChannel(channelId);
+			return ResponseEntity.status(HttpStatus.OK).body(channel);
 		} 
 		catch (NullChannelException e)
 		{
@@ -150,22 +146,15 @@ public class RestChannelController
 		
 	}
 	
-	@GetMapping("/api/channel/subscribers")
+	@GetMapping("/api/channel/subscribers/{channelId}")
 	//@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<Object> selectSubscribers(@RequestBody @Valid Channel request, Errors errors, HttpServletResponse response) throws IOException
+	public ResponseEntity<Object> selectSubscribers(@PathVariable Integer channelId, HttpServletResponse response) throws IOException
 	{
-		
-		if(errors.hasErrors())
-		{
-			String errorCodes = errors.getAllErrors().stream().map(error -> error.getCodes()[0]).collect(Collectors.joining(","));
-			
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse("errorCodes = " + errorCodes));
-		}
-		                                                 
+                                           
 		try
 		{
-			channelSubscribersService.selectSubscribers(request.getChannelId());
-			return ResponseEntity.status(HttpStatus.OK).build();
+			List<Channel> subscriberList = channelSubscribersService.selectSubscribers(channelId);
+			return ResponseEntity.status(HttpStatus.OK).body(subscriberList);
 		} 
 		catch (NullChannelException e)
 		{

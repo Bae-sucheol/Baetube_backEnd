@@ -33,6 +33,12 @@ public class Channel
 	{
 		super();
 	}
+	
+	public Channel(Integer channelId)
+	{
+		super();
+		this.channelId = channelId;
+	}
 
 	public Channel(Integer channelId, Integer userId, Integer subs, Integer videoCount, String name, String description,
 			String arts, Timestamp regDate)

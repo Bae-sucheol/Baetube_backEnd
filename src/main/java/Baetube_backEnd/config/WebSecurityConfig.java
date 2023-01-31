@@ -64,7 +64,7 @@ public class WebSecurityConfig
 			.csrf().disable()
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and().authorizeRequests()
-			//.antMatchers(HttpMethod.GET, "/**").permitAll()
+			.antMatchers(HttpMethod.GET, "/**").permitAll()
 			.antMatchers(HttpMethod.POST, "/**").permitAll() // 화이트 리스트 허용
 			//.antMatchers(HttpMethod.POST, "/api/user/login").permitAll() // 화이트 리스트 허용
 			//.antMatchers(HttpMethod.POST, "/api/user/regist").permitAll() // 화이트 리스트 허용

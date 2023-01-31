@@ -48,13 +48,14 @@
 		
 		<select id="select" resultType="channelDto">
 		
-			SELECT * FROM channel WHERE channel_id = #{channelId}
+			SELECT channel_id as channelId, user_id as userId, name, description, reg_date as regDate,
+			subs, video_count as videoCount, arts, profile FROM channel WHERE channel_id = #{channelId}
 		
 		</select>
 		
-		<select id="selectSubscribers">
+		<select id="selectSubscribers" resultType="channelDto">
 		
-			SELECT channel_id, `name`, `profile` FROM CHANNEL NATURAL JOIN subscribers WHERE subscriber_id = #{channelId};
+			SELECT channel_id as channelId, `name`, `profile` FROM CHANNEL NATURAL JOIN subscribers WHERE subscriber_id = #{channelId};
 		
 		</select>
 		
