@@ -10,7 +10,7 @@ public interface ChannelMapper
 {
 	public void insert(@Param("channel") Channel channel);
 	public void delete(@Param("channelId") Integer channelId);
-	public void update(@Param("oldChanel") Channel oldChannel, @Param("newChannel") Channel newChannel);
+	public void update(@Param("oldChannel") Channel oldChannel, @Param("newChannel") Channel newChannel);
 	public void updateSubscribes(@Param("channelId") Integer channelId, @Param("value") Integer value);
 	public void updateVideoCount(@Param("channelId") Integer channelId, @Param("value") Integer value);
 	public Channel select(@Param("channelId") Integer channelId);	

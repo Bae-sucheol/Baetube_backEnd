@@ -113,14 +113,16 @@ public class RestChannelController
 		                                                 
 		try
 		{
+			System.out.println("요청이 들어왔습니다.");
+			System.out.println("id : " + request.getChannelId());
+			System.out.println("name : " + request.getName());
 			channelUpdateService.updateChannel(request);
 			
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
-		catch (Exception e)
+		catch (NullChannelException e)
 		{
-			
-			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("존재하지 않는 채널입니다.");
 		}
 		
 	}

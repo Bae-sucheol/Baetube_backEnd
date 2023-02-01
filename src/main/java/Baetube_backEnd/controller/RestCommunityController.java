@@ -1,6 +1,7 @@
 package Baetube_backEnd.controller;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletResponse;
@@ -13,6 +14,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,21 +38,13 @@ public class RestCommunityController
 	@Autowired
 	private CommunityInsertService communityInsertService;
 
-	@GetMapping("/api/community/channel_visit")
-	public ResponseEntity<Object> getChannelCommunity(@RequestBody @Valid Channel request, Errors errors, HttpServletResponse response) throws IOException
+	@GetMapping("/api/community/channel_visit/{channelId}")
+	public ResponseEntity<Object> getChannelCommunity(@PathVariable Integer channelId, HttpServletResponse response) throws IOException
 	{
-		
-		if(errors.hasErrors())
-		{
-			String errorCodes = errors.getAllErrors().stream().map(error -> error.getCodes()[0]).collect(Collectors.joining(","));
-			
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse("errorCodes = " + errorCodes));
-		}
-		                                                 
 		try
 		{
-			communityChannelVisitService.selectCommunity(request.getChannelId());
-			return ResponseEntity.status(HttpStatus.OK).build();
+			List<Community> communityList = communityChannelVisitService.selectCommunity(channelId);
+			return ResponseEntity.status(HttpStatus.OK).body(communityList);
 		} 
 		catch (NullCommunityException e)
 		{

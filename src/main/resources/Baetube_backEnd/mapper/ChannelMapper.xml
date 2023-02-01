@@ -31,7 +31,7 @@
 				<if test='!oldChannel.profile.equals(newChannel.profile)'>profile = #{newChannel.profile}, </if>
 			</set>
 			
-			WHERE chennl_id = #{oldChannel.channelId}
+			WHERE channel_id = #{oldChannel.channelId}
 		</update>
 		
 		<update id="updateSubscribes">

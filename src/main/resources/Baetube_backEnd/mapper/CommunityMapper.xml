@@ -9,9 +9,9 @@
 		<insert id="insert" statementType="CALLABLE" parameterType="map">
 			CALL insert_community(
 				#{community.channelId},
-				#{community.image_url},
+				#{community.imageUrl},
 				#{community.comment},
-				#{community.date}
+				NOW()
 			)
 		</insert>
 		
@@ -34,15 +34,17 @@
 		
 		<select id="selectByChannel" resultType="communityDto">
 		
-			SELECT community_id, contents_id, channel_id, `like`, hate, reply_count, image_url, `comment`, `date` 
+			SELECT community_id as communityId, contents_id as contentsId, channel_id as channelId, `like`, hate,
+				reply_count as replyCount, image_url as imageUrl, `comment`, `date` 
 			FROM community NATURAL JOIN contents WHERE channel_id = #{channelId};
 		
 		</select>
 		
 		<select id="selectByCommunityId" resultType="communityDto">
 		
-			SELECT community_id, contents_id, channel_id, `like`, hate, reply_count, image_url, `comment`, `date` 
-			FROM community NATURAL JOIN contents WHERE channel_id = #{communityId};
+			SELECT community_id as communityId, contents_id as contentsId, channel_id as channelId, `like`, hate,
+				reply_count as replyCount, image_url as imageUrl, `comment`, `date` 
+			FROM community NATURAL JOIN contents WHERE community_id = #{communityId};
 		
 		</select>
 		
