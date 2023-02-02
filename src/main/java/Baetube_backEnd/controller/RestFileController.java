@@ -39,6 +39,7 @@ public class RestFileController
 		                                    
 		try
 		{
+			System.out.println("요청이 도착했습니다.");
 			fileUploadService.upload(type, purpose, id, file);
 			
 			return ResponseEntity.status(HttpStatus.OK).build();

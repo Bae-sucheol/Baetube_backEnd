@@ -87,7 +87,7 @@ public class RestReplyControllerTest
 	public void replyInsertTest() throws Exception
 	{
 		mockMvc.perform(post("/api/reply/insert")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(correctContent))
 		.andExpect(status().isOk())
 		.andDo(print());
@@ -106,13 +106,13 @@ public class RestReplyControllerTest
 		when(replyMapper.selectByContentsId(2L)).thenReturn(null);
 		
 		mockMvc.perform(get("/api/reply/select")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(correctContent))
 		.andExpect(status().isOk())
 		.andDo(print());
 		
 		mockMvc.perform(get("/api/reply/select")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(wrongContent))
 		.andExpect(status().isConflict())
 		.andDo(print());
@@ -125,7 +125,7 @@ public class RestReplyControllerTest
 		when(replyMapper.selectByReplyId(2)).thenReturn(null);
 		
 		mockMvc.perform(post("/api/reply/update")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(correctContent))
 		.andExpect(status().isOk())
 		.andDo(print());
@@ -133,7 +133,7 @@ public class RestReplyControllerTest
 		verify(replyMapper, atLeastOnce()).updateComment(any(), any());
 		
 		mockMvc.perform(post("/api/reply/update")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(wrongContent))
 		.andExpect(status().isConflict())
 		.andDo(print());

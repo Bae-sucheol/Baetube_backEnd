@@ -41,7 +41,7 @@ public class RestHistoryController
 		                                                 
 		try
 		{
-			//historyDeleteService.deleteHistory(request);
+			historyDeleteService.deleteHistory(request);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
 		catch (NullHistoryException e)

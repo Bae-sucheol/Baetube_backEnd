@@ -22,16 +22,16 @@
 		
 		<select id="selectByContentsId" resultType="replyDto">
 		
-			SELECT reply_id, contents_id, attached_id, channel_id, `comment`, `like`, 
-			hate, `date`, nested_count, `name`, `profile` FROM reply
+			SELECT reply_id as replyId, contents_id as contentsId, attached_id as attachedId, channel_id as channelId, `comment`, `like`, 
+			hate, `date`, `name`, `profile` FROM reply
 			NATURAL JOIN CHANNEL 
-			WHERE attached_id = #{contentsId};
+			WHERE attached_id = #{contentsId}
 		
 		</select>
 		
 		<select id="selectByReplyId" resultType="replyDto">
 		
-			SELECT reply_id, contents_id, attached_id, channel_id, commnet, `like`, hate, `date`
+			SELECT reply_id as replyId, contents_id as contentsId, attached_id as attachedId, channel_id as channelId, comment, `like`, hate, `date`
 			FROM reply WHERE reply_id = #{replyId}
 		
 		</select>
