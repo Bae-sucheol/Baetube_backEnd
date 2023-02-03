@@ -49,7 +49,7 @@ public class PlaylistChannelServiceTest
 		
 		when(playlistMapper.selectByChannelId(1)).thenReturn(playlistList);
 		
-		assertEquals(playlistList, playlistChannelService.select(channel));
+		assertEquals(playlistList, playlistChannelService.select(channel.getChannelId()));
 		verify(playlistMapper, atLeastOnce()).selectByChannelId(1);
 	}
 	
@@ -58,7 +58,7 @@ public class PlaylistChannelServiceTest
 	{
 		when(playlistMapper.selectByChannelId(1)).thenReturn(null);
 		
-		assertEquals(null, playlistChannelService.select(channel));
+		assertEquals(null, playlistChannelService.select(channel.getChannelId()));
 		verify(playlistMapper, atLeastOnce()).selectByChannelId(1);
 	}
 }

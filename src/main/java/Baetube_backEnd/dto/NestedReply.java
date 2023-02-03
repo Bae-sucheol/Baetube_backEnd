@@ -10,12 +10,54 @@ public class NestedReply
 	private Long contentsId;
 	private Integer channelId;
 	private String comment;
+	private Integer like;
+	private Integer hate;
 	private Timestamp date;
 	private String name;
 	private String profile;
 	private Long attachedId;
 	
 	// constructor
+	public NestedReply()
+	{
+		
+	}
+	
+	public NestedReply(Integer nestedReplyId, Integer replyId, Long contentsId, Integer channelId, String comment,
+			Integer like, Integer hate, Timestamp date, String name, String profile, Long attachedId)
+	{
+		super();
+		this.nestedReplyId = nestedReplyId;
+		this.replyId = replyId;
+		this.contentsId = contentsId;
+		this.channelId = channelId;
+		this.comment = comment;
+		this.like = like;
+		this.hate = hate;
+		this.date = date;
+		this.name = name;
+		this.profile = profile;
+		this.attachedId = attachedId;
+	}
+
+	public NestedReply(Integer nestedReplyId, Integer replyId, Long contentsId, Integer channelId, String comment,
+			Integer like, Integer hate, Timestamp date, String name, String profile)
+	{
+		super();
+		this.nestedReplyId = nestedReplyId;
+		this.replyId = replyId;
+		this.contentsId = contentsId;
+		this.channelId = channelId;
+		this.comment = comment;
+		this.like = like;
+		this.hate = hate;
+		this.date = date;
+		this.name = name;
+		this.profile = profile;
+	}
+
+
+
 	public NestedReply(Integer nestedReplyId, Integer replyId, Long contentsId, Integer channelId, String comment,
 			Timestamp date, String name, String profile)
 	{
@@ -95,7 +137,21 @@ public class NestedReply
 		return profile;
 	}
 	
-	
+	public Integer getLike()
+	{
+		return like;
+	}
+
+	public Integer getHate()
+	{
+		return hate;
+	}
+
+	public Long getAttachedId()
+	{
+		return attachedId;
+	}
+
 	// setter
 	public void setNestedReplyId(Integer nestedReplyId)
 	{
@@ -136,9 +192,20 @@ public class NestedReply
 	{
 		this.profile = profile;
 	}
-	
-	
-	
-	
+
+	public void setLike(Integer like)
+	{
+		this.like = like;
+	}
+
+	public void setHate(Integer hate)
+	{
+		this.hate = hate;
+	}
+
+	public void setAttachedId(Long attachedId)
+	{
+		this.attachedId = attachedId;
+	}
 	
 }

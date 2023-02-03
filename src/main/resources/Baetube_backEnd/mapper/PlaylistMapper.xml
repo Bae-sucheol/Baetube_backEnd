@@ -24,7 +24,7 @@
 		
 		<delete id="delete" parameterType="map">
 		
-			DELETE FROM playlist WHERE playlist_id = #{playlist.playlistId} AND channel_id #{playlist.channelId}
+			DELETE FROM playlist WHERE playlist_id = #{playlist.playlistId} AND channel_id = #{playlist.channelId}
 		
 		</delete>
 		
@@ -39,7 +39,8 @@
 		
 		<select id="selectByChannelId" resultType="playlistDto">
 		
-			SELECT * FROM playlist WHERE channel_id = #{channelId}
+			SELECT playlist_id as playlistId, channel_id as channelId, name, public as visible,
+			video_count as videoCount, thumbnail FROM playlist WHERE channel_id = #{channelId}
 		
 		</select>
 		
@@ -51,7 +52,7 @@
 		
 		<select id="selectPlaylistItem" resultType="playlistItemDto">
 		
-			SELECT * FROM playlistItem WHERE playlist_id = #{playlistId} AND video_id = #{videoId}
+			SELECT playlist_id as playlistId, video_id as videoId FROM playlist_item WHERE playlist_id = #{playlistId} AND video_id = #{videoId}
 		
 		</select>
 		
@@ -61,11 +62,12 @@
 			
 			<set>
 				<if test='!oldPlaylist.name.equals(newPlaylist.name)'>name = #{newPlaylist.name}, </if>
-				<if test='!oldPlaylist.visible.equals(newPlaylist.visible)'>public = #{newPlaylist.visible}, </if>
+				<!--<if test='!oldPlaylist.visible.equals(newPlaylist.visible)'>public = #{newPlaylist.visible}, </if>-->
+				<if test='oldPlaylist.visible != newPlaylist.visible'>public = #{newPlaylist.visible},</if>
 				<if test='!oldPlaylist.thumbnail.equals(newPlaylist.thumbnail)'>thumbnail = #{newPlaylist.thumbnail}, </if>
 			</set>
 			
-			WHERE platlist_id = #{oldPlaylist.playlistId}
+			WHERE playlist_id = #{oldPlaylist.playlistId}
 		
 		</update>
 		

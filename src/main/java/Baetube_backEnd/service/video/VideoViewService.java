@@ -17,7 +17,7 @@ public class VideoViewService
 	private HistoryMapper historyMapper;
 	
 	@Transactional
-	public Video selectVideo(VideoViewRequest request)
+	public Video selectVideo(Integer userId, Integer videoId)
 	{
 		/* 
 		 * 먼저 해당 동영상의 조회수를 증가시킨다.
@@ -25,11 +25,11 @@ public class VideoViewService
 	 	 * 비디오를 한번 더 조회하여 반환한다.
 	 	*/
 		
-		videoMapper.updateViews(request.getVideoId(), 1);
+		videoMapper.updateViews(videoId, 1);
 		
-		historyMapper.insert(request.getUserId(), request.getVideoId());
+		historyMapper.insert(userId, videoId);
 		
-		Video video = videoMapper.selectByVideoId(request.getVideoId());
+		Video video = videoMapper.selectByVideoId(videoId);
 		
 		if(video == null)
 		{

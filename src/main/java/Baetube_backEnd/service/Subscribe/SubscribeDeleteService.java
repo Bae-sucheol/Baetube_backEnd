@@ -15,7 +15,7 @@ public class SubscribeDeleteService
 	@Transactional
 	public boolean delete(Subscribers request)
 	{
-		Subscribers subscribers = subscribeMapper.select(request);
+		Subscribers subscribers = subscribeMapper.select(request.getChannelId(), request.getSubscriberId());
 		
 		if(subscribers == null)
 		{

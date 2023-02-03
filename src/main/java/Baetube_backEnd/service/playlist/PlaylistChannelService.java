@@ -14,9 +14,9 @@ public class PlaylistChannelService
 	@Autowired
 	private PlaylistMapper playlistMapper;
 	
-	public List<Playlist> select(Channel request)
+	public List<Playlist> select(Integer channelId)
 	{
-		List<Playlist> playlistList = playlistMapper.selectByChannelId(request.getChannelId());
+		List<Playlist> playlistList = playlistMapper.selectByChannelId(channelId);
 		
 		if(playlistList == null)
 		{

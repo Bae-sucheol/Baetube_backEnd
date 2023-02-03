@@ -1,6 +1,7 @@
 package Baetube_backEnd.controller;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletResponse;
@@ -13,6 +14,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 import Baetube_backEnd.ErrorResponse;
 import Baetube_backEnd.dto.NestedReply;
 import Baetube_backEnd.exception.NullReplyException;
-import Baetube_backEnd.exception.WrongIdPasswordException;
 import Baetube_backEnd.service.nestedreply.NestedReplyInsertService;
 import Baetube_backEnd.service.nestedreply.NestedReplySelectService;
 import Baetube_backEnd.service.nestedreply.NestedReplyUpdateService;
@@ -48,7 +49,7 @@ public class RestNestedReplyController
 		                                                 
 		try
 		{
-			
+			nestedReplyInsertService.insertNestedReply(request);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
 		catch (NullReplyException e)
@@ -58,21 +59,14 @@ public class RestNestedReplyController
 		}
 	}
 	
-	@GetMapping("/api/nestedreply/select")
+	@GetMapping("/api/nestedreply/select/{replyId}")
 	//@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<Object> selectNestedReply(@RequestBody @Valid Integer request, Errors errors, HttpServletResponse response) throws IOException
-	{
-		if(errors.hasErrors())
-		{
-			String errorCodes = errors.getAllErrors().stream().map(error -> error.getCodes()[0]).collect(Collectors.joining(","));
-			
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse("errorCodes = " + errorCodes));
-		}
-		                                                 
+	public ResponseEntity<Object> selectNestedReply(@PathVariable Integer replyId, HttpServletResponse response) throws IOException
+	{                                            
 		try
 		{
-			
-			return ResponseEntity.status(HttpStatus.OK).build();
+			List<NestedReply> nestedReplyList = nestedReplySelectService.selectNestedReply(replyId);
+			return ResponseEntity.status(HttpStatus.OK).body(nestedReplyList);
 		} 
 		catch (NullReplyException e)
 		{
@@ -94,7 +88,7 @@ public class RestNestedReplyController
 		                                                 
 		try
 		{
-			
+			nestedReplyUpdateService.updateNestedReply(request);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
 		catch (NullReplyException e)

@@ -5,7 +5,13 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
 	<mapper namespace="Baetube_backEnd.mapper.NotificationMapper">
-	
+		
+		<select id="select" resultType="notificationDto">
+		
+			SELECT user_id as userId, contents_id as contentsId FROM notification WHERE user_id = #{userId} AND contents_id = #{contentsId};
+		
+		</select>
+		
 		<delete id="delete">
 		
 			DELETE FROM notification WHERE user_id = #{userId} AND contents_id = #{contentsId}

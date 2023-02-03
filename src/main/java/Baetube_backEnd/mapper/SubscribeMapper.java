@@ -12,5 +12,5 @@ public interface SubscribeMapper
 	
 	public void subscribe(@Param("subscribers") Subscribers subscribers);
 	public void unSubscribe(@Param("subscribers") Subscribers subscribers);
-	public Subscribers select(@Param("subscribers") Subscribers subscribers);
+	public Subscribers select(@Param("channelId") Integer channelId, @Param("subscriberId") Integer subscriberId);
 }

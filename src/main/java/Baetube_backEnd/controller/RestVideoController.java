@@ -1,6 +1,7 @@
 package Baetube_backEnd.controller;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletResponse;
@@ -13,6 +14,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -55,21 +57,13 @@ public class RestVideoController
 	@Autowired
 	private VideoViewService videoViewService;
 	
-	@GetMapping("/api/video/channel_video")
-	public ResponseEntity<Object> getChannelVideo(@RequestBody @Valid Channel request, Errors errors, HttpServletResponse response) throws IOException
-	{
-		
-		if(errors.hasErrors())
-		{
-			String errorCodes = errors.getAllErrors().stream().map(error -> error.getCodes()[0]).collect(Collectors.joining(","));
-			
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse("errorCodes = " + errorCodes));
-		}
-		                                                 
+	@GetMapping("/api/video/channel_video/{channelId}")
+	public ResponseEntity<Object> getChannelVideo(@PathVariable Integer channelId, HttpServletResponse response) throws IOException
+	{                                
 		try
 		{
-			channelVideoRequestService.requestVideo(request.getChannelId());
-			return ResponseEntity.status(HttpStatus.OK).build();
+			List<Video> videoList = channelVideoRequestService.requestVideo(channelId);
+			return ResponseEntity.status(HttpStatus.OK).body(videoList);
 		} 
 		catch (NullVideoException e)
 		{
@@ -79,21 +73,13 @@ public class RestVideoController
 		
 	}
 	
-	@GetMapping("/api/video/history_video")
-	public ResponseEntity<Object> getHistoryVideo(@RequestBody @Valid User request, Errors errors, HttpServletResponse response) throws IOException
-	{
-		
-		if(errors.hasErrors())
-		{
-			String errorCodes = errors.getAllErrors().stream().map(error -> error.getCodes()[0]).collect(Collectors.joining(","));
-			
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse("errorCodes = " + errorCodes));
-		}
-		                                                 
+	@GetMapping("/api/video/history_video/{userId}")
+	public ResponseEntity<Object> getHistoryVideo(@PathVariable Integer userId, HttpServletResponse response) throws IOException
+	{                                           
 		try
 		{
-			historyVideoRequestService.requestVideo(request.getUserId());
-			return ResponseEntity.status(HttpStatus.OK).build();
+			List<Video> videoList = historyVideoRequestService.requestVideo(userId);
+			return ResponseEntity.status(HttpStatus.OK).body(videoList);
 		} 
 		catch (NullVideoException e)
 		{
@@ -103,21 +89,13 @@ public class RestVideoController
 		
 	}
 	
-	@GetMapping("/api/video/main_video")
-	public ResponseEntity<Object> getMainVideo(@RequestBody @Valid User request, Errors errors, HttpServletResponse response) throws IOException
-	{
-		
-		if(errors.hasErrors())
-		{
-			String errorCodes = errors.getAllErrors().stream().map(error -> error.getCodes()[0]).collect(Collectors.joining(","));
-			
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse("errorCodes = " + errorCodes));
-		}
-		                                                 
+	@GetMapping("/api/video/main_video/{userId}")
+	public ResponseEntity<Object> getMainVideo(@PathVariable Integer userId, HttpServletResponse response) throws IOException
+	{                                         
 		try
 		{
-			mainVideoRequestService.requestVideo(request.getUserId());
-			return ResponseEntity.status(HttpStatus.OK).build();
+			List<Video> videoList = mainVideoRequestService.requestVideo(userId);
+			return ResponseEntity.status(HttpStatus.OK).body(videoList);
 		} 
 		catch (NullVideoException e)
 		{
@@ -127,21 +105,13 @@ public class RestVideoController
 		
 	}
 	
-	@GetMapping("/api/video/playlist_video")
-	public ResponseEntity<Object> getPlaylistVideo(@RequestBody @Valid Playlist request, Errors errors, HttpServletResponse response) throws IOException
-	{
-		
-		if(errors.hasErrors())
-		{
-			String errorCodes = errors.getAllErrors().stream().map(error -> error.getCodes()[0]).collect(Collectors.joining(","));
-			
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse("errorCodes = " + errorCodes));
-		}
-		                                                 
+	@GetMapping("/api/video/playlist_video/{playlistId}")
+	public ResponseEntity<Object> getPlaylistVideo(@PathVariable Integer playlistId, HttpServletResponse response) throws IOException
+	{                                   
 		try
 		{
-			playlistVideoRequestService.requestVideo(request.getPlaylistId());
-			return ResponseEntity.status(HttpStatus.OK).build();
+			List<Video> videoList = playlistVideoRequestService.requestVideo(playlistId);
+			return ResponseEntity.status(HttpStatus.OK).body(videoList);
 		} 
 		catch (NullPlaylistException e)
 		{
@@ -154,21 +124,13 @@ public class RestVideoController
 		
 	}
 	
-	@GetMapping("/api/video/subscribe_video")
-	public ResponseEntity<Object> getSubscribeVideo(@RequestBody @Valid Channel request, Errors errors, HttpServletResponse response) throws IOException
-	{
-		
-		if(errors.hasErrors())
-		{
-			String errorCodes = errors.getAllErrors().stream().map(error -> error.getCodes()[0]).collect(Collectors.joining(","));
-			
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse("errorCodes = " + errorCodes));
-		}
-		                                                 
+	@GetMapping("/api/video/subscribe_video/{channelId}")
+	public ResponseEntity<Object> getSubscribeVideo(@PathVariable Integer channelId, HttpServletResponse response) throws IOException
+	{                                         
 		try
 		{
-			subscribeVideoRequestService.requestVideo(request.getChannelId());
-			return ResponseEntity.status(HttpStatus.OK).build();
+			List<Video> videoList = subscribeVideoRequestService.requestVideo(channelId);
+			return ResponseEntity.status(HttpStatus.OK).body(videoList);
 		} 
 		catch (NullVideoException e)
 		{
@@ -215,32 +177,25 @@ public class RestVideoController
 		                                                 
 		try
 		{
+			System.out.println("요청이 도착했습니다.");
 			videoUpdateService.update(request);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
 		catch (NullVideoException e)
 		{
 			
-			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("동영상이 존재하지 않습니다.");
 		}
 		
 	}
 	
-	@GetMapping("/api/video/view_video")
-	public ResponseEntity<Object> viewVideo(@RequestBody @Valid VideoViewRequest request, Errors errors, HttpServletResponse response) throws IOException
-	{
-		
-		if(errors.hasErrors())
-		{
-			String errorCodes = errors.getAllErrors().stream().map(error -> error.getCodes()[0]).collect(Collectors.joining(","));
-			
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse("errorCodes = " + errorCodes));
-		}
-		                                                 
+	@GetMapping("/api/video/view_video/{userId}/{videoId}")
+	public ResponseEntity<Object> viewVideo(@PathVariable Integer userId, @PathVariable Integer videoId, HttpServletResponse response) throws IOException
+	{                                            
 		try
 		{
-			videoViewService.selectVideo(request);
-			return ResponseEntity.status(HttpStatus.OK).build();
+			Video video = videoViewService.selectVideo(userId, videoId);
+			return ResponseEntity.status(HttpStatus.OK).body(video);
 		} 
 		catch (NullVideoException e)
 		{

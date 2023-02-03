@@ -13,9 +13,9 @@ public class SubscribeSelectService
 	private SubscribeMapper subscribeMapper;
 	
 	@Transactional
-	public Subscribers select(Subscribers request)
+	public Subscribers select(Integer channelId, Integer subscriberId)
 	{
-		Subscribers subscribers = subscribeMapper.select(request);
+		Subscribers subscribers = subscribeMapper.select(channelId, subscriberId);
 		
 		if(subscribers == null)
 		{

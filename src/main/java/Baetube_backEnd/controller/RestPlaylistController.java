@@ -1,6 +1,7 @@
 package Baetube_backEnd.controller;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletResponse;
@@ -13,6 +14,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -49,21 +51,15 @@ public class RestPlaylistController
 	@Autowired
 	private PlaylistDeleteItemService playlistDeleteItemService;
 	
-	@GetMapping("/api/playlist/channel")
+	@GetMapping("/api/playlist/channel/{channelId}")
 	//@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<Object> selectChannelPlaylist(@RequestBody @Valid Channel request, Errors errors, HttpServletResponse response) throws IOException
-	{
-		if(errors.hasErrors())
-		{
-			String errorCodes = errors.getAllErrors().stream().map(error -> error.getCodes()[0]).collect(Collectors.joining(","));
-			
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse("errorCodes = " + errorCodes));
-		}
-		                                                 
+	public ResponseEntity<Object> selectChannelPlaylist(@PathVariable Integer channelId, HttpServletResponse response) throws IOException
+	{                                             
 		try
 		{
-			playlistChannelService.select(request);
-			return ResponseEntity.status(HttpStatus.OK).build();
+			System.out.println("요청이 도착했습니다.");
+			List<Playlist> playlistList = playlistChannelService.select(channelId);
+			return ResponseEntity.status(HttpStatus.OK).body(playlistList);
 		} 
 		catch (NullPlaylistException e)
 		{
@@ -108,6 +104,9 @@ public class RestPlaylistController
 		                                                 
 		try
 		{
+			System.out.println("요청이 도착했습니다.");
+			System.out.println("playlistId : " + request.getPlaylistId());
+			System.out.println("channelId : " + request.getChannelId());
 			playlistDeleteService.delete(request);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
@@ -131,6 +130,9 @@ public class RestPlaylistController
 		                                                 
 		try
 		{
+			System.out.println("요청이 도착했습니다.");
+			System.out.println("playlistId : " + request.getPlaylistId());
+			System.out.println("channelId : " + request.getChannelId());
 			playlistUpdateService.update(request);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
@@ -141,7 +143,7 @@ public class RestPlaylistController
 		}
 	}
 	
-	@PostMapping("/api/playlist/insert_item")
+	@PostMapping("/api/playlist/item/insert")
 	//@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Object> insertPlaylistItem(@RequestBody @Valid PlaylistItem request, Errors errors, HttpServletResponse response) throws IOException
 	{
@@ -164,7 +166,7 @@ public class RestPlaylistController
 		}
 	}
 	
-	@PostMapping("/api/playlist/delete_item")
+	@PostMapping("/api/playlist/item/delete")
 	//@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Object> deletePlaylistItem(@RequestBody @Valid PlaylistItem request, Errors errors, HttpServletResponse response) throws IOException
 	{
@@ -177,13 +179,16 @@ public class RestPlaylistController
 		                                                 
 		try
 		{
+			System.out.println("요청이 도착했습니다.");
+			System.out.println("playlistId : " + request.getPlaylistId());
+			System.out.println("videoId : " + request.getVideoId());
 			playlistDeleteItemService.deleteItem(request);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
 		catch (NullPlaylistItemException e)
 		{
 			
-			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("존재하지 않는 아이템");
 		}
 	}
 	

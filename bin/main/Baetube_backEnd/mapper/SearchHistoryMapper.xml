@@ -22,13 +22,13 @@
 		
 		<select id="select" resultType="searchHistoryDto">
 		
-			SELECT * FROM search_history WHERE user_id = #{searchHistory.userId} AND keywords = #{searchHistory.keywords}
+			SELECT user_id as userId, keywords FROM search_history WHERE user_id = #{searchHistory.userId} AND keywords = #{searchHistory.keywords}
 		
 		</select>
 		
 		<select id="selectAll" resultType="searchHistoryDto">
 		
-			SELECT * FROM search_history WHERE user_id = #{userId}
+			SELECT user_id as userId, keywords FROM search_history WHERE user_id = #{userId}
 		
 		</select>
 

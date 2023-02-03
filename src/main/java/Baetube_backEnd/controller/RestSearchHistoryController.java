@@ -1,6 +1,7 @@
 package Baetube_backEnd.controller;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletResponse;
@@ -13,6 +14,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -82,21 +84,14 @@ public class RestSearchHistoryController
 		}
 	}
 	
-	@GetMapping("/api/search_history/select")
+	@GetMapping("/api/search_history/select/{userId}")
 	//@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<Object> selectSearchHistory(@RequestBody @Valid User request, Errors errors, HttpServletResponse response) throws IOException
-	{
-		if(errors.hasErrors())
-		{
-			String errorCodes = errors.getAllErrors().stream().map(error -> error.getCodes()[0]).collect(Collectors.joining(","));
-			
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse("errorCodes = " + errorCodes));
-		}
-		                                                 
+	public ResponseEntity<Object> selectSearchHistory(@PathVariable Integer userId, HttpServletResponse response) throws IOException
+	{                                          
 		try
 		{
-			searchHistorySelectService.select(request.getUserId());
-			return ResponseEntity.status(HttpStatus.OK).build();
+			List<SearchHistory> searchHistoryList = searchHistorySelectService.select(userId);
+			return ResponseEntity.status(HttpStatus.OK).body(searchHistoryList);
 		} 
 		catch (NullSearchHistoryException e)
 		{

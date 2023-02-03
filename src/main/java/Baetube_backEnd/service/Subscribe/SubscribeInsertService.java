@@ -16,7 +16,7 @@ public class SubscribeInsertService
 	@Transactional
 	public boolean insert(Subscribers request)
 	{
-		Subscribers subscribers = subscribeMapper.select(request);
+		Subscribers subscribers = subscribeMapper.select(request.getChannelId(), request.getSubscriberId());
 		
 		if(subscribers != null)
 		{

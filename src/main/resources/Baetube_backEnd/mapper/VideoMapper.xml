@@ -22,8 +22,8 @@
 		
 		<select id="selectChannelVideo" resultType="videoDto">
 		
-			SELECT video_id, contents_id, channel_id, url, public, thumbnail, title, info, location, age, views,
-			`like`, hate, reply_count, `date`, category_id, `profile` 
+			SELECT video_id as videoId, contents_id as contentsId, channel_id as channelId, url, public, thumbnail, title,
+			info, location, age, views, `like`, hate, reply_count as replyCount, `date`, category_id as categoryId,`profile`
 			FROM video NATURAL JOIN contents NATURAL JOIN CHANNEL WHERE channel_id = #{channelId}
 			ORDER BY `date` DESC LIMIT 100;
 			
@@ -31,8 +31,8 @@
 		
 		<select id="selectSubscribeVideo" resultType="videoDto">
 		
-			SELECT video_id, contents_id, channel_id, url, public, thumbnail, title, info, location, age, views,
-			 `like`, hate, reply_count, `date`, category_id, `profile` 
+			SELECT video_id as videoId, contents_id as contentsId, channel_id as channelId, url, public, thumbnail, title,
+			info, location, age, views, `like`, hate, reply_count as replyCount, `date`, category_id as categoryId, `profile` 
 		 	FROM video NATURAL JOIN contents NATURAL JOIN CHANNEL WHERE channel_id IN 
 			(SELECT channel_id FROM subscribers WHERE subscriber_id = #{channelId})
 			ORDER BY `date` DESC LIMIT 100;
@@ -41,8 +41,8 @@
 		
 		<select id="selectMainVideo" resultType="videoDto">
 		
-			SELECT video_id, contents_id, channel_id, url, public, thumbnail, title, info, location, age, views,
-			 `like`, hate, reply_count, `date`, category_id, `profile` 
+			SELECT video_id as videoId, contents_id as contentsId, channel_id as channelId, url, public, thumbnail, title,
+			info, location, age, views, `like`, hate, reply_count as replyCount, `date`, category_id as categoryId, `profile` 
 			 
 			 FROM CHANNEL NATURAL JOIN
 
@@ -60,25 +60,27 @@
 		
 		<select id="selectHistoryVideo" resultType="videoDto">
 		
-			SELECT video.video_id, contents_id, channel_id, url, public, thumbnail, title, info, location, age, views,
-			`like`, hate, reply_count, video.date AS `date`, category_id, `profile`, history.date AS history_date
+			SELECT video.video_id as videoId, contents_id as contentsId, channel_id as channelId, url, public, thumbnail, title,
+			info, location, age, views, `like`, hate, reply_count as replyCount, video.date AS `date`, category_id as categoryId,
+			`profile`, history.date AS historyDate
 			FROM video NATURAL JOIN contents NATURAL JOIN CHANNEL JOIN HISTORY WHERE video.video_id = history.video_id 
-			AND history.user_id = #{userId} ORDER BY history_date DESC;
+			AND history.user_id = #{userId} ORDER BY historyDate DESC;
 			
 		</select>
 		
 		<select id="selectPlaylistVideo" resultType="videoDto">
 		
-			SELECT video_id, channel_id, contents_id, url, public, thumbnail, title, info, location, age, views, `like`,
-			 hate, reply_count, `date`,category_id, `profile`, playlist_item_id, playlist_id
+			SELECT video_id as videoId, contents_id as contentsId, channel_id as channelId, url, public, thumbnail, title,
+			info, location, age, views, `like`, hate, reply_count as replyCount, `date`,category_id as categoryId, `profile`,
+			playlist_id as playlistId
  			FROM video NATURAL JOIN contents NATURAL JOIN CHANNEL NATURAL JOIN playlist_item WHERE playlist_id = #{playlistId};
 		
 		</select>
 		
 		<select id="selectByVideoId" resultType="videoDto">
 		
-			SELECT video_id, contents_id, channel_id, url, public, thumbnail, title, info, location, age, views,
-			`like`, hate, reply_count, `date`, category_id, `profile` 
+			SELECT video_id as videoId, contents_id as contentsId, channel_id as channelId, url, public, thumbnail, title,
+			info, location, age, views, `like`, hate, reply_count as replyCount, `date`, category_id as categoryId, `profile` 
 			FROM video NATURAL JOIN contents NATURAL JOIN CHANNEL WHERE video_id = #{videoId};
 		
 		</select>

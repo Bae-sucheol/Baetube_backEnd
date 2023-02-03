@@ -10,6 +10,7 @@ import Baetube_backEnd.controller.RestFileController;
 import Baetube_backEnd.controller.RestHistoryController;
 import Baetube_backEnd.controller.RestHlsController;
 import Baetube_backEnd.controller.RestNestedReplyController;
+import Baetube_backEnd.controller.RestNotificationController;
 import Baetube_backEnd.controller.RestPlaylistController;
 import Baetube_backEnd.controller.RestRateController;
 import Baetube_backEnd.controller.RestReplyController;
@@ -112,6 +113,12 @@ public class ControllerConfig
 	public RestHlsController restHlsController()
 	{
 		return new RestHlsController();
+	}
+	
+	@Bean
+	public RestNotificationController restNotificationController()
+	{
+		return new RestNotificationController();
 	}
 	      
 }

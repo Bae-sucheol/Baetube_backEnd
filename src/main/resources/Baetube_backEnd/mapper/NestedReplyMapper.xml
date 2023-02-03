@@ -35,17 +35,17 @@
 		
 		<select id="selectByReplyId" resultType="nestedReplyDto">
 		
-			SELECT nested_reply_id, contents_id, reply_id, channel_id, `comment`, `like`, 
-			hate, `date`, `name`, `profile` FROM reply
-			NATURAL JOIN CHANNEL 
-			WHERE reply_id = #{replyId};
+			SELECT nested_reply_id AS nestedReplyId, reply_id AS replyId, contents_id AS contentsId, channel_id AS channelId, 
+			`comment`, `like`, hate, `date`, `name`, `profile` FROM nested_reply NATURAL JOIN contents
+ 			NATURAL JOIN CHANNEL WHERE reply_id = #{replyId};
 		
 		</select>
 		
 		<select id="selectByNestedReplyId" resultType="nestedReplyDto">
-		
-			SELECT nested_reply_id, contents_id, reply_id, channel_id, `comment`, `date`
-			FROM nested_reply WHERE nested_reply_id = #{nestedReplyId}
+	
+			SELECT nested_reply_id AS nestedReplyId, contents_id AS contentsId, reply_id AS replyId,
+				channel_id AS channelId, `comment`, `like`, `hate`, `date`
+			FROM nested_reply NATURAL JOIN contents WHERE nested_reply_id = #{nestedReplyId};
 		
 		</select>
 

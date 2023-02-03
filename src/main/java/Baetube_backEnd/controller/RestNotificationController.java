@@ -6,33 +6,28 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import Baetube_backEnd.ErrorResponse;
-import Baetube_backEnd.dto.Rate;
-import Baetube_backEnd.dto.Reply;
-import Baetube_backEnd.exception.NullRateResultException;
-import Baetube_backEnd.exception.WrongIdPasswordException;
-import Baetube_backEnd.service.rate.RateService;
+import Baetube_backEnd.dto.Notification;
+import Baetube_backEnd.exception.NullNotificationException;
+import Baetube_backEnd.service.notification.NotificationDeleteService;
 
 @RestController
-public class RestRateController
+public class RestNotificationController
 {
 	@Autowired
-	private RateService rateService;
+	private NotificationDeleteService notificationDeleteService;
 	
-	@PostMapping("/api/rate")
+	@PostMapping("/api/notification/delete")
 	//@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<Object> rateContents(@RequestBody @Valid Rate request, Errors errors, HttpServletResponse response) throws IOException
+	public ResponseEntity<Object> insertNestedReply(@RequestBody @Valid Notification request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		if(errors.hasErrors())
 		{
@@ -43,10 +38,10 @@ public class RestRateController
 		                                                 
 		try
 		{
-			rateService.rate(request);
+			notificationDeleteService.delete(request);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
-		catch (NullRateResultException e)
+		catch (NullNotificationException e)
 		{
 			
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
