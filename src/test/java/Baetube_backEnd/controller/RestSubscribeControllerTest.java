@@ -75,7 +75,7 @@ public class RestSubscribeControllerTest
 	@Test
 	public void subscribeInsertTest() throws Exception
 	{	
-		when(subscribeMapper.select(any())).thenReturn(null);
+		when(subscribeMapper.select(any(), any())).thenReturn(null);
 		
 		mockMvc.perform(post("/api/subscribe/subscribe")
 				.contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -84,7 +84,7 @@ public class RestSubscribeControllerTest
 		.andDo(print());
 		
 		verify(subscribeMapper, atLeastOnce()).subscribe(any());
-		when(subscribeMapper.select(any())).thenReturn(subscribers);
+		when(subscribeMapper.select(any(), any())).thenReturn(subscribers);
 		
 		mockMvc.perform(post("/api/subscribe/subscribe")
 				.contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -96,7 +96,7 @@ public class RestSubscribeControllerTest
 	@Test
 	public void subscribeDeleteTest() throws Exception
 	{
-		when(subscribeMapper.select(any())).thenReturn(subscribers);
+		when(subscribeMapper.select(any(), any())).thenReturn(subscribers);
 		
 		mockMvc.perform(post("/api/subscribe/unsubscribe")
 				.contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -105,7 +105,7 @@ public class RestSubscribeControllerTest
 		.andDo(print());
 		
 		verify(subscribeMapper, atLeastOnce()).unSubscribe(any());
-		when(subscribeMapper.select(any())).thenReturn(null);
+		when(subscribeMapper.select(any(), any())).thenReturn(null);
 		
 		mockMvc.perform(post("/api/subscribe/unsubscribe")
 				.contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -120,7 +120,7 @@ public class RestSubscribeControllerTest
 		Subscribers subscribers = new Subscribers(1, 1);
 		String content = objectMapper.writeValueAsString(subscribers);
 		
-		when(subscribeMapper.select(any())).thenReturn(subscribers);
+		when(subscribeMapper.select(any(), any())).thenReturn(subscribers);
 		
 		mockMvc.perform(get("/api/subscribe/select")
 				.contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -128,7 +128,7 @@ public class RestSubscribeControllerTest
 		.andExpect(status().isOk())
 		.andDo(print());
 		
-		when(subscribeMapper.select(any())).thenReturn(null);
+		when(subscribeMapper.select(any(), any())).thenReturn(null);
 		
 		mockMvc.perform(get("/api/subscribe/select")
 				.contentType(MediaType.APPLICATION_JSON_UTF8)

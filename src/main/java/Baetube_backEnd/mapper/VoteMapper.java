@@ -19,5 +19,6 @@ public interface VoteMapper
 	public void deleteVoteOptionMulti(@Param("voteOptionList") List<Vote> voteOptionList);
 	public List<Vote> selectVoteOptions(@Param("voteId") Integer voteId);
 	public Vote selectVote(@Param("voteId") Integer voteId);
+	public Vote selectVoteByCommunityId(@Param("communityId") Integer communityId);
 	public Vote selectVoteOption(@Param("voteOptionId") Integer voteOptionId);
 }

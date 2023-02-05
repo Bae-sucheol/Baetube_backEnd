@@ -22,6 +22,7 @@ public class Video
 	private Timestamp date;
 	private Integer categoryId;
 	private String profile;
+	private String name;
 	private Timestamp historyDate;
 	private Integer playlistItemId;
 	private Integer playlistId;
@@ -32,6 +33,37 @@ public class Video
 		super();
 	}
 	
+	public Video(Integer videoId, Long contentsId, Integer channelId, String url, Integer visible, String thumbnail,
+			String title, String info, String location, Integer age, Integer views, Integer like, Integer hate,
+			Integer replyCount, Timestamp date, Integer categoryId, String profile, String name, Timestamp historyDate,
+			Integer playlistItemId, Integer playlistId)
+	{
+		super();
+		this.videoId = videoId;
+		this.contentsId = contentsId;
+		this.channelId = channelId;
+		this.url = url;
+		this.visible = visible;
+		this.thumbnail = thumbnail;
+		this.title = title;
+		this.info = info;
+		this.location = location;
+		this.age = age;
+		this.views = views;
+		this.like = like;
+		this.hate = hate;
+		this.replyCount = replyCount;
+		this.date = date;
+		this.categoryId = categoryId;
+		this.profile = profile;
+		this.name = name;
+		this.historyDate = historyDate;
+		this.playlistItemId = playlistItemId;
+		this.playlistId = playlistId;
+	}
+
+
+
 	public Video(Integer videoId, Long contentsId, Integer channelId, String url, Integer visible, String thumbnail, String title,
 			String info, String location, Integer age, Integer views, Integer like, Integer hate, Integer replyCount,
 			Timestamp date, Integer categoryId, String profile)
@@ -258,6 +290,12 @@ public class Video
 	{
 		return profile;
 	}
+	
+	public String getName()
+	{
+		return name;
+	}
+
 
 	public Timestamp getHistoryDate()
 	{
@@ -358,6 +396,11 @@ public class Video
 	public void setProfile(String profile)
 	{
 		this.profile = profile;
+	}
+	
+	public void setName(String name)
+	{
+		this.name = name;
 	}
 
 	public void setHistoryDate(Timestamp historyDate)
