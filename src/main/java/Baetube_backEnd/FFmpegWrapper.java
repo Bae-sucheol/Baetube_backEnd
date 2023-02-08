@@ -34,6 +34,7 @@ public class FFmpegWrapper
 	{
 	}
 	
+
 	/**
 	 * ffmpeg 사전 준비 작업 메소드
 	 * @throws IOException
@@ -122,7 +123,7 @@ public class FFmpegWrapper
 						.setAudioChannels(2)
 						.setVideoResolution(resolutionWidth, resolutionHeight)
 						//.setVideoBitRate(Math.min(sourceBitrate , bitrates[i] * bitrateUnit))
-						.setVideoBitRate(100000)
+						.setVideoBitRate(bitrates[i] + bitrateUnit)
 						.setStrict(FFmpegBuilder.Strict.EXPERIMENTAL)
 						.addExtraArgs("-threads", "4")
 						.addExtraArgs("-profile:v", "baseline")
