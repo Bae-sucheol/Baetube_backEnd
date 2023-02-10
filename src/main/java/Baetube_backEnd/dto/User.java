@@ -1,22 +1,16 @@
 package Baetube_backEnd.dto;
 
-import java.lang.annotation.Annotation;
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.checkerframework.checker.units.qual.A;
-import org.checkerframework.checker.units.qual.Prefix;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 /*
  * sql 반환형이 TinyInt Integer로 반환.
