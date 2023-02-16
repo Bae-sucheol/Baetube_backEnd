@@ -153,8 +153,8 @@ public class RestVideoController
 		                                                 
 		try
 		{
-			videoInsertService.insert(request);
-			return ResponseEntity.status(HttpStatus.OK).build();
+			String result[] = videoInsertService.insert(request);
+			return ResponseEntity.status(HttpStatus.OK).body(result);
 		} 
 		catch (Exception e)
 		{

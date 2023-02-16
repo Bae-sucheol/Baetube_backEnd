@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
 import Baetube_backEnd.FFmpegWrapper;
+import Baetube_backEnd.UUIDUtil;
 import Baetube_backEnd.exception.NotSupportUploadException;
       
 public class FileUploadService
@@ -25,7 +26,7 @@ public class FileUploadService
 	private static final String BASE_FILE_PATH = Paths.get("G:", "baetube").toString();
 	private static final int IMAGE_SIZE = 64;
 	
-	public boolean upload(String type, String purpose, String id, MultipartFile request) throws IOException, NotSupportUploadException
+	public boolean upload(String type, String purpose, String uuid, MultipartFile request) throws IOException, NotSupportUploadException
 	{
 		/* 요청한 타입, 목적을 검증한다.
 		 * 검증이 실패하면 valid 메소드에서 NotSupportUploadException을 발생시킨다.
@@ -46,11 +47,10 @@ public class FileUploadService
 		 * 중복되지 않도록 TimeStamp + Hash를 사용하는 방법도 있지만
 		 * uuid를 사용하기로 했음.
 		 */
-		String uuid = UUID.randomUUID().toString();
+		
 		// 확장자를 가져온다.
-		String prefix = request.getOriginalFilename().substring(request.getOriginalFilename().lastIndexOf(".") + 1,
-				request.getOriginalFilename().length());
-		String fileName = uuid + "_" + id;
+		String fileName = UUIDUtil.createUUID();
+		String prefix = UUIDUtil.getPrefix(request.getOriginalFilename());
 		String fileNamePrefix = fileName + "." + prefix;
 		String destinationPath = Paths.get(baseFolderPath, fileNamePrefix).toString();
 		
@@ -65,7 +65,7 @@ public class FileUploadService
 		
 		// multipart file request의 inputStream을 받아온다.
 		InputStream fileStream = request.getInputStream();
-		
+	
 		// 타입이 이미지면 리사이징 후 저장.
 		if(type.equals("image"))
 		{

@@ -33,14 +33,13 @@ public class RestFileController
 	private FileUploadService fileUploadService;
 	
 	@PostMapping("/api/file/upload")
-	public ResponseEntity<Object>  deleteContents(@RequestParam String type, @RequestParam String purpose,
-			@RequestParam String id, @RequestParam MultipartFile file, HttpServletResponse response) throws IOException
+	public ResponseEntity<Object> uploadVideo(@RequestParam String type, @RequestParam String purpose, 
+			@RequestParam String uuid, @RequestParam MultipartFile file, HttpServletResponse response) throws IOException
 	{
 		                                    
 		try
 		{
-			System.out.println("요청이 도착했습니다.");
-			fileUploadService.upload(type, purpose, id, file);
+			fileUploadService.upload(type, purpose, uuid, file);
 			
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
@@ -54,6 +53,5 @@ public class RestFileController
 		}
 		
 	}
-	
 	
 }
