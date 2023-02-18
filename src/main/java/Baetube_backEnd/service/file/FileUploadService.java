@@ -26,7 +26,7 @@ public class FileUploadService
 	private static final String BASE_FILE_PATH = Paths.get("G:", "baetube").toString();
 	private static final int IMAGE_SIZE = 64;
 	
-	public boolean upload(String type, String purpose, String uuid, MultipartFile request) throws IOException, NotSupportUploadException
+	public boolean upload(String type, String purpose, String fileName, MultipartFile request) throws IOException, NotSupportUploadException
 	{
 		/* 요청한 타입, 목적을 검증한다.
 		 * 검증이 실패하면 valid 메소드에서 NotSupportUploadException을 발생시킨다.
@@ -49,7 +49,7 @@ public class FileUploadService
 		 */
 		
 		// 확장자를 가져온다.
-		String fileName = UUIDUtil.createUUID();
+		//String fileName = UUIDUtil.createUUID();
 		String prefix = UUIDUtil.getPrefix(request.getOriginalFilename());
 		String fileNamePrefix = fileName + "." + prefix;
 		String destinationPath = Paths.get(baseFolderPath, fileNamePrefix).toString();

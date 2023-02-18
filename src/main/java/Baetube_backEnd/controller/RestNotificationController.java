@@ -38,6 +38,7 @@ public class RestNotificationController
 		                                                 
 		try
 		{
+			
 			notificationDeleteService.delete(request);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
