@@ -43,7 +43,7 @@ public class User implements UserDetails
    				.map(SimpleGrantedAuthority::new)
    				.collect(Collectors.toList());
    	}
-
+   	
     /**
      * db에서 데이터를 받아올 때 필요한 생성자로 모든 속성을 인자로 받아서 사용한다.
      * @param userId

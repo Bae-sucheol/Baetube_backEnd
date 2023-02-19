@@ -27,7 +27,7 @@ public class FFmpegWrapper
 	private static FFmpeg ffmpeg;
 	private static FFprobe ffprobe;
 	private static final int resolutions[][] = {{1920, 1080}, {1280, 720}, {854, 480}};
-	private static final long bitrates[] = {12000L, 7500L, 4000L};
+	private static final long bitrates[] = {120000L, 75000L, 40000L};
 	private static final long bitrateUnit = 1000L;
 	
 	public FFmpegWrapper()
@@ -122,8 +122,7 @@ public class FFmpegWrapper
 						.disableSubtitle()
 						.setAudioChannels(2)
 						.setVideoResolution(resolutionWidth, resolutionHeight)
-						//.setVideoBitRate(Math.min(sourceBitrate , bitrates[i] * bitrateUnit))
-						.setVideoBitRate(bitrates[i] + bitrateUnit)
+						.setVideoBitRate(Math.min(sourceBitrate , bitrates[i] * bitrateUnit))
 						.setStrict(FFmpegBuilder.Strict.EXPERIMENTAL)
 						.addExtraArgs("-threads", "4")
 						.addExtraArgs("-profile:v", "baseline")
