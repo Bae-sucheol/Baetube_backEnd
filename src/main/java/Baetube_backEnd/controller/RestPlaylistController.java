@@ -187,4 +187,20 @@ public class RestPlaylistController
 		}
 	}
 	
+	@GetMapping("/api/playlist/item/{playlistId}")
+	public ResponseEntity<Object> selectPlaylistItem(@PathVariable Integer channelId, HttpServletResponse response) throws IOException
+	{                                             
+		try
+		{
+			System.out.println("요청이 도착했습니다.");
+			List<Playlist> playlistList = playlistChannelService.select(channelId);
+			return ResponseEntity.status(HttpStatus.OK).body(playlistList);
+		} 
+		catch (NullPlaylistException e)
+		{
+			
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+		}
+	}
+	
 }
