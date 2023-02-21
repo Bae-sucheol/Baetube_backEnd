@@ -1,5 +1,7 @@
 package Baetube_backEnd.service.file;
 
+
+
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
@@ -15,6 +17,7 @@ import javax.imageio.ImageIO;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.method.P;
 import org.springframework.web.multipart.MultipartFile;
 
 import Baetube_backEnd.FFmpegWrapper;
@@ -24,7 +27,8 @@ import Baetube_backEnd.exception.NotSupportUploadException;
 public class FileUploadService
 {
 	private static final String BASE_FILE_PATH = Paths.get("G:", "baetube").toString();
-	private static final int IMAGE_SIZE = 64;
+	private static int ImageResolution[][] = {{64, 64}, {640, 360}};
+	private int selectedResolution;
 	
 	public boolean upload(String type, String purpose, String fileName, MultipartFile request) throws IOException, NotSupportUploadException
 	{
@@ -69,6 +73,9 @@ public class FileUploadService
 		// 타입이 이미지면 리사이징 후 저장.
 		if(type.equals("image"))
 		{
+			
+			
+			
 			saveImage(fileStream, storageFile);
 		}
 		else // 파일이 동영상이면 파일을 저장하고 FFmpeg을 사용하여 hls 인코딩.
@@ -113,11 +120,14 @@ public class FileUploadService
 	// 추후 배너, 프로필, 게시글등 목적에 맞는 이미지 별 사이즈 변환을 지원해야 한다.
 	private BufferedImage resize(InputStream fileStream) throws IOException
 	{
+		int width = ImageResolution[selectedResolution][0];
+		int height = ImageResolution[selectedResolution][1];
+		
 		BufferedImage inputImage = ImageIO.read(fileStream);
-		BufferedImage outputImage = new BufferedImage(IMAGE_SIZE, IMAGE_SIZE, inputImage.getType());
+		BufferedImage outputImage = new BufferedImage(width, height, inputImage.getType());
 		
 		Graphics2D graphics2d = outputImage.createGraphics();
-		graphics2d.drawImage(inputImage, 0, 0, IMAGE_SIZE, IMAGE_SIZE, null);
+		graphics2d.drawImage(inputImage, 0, 0, width, height, null);
 		graphics2d.dispose();
 		
 		return outputImage;
@@ -138,5 +148,18 @@ public class FileUploadService
 		{
 			throw new NotSupportUploadException();
 		}
+		
+		if(type.equals(types[0]))
+		{
+			for (int i = 0; i < 2; i++) //for (int i = 0; i < purposes.length; i++)
+			{
+				if(purpose.equals(purposes[i]))
+				{
+					selectedResolution = i;
+					break;
+				}
+			}
+		}
 	}
+	
 }

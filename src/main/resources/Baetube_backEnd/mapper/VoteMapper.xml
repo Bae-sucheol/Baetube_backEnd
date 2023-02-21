@@ -11,8 +11,7 @@
 			INSERT INTO vote(community_id, title, `comment`)
 			VALUES(
 				#{vote.communityId},
-				#{vote.title},
-				#{vote.comment}
+				#{vote.title}
 			)
 		
 		</insert>
