@@ -8,10 +8,11 @@
 	
 		<insert id="insert" statementType="CALLABLE" parameterType="map">
 			CALL insert_community(
-				#{community.channelId},
-				#{community.imageUrl},
-				#{community.comment},
-				NOW()
+				#{community.channelId, mode=IN, jdbcType=INTEGER, javaType=int},
+				#{community.imageUrl, mode=IN, jdbcType=VARCHAR, javaType=String},
+				#{community.comment, mode=IN, jdbcType=VARCHAR, javaType=String},
+				NOW(),
+				#{community.communityId, mode=OUT, jdbcType=INTEGER, javaType=int}
 			)
 		</insert>
 		

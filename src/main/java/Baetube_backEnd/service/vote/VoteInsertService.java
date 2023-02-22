@@ -1,5 +1,7 @@
 package Baetube_backEnd.service.vote;
 
+import java.util.HashMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,7 +15,7 @@ public class VoteInsertService
 	private VoteMapper voteMapper;
 	
 	@Transactional
-	public boolean insert(Vote request) throws DuplicateVoteException
+	public HashMap<String , String> insert(Vote request) throws DuplicateVoteException
 	{
 		Vote vote = voteMapper.selectVoteByCommunityId(request.getCommunityId());
 		
@@ -24,6 +26,11 @@ public class VoteInsertService
 		
 		voteMapper.insertVote(request);
 		
-		return true;
+		HashMap<String , String> result = new HashMap<>();
+		
+		result.put("insertType", "vote");
+		result.put("voteId", String.valueOf(request.getVoteId()));
+		
+		return result;
 	}
 }

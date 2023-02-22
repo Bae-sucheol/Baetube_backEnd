@@ -1,6 +1,7 @@
 package Baetube_backEnd.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -92,8 +93,8 @@ public class RestCommunityController
 		                                                 
 		try
 		{
-			communityInsertService.insertCommunity(request);
-			return ResponseEntity.status(HttpStatus.OK).build();
+			HashMap<String, String> result = communityInsertService.insertCommunity(request);
+			return ResponseEntity.status(HttpStatus.OK).body(result);
 		} 
 		catch (DuplicateUserException e)
 		{

@@ -1,5 +1,7 @@
 package Baetube_backEnd.service.video;
 
+import java.util.HashMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import Baetube_backEnd.UUIDUtil;
@@ -11,7 +13,7 @@ public class VideoInsertService
 	@Autowired
 	private VideoMapper videoMaper;
 	
-	public String[] insert(Video request)
+	public HashMap<String, String> insert(Video request)
 	{
 		// 동영상, 썸네일 UUID 생성.
 		String videoUUID = UUIDUtil.createUUID();
@@ -24,6 +26,13 @@ public class VideoInsertService
 		// 동영상 파일
 		videoMaper.insert(request);
 		
-		return new String[] {videoUUID, thumbnailUUID};
+		// 맵을 만들어서 반환한다.
+		HashMap<String, String> result = new HashMap<>();
+		
+		result.put("insertType", "video");
+		result.put("videoUUID", videoUUID);
+		result.put("thumbnailUUID", thumbnailUUID);
+		
+		return result;
 	}
 }

@@ -1,6 +1,7 @@
 package Baetube_backEnd.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -69,8 +70,8 @@ public class RestVoteController
 		                                                 
 		try
 		{
-			voteInsertService.insert(request);
-			return ResponseEntity.status(HttpStatus.OK).build();
+			HashMap<String , String> result = voteInsertService.insert(request);
+			return ResponseEntity.status(HttpStatus.OK).body(result);
 		} 
 		catch (DuplicateVoteException e)
 		{

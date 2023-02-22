@@ -6,9 +6,9 @@
 	
 	<mapper namespace="Baetube_backEnd.mapper.VoteMapper">
 	
-		<insert id="insertVote" parameterType="map">
+		<insert id="insertVote" parameterType="map" useGeneratedKeys="true" keyProperty="vote.voteId">
 		
-			INSERT INTO vote(community_id, title, `comment`)
+			INSERT INTO vote(community_id, title)
 			VALUES(
 				#{vote.communityId},
 				#{vote.title}
@@ -102,13 +102,13 @@
 		
 		<select id="selectVoteByCommunityId" resultType="voteDto">
 		
-			SELECT vote_id as voteId, community_id as communityId, `title`, `comment` FROM vote WHERE community_id = #{communityId}
+			SELECT vote_id as voteId, community_id as communityId, `title` FROM vote WHERE community_id = #{communityId}
 			
 		</select>
 		
 		<select id="selectVote" resultType="voteDto">
 		
-			SELECT vote_id as voteId, community_id as communityId, `title`, `comment` FROM vote WHERE vote_id = #{voteId}
+			SELECT vote_id as voteId, community_id as communityId, `title` FROM vote WHERE vote_id = #{voteId}
 			
 		</select>
 		

@@ -27,7 +27,7 @@ import Baetube_backEnd.exception.NotSupportUploadException;
 public class FileUploadService
 {
 	private static final String BASE_FILE_PATH = Paths.get("G:", "baetube").toString();
-	private static int ImageResolution[][] = {{64, 64}, {640, 360}};
+	private static int ImageResolution[][] = {{64, 64}, {640, 360}, {640, 360}, {640, 360}};
 	private int selectedResolution;
 	
 	public boolean upload(String type, String purpose, String fileName, MultipartFile request) throws IOException, NotSupportUploadException
@@ -151,7 +151,7 @@ public class FileUploadService
 		
 		if(type.equals(types[0]))
 		{
-			for (int i = 0; i < 2; i++) //for (int i = 0; i < purposes.length; i++)
+			for (int i = 0; i < 4; i++) //for (int i = 0; i < purposes.length; i++)
 			{
 				if(purpose.equals(purposes[i]))
 				{

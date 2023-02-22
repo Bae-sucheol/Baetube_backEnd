@@ -1,6 +1,7 @@
 package Baetube_backEnd.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -153,7 +154,7 @@ public class RestVideoController
 		                                                 
 		try
 		{
-			String result[] = videoInsertService.insert(request);
+			HashMap<String, String> result = videoInsertService.insert(request);
 			return ResponseEntity.status(HttpStatus.OK).body(result);
 		} 
 		catch (Exception e)
