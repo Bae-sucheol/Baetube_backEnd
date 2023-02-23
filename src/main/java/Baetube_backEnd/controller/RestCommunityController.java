@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import Baetube_backEnd.ErrorResponse;
-import Baetube_backEnd.dto.Channel;
 import Baetube_backEnd.dto.Community;
 import Baetube_backEnd.exception.DuplicateUserException;
 import Baetube_backEnd.exception.NullCommunityException;

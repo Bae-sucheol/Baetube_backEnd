@@ -6,14 +6,11 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Component;
-
 import net.bramp.ffmpeg.FFmpeg;
 import net.bramp.ffmpeg.FFmpegExecutor;
 import net.bramp.ffmpeg.FFprobe;
 import net.bramp.ffmpeg.builder.FFmpegBuilder;
 import net.bramp.ffmpeg.builder.FFmpegOutputBuilder;
-import net.bramp.ffmpeg.job.FFmpegJob;
 import net.bramp.ffmpeg.probe.FFmpegProbeResult;
 import net.bramp.ffmpeg.probe.FFmpegStream;
 
@@ -47,7 +44,7 @@ public class FFmpegWrapper
 		FFmpegStream stream = probeResult.getStreams().get(0);
 		
 		long sourceBitrate = stream.bit_rate;
-		int width = stream.width;
+		//int width = stream.width;
 		int height = stream.height;
 		
 		String fileBasePath = Paths.get(basePath, fileName).toString();
