@@ -35,9 +35,22 @@
 		
 		<select id="selectByChannel" resultType="communityDto">
 		
+		<!--  
 			SELECT community_id as communityId, contents_id as contentsId, channel_id as channelId, `like`, hate,
 				reply_count as replyCount, image_url as imageUrl, `comment`, `date` 
 			FROM community NATURAL JOIN contents WHERE channel_id = #{channelId};
+		-->
+		
+			SELECT a.community_id AS communityId, a.contents_id AS contentsId, channel_id AS channelId, `like` as likeCount,
+			 `hate` as hateCount, b.reply_count AS replyCount, image_url AS imageUrl, a.comment, a.date, c.vote_id AS voteId,
+			  `title`, d.vote_option_id AS voteOptionId, `option`, `count`  FROM community AS a
+				 LEFT JOIN contents AS b
+				 ON a.contents_id = b.contents_id
+				 LEFT JOIN vote AS c
+				 ON a.community_id = c.community_id
+				 LEFT JOIN vote_option AS d
+				 ON c.vote_id = d.vote_id
+				 WHERE a.channel_id = #{channelId};
 		
 		</select>
 		

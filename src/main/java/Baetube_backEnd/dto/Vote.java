@@ -5,7 +5,6 @@ public class Vote
 	private Integer voteId;
 	private Integer communityId;
 	private String title;
-	private String comment;
 	private Integer voteOptionId;
 	private String option;
 	private Integer count;
@@ -16,34 +15,31 @@ public class Vote
 		super();
 	}
 	
-	public Vote(Integer voteId, Integer communityId, String title, String comment, Integer voteOptionId, String option,
+	public Vote(Integer voteId, Integer communityId, String title, Integer voteOptionId, String option,
 			Integer count)
 	{
 		super();
 		this.voteId = voteId;
 		this.communityId = communityId;
 		this.title = title;
-		this.comment = comment;
 		this.voteOptionId = voteOptionId;
 		this.option = option;
 		this.count = count;
 	}
 
-	public Vote(Integer communityId, String title, String comment)
+	public Vote(Integer communityId, String title)
 	{
 		super();
 		this.communityId = communityId;
 		this.title = title;
-		this.comment = comment;
 	}
 	
-	public Vote(Integer voteId, Integer communityId, String title, String comment)
+	public Vote(Integer voteId, Integer communityId, String title)
 	{
 		super();
 		this.voteId = voteId;
 		this.communityId = communityId;
 		this.title = title;
-		this.comment = comment;
 	}
 	
 	public Vote(Integer voteId, Integer voteOptionId, String option, Integer count)
@@ -67,10 +63,6 @@ public class Vote
 	public String getTitle()
 	{
 		return title;
-	}
-	public String getComment()
-	{
-		return comment;
 	}
 	public Integer getVoteOptionId()
 	{
@@ -97,10 +89,6 @@ public class Vote
 	public void setTitle(String title)
 	{
 		this.title = title;
-	}
-	public void setComment(String comment)
-	{
-		this.comment = comment;
 	}
 	public void setVoteOptionId(Integer voteOptionId)
 	{

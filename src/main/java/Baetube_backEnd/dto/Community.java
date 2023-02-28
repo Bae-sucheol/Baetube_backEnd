@@ -1,6 +1,5 @@
 package Baetube_backEnd.dto;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 public class Community
@@ -14,6 +13,11 @@ public class Community
 	    private String imageUrl;
 	    private String comment;
 	    private Timestamp date;
+	    private Integer voteId;
+		private String title;
+		private Integer voteOptionId;
+		private String option;
+		private Integer count;	
 	    
 	    // constructor
 	    
@@ -22,7 +26,28 @@ public class Community
 			super();
 		}
 	    
-	    public Community(Integer communityId, Long contentsId, Integer channelId, Integer likeCount,
+	    public Community(Integer communityId, Long contentsId, Integer channelId, Integer likeCount, Integer hateCount,
+				Integer replyCount, String imageUrl, String comment, Timestamp date, Integer voteId, String title,
+				Integer voteOptionId, String option, Integer count)
+		{
+			super();
+			this.communityId = communityId;
+			this.contentsId = contentsId;
+			this.channelId = channelId;
+			this.likeCount = likeCount;
+			this.hateCount = hateCount;
+			this.replyCount = replyCount;
+			this.imageUrl = imageUrl;
+			this.comment = comment;
+			this.date = date;
+			this.voteId = voteId;
+			this.title = title;
+			this.voteOptionId = voteOptionId;
+			this.option = option;
+			this.count = count;
+		}
+
+		public Community(Integer communityId, Long contentsId, Integer channelId, Integer likeCount,
 				Integer hateCount, Integer replyCount, String imageUrl, String comment, Timestamp date)
 		{
 			super();
@@ -84,6 +109,32 @@ public class Community
 			return date;
 		}
 		
+		
+		public Integer getVoteId()
+		{
+			return voteId;
+		}
+
+		public String getTitle()
+		{
+			return title;
+		}
+
+		public Integer getVoteOptionId()
+		{
+			return voteOptionId;
+		}
+
+		public String getOption()
+		{
+			return option;
+		}
+
+		public Integer getCount()
+		{
+			return count;
+		}
+
 		// setter
 		public void setCommunityId(Integer communityId)
 		{
@@ -120,6 +171,31 @@ public class Community
 		public void setDate(Timestamp date)
 		{
 			this.date = date;
+		}
+
+		public void setVoteId(Integer voteId)
+		{
+			this.voteId = voteId;
+		}
+
+		public void setTitle(String title)
+		{
+			this.title = title;
+		}
+
+		public void setVoteOptionId(Integer voteOptionId)
+		{
+			this.voteOptionId = voteOptionId;
+		}
+
+		public void setOption(String option)
+		{
+			this.option = option;
+		}
+
+		public void setCount(Integer count)
+		{
+			this.count = count;
 		}
 	    
 	    
