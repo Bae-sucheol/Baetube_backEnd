@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.checkerframework.checker.units.qual.cd;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,8 @@ import Baetube_backEnd.dto.Vote;
 import Baetube_backEnd.exception.DuplicateVoteException;
 import Baetube_backEnd.exception.DuplicateVoteOptionException;
 import Baetube_backEnd.exception.NullVoteException;
+import Baetube_backEnd.service.vote.CancelVoteOptionService;
+import Baetube_backEnd.service.vote.CastVoteOptionService;
 import Baetube_backEnd.service.vote.VoteDeleteOptionMultiService;
 import Baetube_backEnd.service.vote.VoteDeleteOptionService;
 import Baetube_backEnd.service.vote.VoteDeleteService;
@@ -56,6 +59,10 @@ public class RestVoteController
 	private VoteUpdateOptionService voteUpdateOptionService;
 	@Autowired
 	private VoteSelectOptionService VoteSelectOptionService;
+	@Autowired
+	private CastVoteOptionService castVoteOptionService;
+	@Autowired
+	private CancelVoteOptionService cancelVoteOptionService;
 	
 	@PostMapping("/api/vote/insert")
 	public ResponseEntity<Object> insertVote(@RequestBody @Valid Vote request, Errors errors, HttpServletResponse response) throws IOException
@@ -124,6 +131,52 @@ public class RestVoteController
 		catch (DuplicateVoteOptionException e)
 		{
 			
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+		}
+		
+	}
+	
+	@PostMapping("/api/vote/cast")
+	public ResponseEntity<Object> castVoteOption(@RequestBody @Valid Vote request, Errors errors, HttpServletResponse response) throws IOException
+	{
+		
+		if(errors.hasErrors())
+		{
+			String errorCodes = errors.getAllErrors().stream().map(error -> error.getCodes()[0]).collect(Collectors.joining(","));
+			
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse("errorCodes = " + errorCodes));
+		}
+		                                                 
+		try
+		{
+			castVoteOptionService.castVoteOption(request);
+			return ResponseEntity.status(HttpStatus.OK).build();
+		} 
+		catch (DuplicateVoteException e)
+		{
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+		}
+		
+	}
+	
+	@PostMapping("/api/vote/cancel")
+	public ResponseEntity<Object> cancelVoteOption(@RequestBody @Valid Vote request, Errors errors, HttpServletResponse response) throws IOException
+	{
+		
+		if(errors.hasErrors())
+		{
+			String errorCodes = errors.getAllErrors().stream().map(error -> error.getCodes()[0]).collect(Collectors.joining(","));
+			
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse("errorCodes = " + errorCodes));
+		}
+		                                                 
+		try
+		{
+			cancelVoteOptionService.cancelVoteOption(request);
+			return ResponseEntity.status(HttpStatus.OK).build();
+		} 
+		catch (DuplicateVoteException e)
+		{
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
 		
@@ -264,4 +317,6 @@ public class RestVoteController
 		}
 		
 	}
+	
+	
 }

@@ -21,4 +21,6 @@ public interface VoteMapper
 	public Vote selectVote(@Param("voteId") Integer voteId);
 	public Vote selectVoteByCommunityId(@Param("communityId") Integer communityId);
 	public Vote selectVoteOption(@Param("voteOptionId") Integer voteOptionId);
+	public void castVoteOption(@Param("channelId") Integer channelId, @Param("voteId") Integer voteId, @Param("voteOptionId") Integer voteOptionId);
+	public void cancelVoteOption(@Param("channelId") Integer channelId, @Param("voteId") Integer voteId, @Param("voteOptionId") Integer voteOptionId);
 }

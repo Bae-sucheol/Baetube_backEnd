@@ -35,6 +35,16 @@
 				</foreach>
 		</insert>
 		
+		<insert id="castVoteOption" statementType="CALLABLE">
+		
+			CALL cast_vote(
+				#{channelId, mode=IN, jdbcType=INTEGER, javaType=int},
+				#{voteId, mode=IN, jdbcType=INTEGER, javaType=int},
+				#{voteOptionId, mode=IN, jdbcType=INTEGER, javaType=int}
+			)
+		
+		</insert>
+		
 		<update id="updateVote" parameterType="map">
 		
 			UPDATE vote
@@ -85,6 +95,16 @@
 			<foreach collection="voteOptionList" item="item" index="index" separator="," open="(" close=")">
 				#{item.voteOptionId}
 			</foreach>
+		
+		</delete>
+		
+		<delete id="cancelVoteOption" statementType="CALLABLE">
+		
+			CALL cancel_vote(
+				#{channelId, mode=IN, jdbcType=INTEGER, javaType=int},
+				#{voteId, mode=IN, jdbcType=INTEGER, javaType=int},
+				#{voteOptionId, mode=IN, jdbcType=INTEGER, javaType=int}
+			)
 		
 		</delete>
 		

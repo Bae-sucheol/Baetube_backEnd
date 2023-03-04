@@ -38,12 +38,12 @@ public class RestCommunityController
 	@Autowired
 	private CommunityInsertService communityInsertService;
 
-	@GetMapping("/api/community/channel_visit/{channelId}")
-	public ResponseEntity<Object> getChannelCommunity(@PathVariable Integer channelId, HttpServletResponse response) throws IOException
+	@GetMapping("/api/community/channel_visit/{channelId}/{requestChannelId}")
+	public ResponseEntity<Object> getChannelCommunity(@PathVariable Integer channelId, @PathVariable Integer requestChannelId, HttpServletResponse response) throws IOException
 	{
 		try
 		{
-			List<Community> communityList = communityChannelVisitService.selectCommunity(channelId);
+			List<Community> communityList = communityChannelVisitService.selectCommunity(channelId, requestChannelId);
 			return ResponseEntity.status(HttpStatus.OK).body(communityList);
 		} 
 		catch (NullCommunityException e)

@@ -12,6 +12,6 @@ public interface CommunityMapper
 	public void insert(@Param("community") Community community);
 	public void update(@Param("oldCommunity") Community oldCommunity, @Param("newCommunity") Community newCommunity);
 	public void delete(@Param("communityId") Integer communityId);
-	public List<Community> selectByChannel(@Param("channelId") Integer channelId);
+	public List<Community> selectByChannel(@Param("channelId") Integer channelId, @Param("requestChannelId") Integer requestChannelId);
 	public Community selectByCommunityId(@Param("communityId") Integer communityId);
 }

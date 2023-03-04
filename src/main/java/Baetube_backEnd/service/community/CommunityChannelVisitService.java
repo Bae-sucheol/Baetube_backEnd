@@ -16,9 +16,9 @@ public class CommunityChannelVisitService
 	@Autowired
 	private CommunityMapper communityMapper;
 
-	public List<Community> selectCommunity(Integer request)
+	public List<Community> selectCommunity(Integer channelId, Integer requestChannelId)
 	{
-		List<Community> communityList = communityMapper.selectByChannel(request);
+		List<Community> communityList = communityMapper.selectByChannel(channelId, requestChannelId);
 		
 		if(communityList == null)
 		{

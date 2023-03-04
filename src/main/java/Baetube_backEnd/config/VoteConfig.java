@@ -3,6 +3,8 @@ package Baetube_backEnd.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import Baetube_backEnd.service.vote.CancelVoteOptionService;
+import Baetube_backEnd.service.vote.CastVoteOptionService;
 import Baetube_backEnd.service.vote.VoteDeleteOptionMultiService;
 import Baetube_backEnd.service.vote.VoteDeleteOptionService;
 import Baetube_backEnd.service.vote.VoteDeleteService;
@@ -70,4 +72,15 @@ public class VoteConfig
 		return new VoteUpdateService();
 	}
 	
+	@Bean
+	public CastVoteOptionService castVoteOptionService()
+	{
+		return new CastVoteOptionService();
+	}
+	
+	@Bean
+	public CancelVoteOptionService cancelVoteOptionService()
+	{
+		return new CancelVoteOptionService();
+	}
 }
