@@ -23,7 +23,7 @@
 		<select id="selectByContentsId" resultType="replyDto">
 		
 			SELECT reply_id AS replyId, contents_id AS contentsId, attached_id AS attachedId, channel_id AS channelId, 
-			`comment`, `like`, hate, `date`, `name`, `profile` FROM reply NATURAL JOIN contents 
+			`comment`, `like`, hate, `date`, reply_count as nestedCount, `name`, `profile` FROM reply NATURAL JOIN contents 
 			NATURAL JOIN CHANNEL WHERE attached_id = #{contentsId};
 		
 			<!-- SELECT reply_id as replyId, contents_id as contentsId, attached_id as attachedId, channel_id as channelId, `comment`, `like`, 

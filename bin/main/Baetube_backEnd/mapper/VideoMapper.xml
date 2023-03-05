@@ -42,7 +42,8 @@
 		<select id="selectMainVideo" resultType="videoDto">
 		
 			SELECT video_id as videoId, contents_id as contentsId, channel_id as channelId, url, public, thumbnail, title,
-			info, location, age, views, `like`, hate, reply_count as replyCount, `date`, category_id as categoryId, `profile`, `name` 
+			info, location, age, views, `like`, hate, reply_count as replyCount, `date`, category_id as categoryId,
+			`profile`, `name`, subs 
 			 
 			 FROM CHANNEL NATURAL JOIN
 

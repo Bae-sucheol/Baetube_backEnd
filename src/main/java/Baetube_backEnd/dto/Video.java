@@ -25,6 +25,7 @@ public class Video
 	private Timestamp historyDate;
 	private Integer playlistItemId;
 	private Integer playlistId;
+	private Integer subs;
 	
 	// constructor
 	public Video()
@@ -32,6 +33,40 @@ public class Video
 		super();
 	}
 	
+	
+	
+	public Video(Integer videoId, Long contentsId, Integer channelId, String url, Integer visible, String thumbnail,
+			String title, String info, String location, Integer age, Integer views, Integer like, Integer hate,
+			Integer replyCount, Timestamp date, Integer categoryId, String profile, String name, Timestamp historyDate,
+			Integer playlistItemId, Integer playlistId, Integer subs)
+	{
+		super();
+		this.videoId = videoId;
+		this.contentsId = contentsId;
+		this.channelId = channelId;
+		this.url = url;
+		this.visible = visible;
+		this.thumbnail = thumbnail;
+		this.title = title;
+		this.info = info;
+		this.location = location;
+		this.age = age;
+		this.views = views;
+		this.like = like;
+		this.hate = hate;
+		this.replyCount = replyCount;
+		this.date = date;
+		this.categoryId = categoryId;
+		this.profile = profile;
+		this.name = name;
+		this.historyDate = historyDate;
+		this.playlistItemId = playlistItemId;
+		this.playlistId = playlistId;
+		this.subs = subs;
+	}
+
+
+
 	public Video(Integer videoId, Long contentsId, Integer channelId, String url, Integer visible, String thumbnail,
 			String title, String info, String location, Integer age, Integer views, Integer like, Integer hate,
 			Integer replyCount, Timestamp date, Integer categoryId, String profile, String name, Timestamp historyDate,
@@ -311,6 +346,11 @@ public class Video
 		return playlistId;
 	}
 	
+	public Integer getSubs()
+	{
+		return subs;
+	}
+
 	// setter
 	public void setVideoId(Integer videoId)
 	{
@@ -415,6 +455,11 @@ public class Video
 	public void setPlaylistId(Integer playlistId)
 	{
 		this.playlistId = playlistId;
+	}
+	
+	public void setSubs(Integer subs)
+	{
+		this.subs = subs;
 	}
 
 }
