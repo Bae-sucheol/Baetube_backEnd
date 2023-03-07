@@ -10,10 +10,10 @@ public class PlaylistInsertService
 	@Autowired
 	private PlaylistMapper playlistMapper;
 	
-	public boolean insert(Playlist request)
+	public Integer insert(Playlist request)
 	{
 		playlistMapper.insert(request);
 		
-		return true;
+		return request.getPlaylistId();
 	}
 }

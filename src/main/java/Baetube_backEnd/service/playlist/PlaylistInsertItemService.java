@@ -1,5 +1,7 @@
 package Baetube_backEnd.service.playlist;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,16 +16,17 @@ public class PlaylistInsertItemService
 	private PlaylistMapper playlistMapper;
 	
 	@Transactional
-	public boolean insertItem(PlaylistItem request)
+	public boolean insertItem(List<PlaylistItem> request)
 	{
-		PlaylistItem playlistItem = playlistMapper.selectPlaylistItem(request.getPlaylistId(), request.getVideoId());
+		Integer count = playlistMapper.selectPlaylistItemCount(request.get(0).getPlaylistId() , request);
 		
-		if(playlistItem != null)
+		if(count != 0)
 		{
 			throw new DuplicatePlaylistItemException();
 		}
 		
 		playlistMapper.insertItem(request);
+		playlistMapper.updateVideoCount(request.get(0).getPlaylistId(), request.size());
 		
 		return true;
 	}

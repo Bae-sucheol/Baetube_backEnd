@@ -76,8 +76,8 @@ public class RestPlaylistController
 		                                                 
 		try
 		{
-			playlistInsertService.insert(request);
-			return ResponseEntity.status(HttpStatus.OK).build();
+			Integer playlistId = playlistInsertService.insert(request);
+			return ResponseEntity.status(HttpStatus.OK).body(playlistId);
 		} 
 		catch (NullPlaylistException e)
 		{
@@ -140,7 +140,7 @@ public class RestPlaylistController
 	
 	@PostMapping("/api/playlist/item/insert")
 	//@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<Object> insertPlaylistItem(@RequestBody @Valid PlaylistItem request, Errors errors, HttpServletResponse response) throws IOException
+	public ResponseEntity<Object> insertPlaylistItem(@RequestBody @Valid List<PlaylistItem> request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		if(errors.hasErrors())
 		{
@@ -174,9 +174,6 @@ public class RestPlaylistController
 		                                                 
 		try
 		{
-			System.out.println("요청이 도착했습니다.");
-			System.out.println("playlistId : " + request.getPlaylistId());
-			System.out.println("videoId : " + request.getVideoId());
 			playlistDeleteItemService.deleteItem(request);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 

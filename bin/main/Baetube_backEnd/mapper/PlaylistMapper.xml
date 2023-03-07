@@ -6,19 +6,21 @@
 	
 	<mapper namespace="Baetube_backEnd.mapper.PlaylistMapper">
 	
-		<insert id="insert" parameterType="map">
+		<insert id="insert" parameterType="map" useGeneratedKeys="true" keyProperty="playlist.playlistId">
 		
 			INSERT INTO playlist(channel_id, name, public, thumbnail)
 			VALUES(#{playlist.channelId}, #{playlist.name}, #{playlist.visible}, #{playlist.thumbnail})
 		
 		</insert>
 		
-		<insert id="insertItem" statementType="CALLABLE" parameterType="map">
+		<insert id="insertItem" parameterType="java.util.List" statementType="CALLABLE">
 		
-			CALL insert_playlist_item(
-				#{playlistItem.playlistId},
-				#{playlistItem.videoId}
-			)
+			INSERT INTO playlist_item(playlist_id, video_id)
+			VALUES
+		
+				<foreach collection="playlistItem" item="item" index="index" separator=",">
+					(#{item.playlistId}, #{item.videoId})
+				</foreach>
 			
 		</insert>
 		
@@ -56,28 +58,42 @@
 		
 		</select>
 		
+		<select id="selectPlaylistItemCount" parameterType="java.util.List" resultType="Integer">
+		
+			SELECT COUNT(*) FROM playlist_item WHERE playlist_id = #{playlistId} AND video_id IN(
+			
+				<foreach collection="playlistItem" item="item" index="index" separator=","> 
+				
+					#{item.videoId}
+				
+				</foreach>
+			
+			)
+		
+		</select>
+		
 		<update id="update" parameterType="map">
 		
 			UPDATE playlist
 			
 			<set>
-				<if test='!oldPlaylist.name.equals(newPlaylist.name)'>name = #{newPlaylist.name}, </if>
+				<if test='!oldPlaylist.name.equals(newPlaylist.name)'>`name` = #{newPlaylist.name}, </if>
 				<!--<if test='!oldPlaylist.visible.equals(newPlaylist.visible)'>public = #{newPlaylist.visible}, </if>-->
 				<if test='oldPlaylist.visible != newPlaylist.visible'>public = #{newPlaylist.visible},</if>
 				<if test='!oldPlaylist.thumbnail.equals(newPlaylist.thumbnail)'>thumbnail = #{newPlaylist.thumbnail}, </if>
 			</set>
 			
-			WHERE playlist_id = #{oldPlaylist.playlistId}
+			WHERE playlist_id = #{newPlaylist.playlistId}
 		
 		</update>
 		
-		<update id="updateVideoCount" parameterType="map">
+		<update id="updateVideoCount">
 		
 			UPDATE playlist
 			
 			SET video_count = video_count + #{value}
 			
-			WHERE platlist_id = #{playlistId}
+			WHERE playlist_id = #{playlistId}
 		
 		</update>
 
