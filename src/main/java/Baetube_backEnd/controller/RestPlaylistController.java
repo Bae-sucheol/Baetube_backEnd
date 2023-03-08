@@ -128,6 +128,7 @@ public class RestPlaylistController
 			System.out.println("요청이 도착했습니다.");
 			System.out.println("playlistId : " + request.getPlaylistId());
 			System.out.println("channelId : " + request.getChannelId());
+			System.out.println("thumbnail : " + request.getThumbnail());
 			playlistUpdateService.update(request);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
