@@ -24,7 +24,7 @@ public class FFmpegWrapper
 	private static FFmpeg ffmpeg;
 	private static FFprobe ffprobe;
 	private static final int resolutions[][] = {{1920, 1080}, {1280, 720}, {854, 480}};
-	private static final long bitrates[] = {120000L, 75000L, 40000L};
+	private static final long bitrates[] = {6000L, 4500L, 3000L};
 	private static final long bitrateUnit = 1000L;
 	
 	public FFmpegWrapper()
