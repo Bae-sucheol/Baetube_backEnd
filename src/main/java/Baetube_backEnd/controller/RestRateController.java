@@ -38,8 +38,8 @@ public class RestRateController
 		                                                 
 		try
 		{
-			rateService.rate(request);
-			return ResponseEntity.status(HttpStatus.OK).build();
+			Integer result = rateService.rate(request);
+			return ResponseEntity.status(HttpStatus.OK).body(result);
 		} 
 		catch (NullRateResultException e)
 		{
