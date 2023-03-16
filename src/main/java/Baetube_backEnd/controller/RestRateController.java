@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import Baetube_backEnd.ErrorResponse;
+import Baetube_backEnd.dto.Contents;
 import Baetube_backEnd.dto.Rate;
 import Baetube_backEnd.exception.NullRateResultException;
 import Baetube_backEnd.service.rate.RateService;
@@ -38,7 +39,7 @@ public class RestRateController
 		                                                 
 		try
 		{
-			Integer result = rateService.rate(request);
+			Contents result = rateService.rate(request);
 			return ResponseEntity.status(HttpStatus.OK).body(result);
 		} 
 		catch (NullRateResultException e)
