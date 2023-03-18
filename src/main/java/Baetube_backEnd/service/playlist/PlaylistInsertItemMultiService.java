@@ -7,16 +7,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import Baetube_backEnd.dto.PlaylistItem;
 import Baetube_backEnd.exception.DuplicatePlaylistItemException;
-import Baetube_backEnd.exception.NullPlaylistItemException;
 import Baetube_backEnd.mapper.PlaylistMapper;
 
-public class PlaylistInsertItemService
+public class PlaylistInsertItemMultiService
 {
 	@Autowired
 	private PlaylistMapper playlistMapper;
 	
 	@Transactional
-	public boolean insertItem(List<PlaylistItem> request)
+	public boolean insertItemMulti(List<PlaylistItem> request)
 	{
 		Integer count = playlistMapper.selectPlaylistItemCount(request);
 		
@@ -26,7 +25,7 @@ public class PlaylistInsertItemService
 		}
 		
 		playlistMapper.insertItem(request);
-		playlistMapper.updateVideoCount(request.get(0).getPlaylistId(), request.size());
+		playlistMapper.updateVideoCountMulti(request, 1);
 		
 		return true;
 	}

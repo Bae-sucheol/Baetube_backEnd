@@ -14,11 +14,12 @@ public interface PlaylistMapper
 	public List<Playlist> selectByChannelId(@Param("channelId") Integer channelId);
 	public Playlist selectByPlaylistId(@Param("playlistId") Integer playlistId);
 	public PlaylistItem selectPlaylistItem(@Param("playlistId") Integer playlistId, @Param("videoId") Integer videoId);
-	public Integer selectPlaylistItemCount(@Param("playlistId") Integer playlistId, @Param("playlistItem") List<PlaylistItem> playlistItem);
+	public Integer selectPlaylistItemCount(@Param("playlistItem") List<PlaylistItem> playlistItem);
 	public void update(@Param("oldPlaylist") Playlist oldPlaylist, @Param("newPlaylist") Playlist newPlaylist);
 	
 	public void insertItem(@Param("playlistItem") List<PlaylistItem> playlistItem);
 	public void deleteItem(@Param("playlistItem") PlaylistItem playlistItem);
 	
 	public void updateVideoCount(@Param("playlistId") Integer playlistId, @Param("value") Integer value);
+	public void updateVideoCountMulti(@Param("playlistItem") List<PlaylistItem> playlistItem, @Param("value") Integer value);
 }

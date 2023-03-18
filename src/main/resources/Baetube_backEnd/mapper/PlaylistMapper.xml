@@ -60,15 +60,11 @@
 		
 		<select id="selectPlaylistItemCount" parameterType="java.util.List" resultType="Integer">
 		
-			SELECT COUNT(*) FROM playlist_item WHERE playlist_id = #{playlistId} AND video_id IN(
+			SELECT COUNT(*) FROM playlist_item WHERE
 			
-				<foreach collection="playlistItem" item="item" index="index" separator=","> 
-				
-					#{item.videoId}
-				
+				<foreach collection="playlistItem" item="item" index="index" separator=" OR"> 
+					(playlist_id = #{item.playlistId} AND video_id = #{item.videoId})
 				</foreach>
-			
-			)
 		
 		</select>
 		
@@ -94,6 +90,22 @@
 			SET video_count = video_count + #{value}
 			
 			WHERE playlist_id = #{playlistId}
+		
+		</update>
+		
+		<update id="updateVideoCountMulti" parameterType="java.util.List">
+		
+			UPDATE playlist
+			
+			SET video_count = video_count + #{value}
+			
+			WHERE playlist_id IN (
+			
+			<foreach collection="playlistItem" item="item" index="index" separator=","> 
+					#{item.playlistId}
+				</foreach>
+				
+				)
 		
 		</update>
 

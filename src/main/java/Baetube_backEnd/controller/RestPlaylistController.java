@@ -26,6 +26,7 @@ import Baetube_backEnd.exception.NullPlaylistItemException;
 import Baetube_backEnd.service.playlist.PlaylistChannelService;
 import Baetube_backEnd.service.playlist.PlaylistDeleteItemService;
 import Baetube_backEnd.service.playlist.PlaylistDeleteService;
+import Baetube_backEnd.service.playlist.PlaylistInsertItemMultiService;
 import Baetube_backEnd.service.playlist.PlaylistInsertItemService;
 import Baetube_backEnd.service.playlist.PlaylistInsertService;
 import Baetube_backEnd.service.playlist.PlaylistUpdateService;
@@ -45,6 +46,8 @@ public class RestPlaylistController
 	private PlaylistInsertItemService playlistInsertItemService;
 	@Autowired
 	private PlaylistDeleteItemService playlistDeleteItemService;
+	@Autowired
+	private PlaylistInsertItemMultiService playlistInsertItemMultiService;
 	
 	@GetMapping("/api/playlist/channel/{channelId}")
 	//@ExceptionHandler(MethodArgumentNotValidException.class)
@@ -201,4 +204,26 @@ public class RestPlaylistController
 		}
 	}
 	
+	@PostMapping("/api/playlist/item/insert/multi")
+	//@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<Object> insertPlaylistItemMulti(@RequestBody @Valid List<PlaylistItem> request, Errors errors, HttpServletResponse response) throws IOException
+	{
+		if(errors.hasErrors())
+		{
+			String errorCodes = errors.getAllErrors().stream().map(error -> error.getCodes()[0]).collect(Collectors.joining(","));
+			
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse("errorCodes = " + errorCodes));
+		}
+		                                                 
+		try
+		{
+			playlistInsertItemMultiService.insertItemMulti(request);
+			return ResponseEntity.status(HttpStatus.OK).build();
+		} 
+		catch (NullPlaylistItemException e)
+		{
+			
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("존재하지 않는 아이템");
+		}
+	}
 }

@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import Baetube_backEnd.service.playlist.PlaylistChannelService;
 import Baetube_backEnd.service.playlist.PlaylistDeleteItemService;
 import Baetube_backEnd.service.playlist.PlaylistDeleteService;
+import Baetube_backEnd.service.playlist.PlaylistInsertItemMultiService;
 import Baetube_backEnd.service.playlist.PlaylistInsertItemService;
 import Baetube_backEnd.service.playlist.PlaylistInsertService;
 import Baetube_backEnd.service.playlist.PlaylistUpdateService;
@@ -47,6 +48,12 @@ public class PlaylistConfig
 	public PlaylistUpdateService playlistUpdateService()
 	{
 		return new PlaylistUpdateService();
+	}
+	
+	@Bean
+	public PlaylistInsertItemMultiService playlistInsertItemMultiService()
+	{
+		return new PlaylistInsertItemMultiService();
 	}
 	
 }
