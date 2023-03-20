@@ -6,13 +6,13 @@
 	
 	<mapper namespace="Baetube_backEnd.mapper.ChannelMapper">
 	
-		<insert id="insert" parameterType="map" useGeneratedKeys="true">
+		<insert id="insert" parameterType="map" useGeneratedKeys="true" keyProperty="channel.channelId" keyColumn="channel_id">
 			INSERT INTO channel(user_id, name, reg_date)
 			VALUES(
 				#{channel.userId},
 				#{channel.name},
 				NOW()
-			)
+			) 
 		</insert>
 		
 		<delete id="delete">

@@ -11,11 +11,11 @@ public class ChannelInsertService
 	private ChannelMapper channelMapper;
 
 	
-	public boolean insertChannel(Channel request)
+	public Integer insertChannel(Channel request)
 	{
 		channelMapper.insert(request);
 		
-		return true;
+		return request.getChannelId();
 	}
 	
 }

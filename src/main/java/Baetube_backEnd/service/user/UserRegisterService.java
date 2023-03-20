@@ -18,7 +18,7 @@ public class UserRegisterService
 	private UserMapper userMapper;
 	
 	@Transactional
-	public Integer regist(User request)
+	public User regist(User request)
 	{
 		User user = userMapper.selectByEmail(request.getEmail());
 		
@@ -35,7 +35,7 @@ public class UserRegisterService
 		
 		userMapper.insert(newUser);
 		
-		return newUser.getUserId();
+		return newUser;
 	}
 	
 }
