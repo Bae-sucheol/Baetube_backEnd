@@ -22,4 +22,7 @@ public interface PlaylistMapper
 	
 	public void updateVideoCount(@Param("playlistId") Integer playlistId, @Param("value") Integer value);
 	public void updateVideoCountMulti(@Param("playlistItem") List<PlaylistItem> playlistItem, @Param("value") Integer value);
+	
+	public void insertLikeVideo(@Param("channelId") Integer channelId, @Param("videoId") Integer videoId);
+	public PlaylistItem selectLikePlaylist(@Param("channelId") Integer channelId, @Param("videoId") Integer videoId);	
 }

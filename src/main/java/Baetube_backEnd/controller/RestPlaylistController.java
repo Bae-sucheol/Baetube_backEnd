@@ -20,14 +20,17 @@ import org.springframework.web.bind.annotation.RestController;
 import Baetube_backEnd.ErrorResponse;
 import Baetube_backEnd.dto.Playlist;
 import Baetube_backEnd.dto.PlaylistItem;
+import Baetube_backEnd.dto.Video;
 import Baetube_backEnd.exception.DuplicatePlaylistItemException;
 import Baetube_backEnd.exception.NullPlaylistException;
 import Baetube_backEnd.exception.NullPlaylistItemException;
 import Baetube_backEnd.service.playlist.PlaylistChannelService;
 import Baetube_backEnd.service.playlist.PlaylistDeleteItemService;
+import Baetube_backEnd.service.playlist.PlaylistDeleteLikeVideoService;
 import Baetube_backEnd.service.playlist.PlaylistDeleteService;
 import Baetube_backEnd.service.playlist.PlaylistInsertItemMultiService;
 import Baetube_backEnd.service.playlist.PlaylistInsertItemService;
+import Baetube_backEnd.service.playlist.PlaylistInsertLikeVideoService;
 import Baetube_backEnd.service.playlist.PlaylistInsertService;
 import Baetube_backEnd.service.playlist.PlaylistUpdateService;
 
@@ -48,6 +51,10 @@ public class RestPlaylistController
 	private PlaylistDeleteItemService playlistDeleteItemService;
 	@Autowired
 	private PlaylistInsertItemMultiService playlistInsertItemMultiService;
+	@Autowired
+	private PlaylistInsertLikeVideoService playlistInsertLikeVideoService;
+	@Autowired
+	private PlaylistDeleteLikeVideoService playlistDeleteLikeVideoService;
 	
 	@GetMapping("/api/playlist/channel/{channelId}")
 	//@ExceptionHandler(MethodArgumentNotValidException.class)
@@ -218,6 +225,52 @@ public class RestPlaylistController
 		try
 		{
 			playlistInsertItemMultiService.insertItemMulti(request);
+			return ResponseEntity.status(HttpStatus.OK).build();
+		} 
+		catch (NullPlaylistItemException e)
+		{
+			
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("존재하지 않는 아이템");
+		}
+	}
+	
+	@PostMapping("/api/playlist/item/insert/like")
+	//@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<Object> insertLikeVideo(@RequestBody @Valid Video request, Errors errors, HttpServletResponse response) throws IOException
+	{
+		if(errors.hasErrors())
+		{
+			String errorCodes = errors.getAllErrors().stream().map(error -> error.getCodes()[0]).collect(Collectors.joining(","));
+			
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse("errorCodes = " + errorCodes));
+		}
+		                                                 
+		try
+		{
+			playlistInsertLikeVideoService.insertLikeVideo(request);
+			return ResponseEntity.status(HttpStatus.OK).build();
+		} 
+		catch (NullPlaylistItemException e)
+		{
+			
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("존재하지 않는 아이템");
+		}
+	}
+	
+	@PostMapping("/api/playlist/item/delete/like")
+	//@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<Object> deleteLikeVideo(@RequestBody @Valid Video request, Errors errors, HttpServletResponse response) throws IOException
+	{
+		if(errors.hasErrors())
+		{
+			String errorCodes = errors.getAllErrors().stream().map(error -> error.getCodes()[0]).collect(Collectors.joining(","));
+			
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse("errorCodes = " + errorCodes));
+		}
+		                                                 
+		try
+		{
+			playlistDeleteLikeVideoService.deleteLikeVideo(request);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
 		catch (NullPlaylistItemException e)
