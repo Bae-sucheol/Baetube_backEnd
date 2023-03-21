@@ -26,7 +26,7 @@ import Baetube_backEnd.service.channel.ChannelInsertService;
 import Baetube_backEnd.service.channel.ChannelSubscribersService;
 import Baetube_backEnd.service.channel.ChannelUpdateService;
 import Baetube_backEnd.service.channel.ChannelVisitService;
-
+ 
 @RestController
 public class RestChannelController
 {
