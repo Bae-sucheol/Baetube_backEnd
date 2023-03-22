@@ -125,6 +125,7 @@ public class RestUserController
 		}
 	}
 	
+	
 	@PostMapping("/api/user/unregist")
 	public ResponseEntity<Object> unRegistUser(@RequestBody User request, Errors errors, HttpServletResponse response) throws IOException
 	{
