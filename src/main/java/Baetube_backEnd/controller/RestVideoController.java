@@ -33,6 +33,7 @@ import Baetube_backEnd.service.video.ChannelVideoRequestService;
 import Baetube_backEnd.service.video.HistoryVideoRequestService;
 import Baetube_backEnd.service.video.MainVideoRequestService;
 import Baetube_backEnd.service.video.PlaylistVideoRequestService;
+import Baetube_backEnd.service.video.RelatedVideoRequestService;
 import Baetube_backEnd.service.video.SubscribeVideoRequestService;
 import Baetube_backEnd.service.video.VideoInsertService;
 import Baetube_backEnd.service.video.VideoUpdateService;
@@ -57,6 +58,8 @@ public class RestVideoController
 	private VideoUpdateService videoUpdateService;
 	@Autowired
 	private VideoViewService videoViewService;
+	@Autowired
+	private RelatedVideoRequestService relatedVideoRequestService;
 	
 	@GetMapping("/api/video/channel_video/{channelId}")
 	public ResponseEntity<Object> getChannelVideo(@PathVariable Integer channelId, HttpServletResponse response) throws IOException
@@ -205,4 +208,21 @@ public class RestVideoController
 		}
 		
 	}
+	
+	@GetMapping("/api/video/related/{videoId}")
+	public ResponseEntity<Object> getRelatedVideo(@PathVariable Integer videoId, HttpServletResponse response) throws IOException
+	{                                         
+		try
+		{
+			List<Video> videoList = relatedVideoRequestService.requestVideo(videoId);
+			return ResponseEntity.status(HttpStatus.OK).body(videoList);
+		} 
+		catch (NullVideoException e)
+		{
+			
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+		}
+		
+	}
+	
 }

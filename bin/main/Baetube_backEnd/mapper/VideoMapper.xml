@@ -86,6 +86,22 @@
 		
 		</select>
 		
+		<select id="selectRelatedVideo" resultType="videoDto">
+		
+			(SELECT video_id as videoId, contents_id as contentsId, channel_id as channelId, url, public, thumbnail, title, info, 
+			location, age, views, `like`, hate, reply_count as replyCount, `date`, category_id as categoryId, `profile`, `name`, subs 
+			FROM video NATURAL JOIN `channel` NATURAL JOIN contents 
+			WHERE category_id = (SELECT category_id FROM video WHERE video_id = #{videoId}) ORDER BY views DESC LIMIT 25)
+
+			UNION
+
+			(SELECT video_id as videoId, contents_id as contentsId, channel_id as channelId, url, public, thumbnail, title, info, 
+			location, age, views, `like`, hate, reply_count as replyCount, `date`, category_id as categoryId, `profile`, `name`, subs 
+			FROM video NATURAL JOIN `channel` NATURAL JOIN contents 
+			WHERE channel_id = (SELECT channel_id FROM video WHERE video_id = #{videoId}) LIMIT 25);
+		
+		</select>
+		
 		<update id="update" parameterType="map">
 			UPDATE video 
 			

@@ -7,6 +7,7 @@ import Baetube_backEnd.service.video.ChannelVideoRequestService;
 import Baetube_backEnd.service.video.HistoryVideoRequestService;
 import Baetube_backEnd.service.video.MainVideoRequestService;
 import Baetube_backEnd.service.video.PlaylistVideoRequestService;
+import Baetube_backEnd.service.video.RelatedVideoRequestService;
 import Baetube_backEnd.service.video.SubscribeVideoRequestService;
 import Baetube_backEnd.service.video.VideoInsertService;
 import Baetube_backEnd.service.video.VideoUpdateService;
@@ -62,5 +63,11 @@ public class VideoConfig
 	public VideoViewService videoViewService()
 	{
 		return new VideoViewService();
+	}
+	
+	@Bean
+	public RelatedVideoRequestService relatedVideoRequestService()
+	{
+		return new RelatedVideoRequestService();
 	}
 }

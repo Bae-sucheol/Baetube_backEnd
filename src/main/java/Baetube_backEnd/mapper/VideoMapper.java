@@ -15,6 +15,7 @@ public interface VideoMapper
 	public List<Video> selectChannelVideo(@Param("channelId") Integer channelId);
 	public List<Video> selectHistoryVideo(@Param("userId") Integer userId);
 	public List<Video> selectPlaylistVideo(@Param("playlistId") Integer playlistId);
+	public List<Video> selectRelatedVideo(@Param("videoId") Integer videoId);
 	public Video selectByVideoId(@Param("videoId") Integer videoId);
 	public void update(@Param("oldVideo") Video oldVideo, @Param("newVideo") Video newVideo);
 	public void updateViews(@Param("videoId") Integer videoId, @Param("value") Integer value);
