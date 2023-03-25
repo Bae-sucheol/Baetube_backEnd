@@ -1,6 +1,7 @@
 package Baetube_backEnd.controller;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletResponse;
@@ -65,7 +66,7 @@ public class RestSubscribeController
 	
 	@PostMapping("/api/subscribe/unsubscribe")
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<Object> unsubscribe(@RequestBody @Valid Subscribers request, Errors errors, HttpServletResponse response) throws IOException
+	public ResponseEntity<Object> unsubscribe(@RequestBody @Valid List<Subscribers> request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		if(errors.hasErrors())
 		{

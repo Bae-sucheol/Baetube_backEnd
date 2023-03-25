@@ -12,9 +12,24 @@
 		
 		</insert>
 		
+		<!--
 		<delete id="unSubscribe" statementType="CALLABLE" parameterType="map">
 		
 			CALL delete_subscriber(#{subscribers.channelId}, #{subscribers.subscriberId})
+		
+		</delete>
+		-->
+		
+		<delete id="unSubscribe" statementType="CALLABLE" parameterType="java.util.List">
+		
+			DELETE FROM subscribers WHERE (channel_id, subscriber_id) IN 
+			(
+				
+				<foreach collection="subscribers" item="item" index="index" separator=",">
+					(#{item.channelId}, #{item.subscriberId})
+				</foreach>
+				
+			)
 		
 		</delete>
 		
@@ -22,6 +37,19 @@
 		
 			SELECT channel_id as channelId, subscriber_id as subscriberId FROM subscribers WHERE channel_id = #{channelId}
 			AND subscriber_id = #{subscriberId}
+		
+		</select>
+		
+		<select id="selectSubscribersList" resultType="subscribersDto" parameterType="java.util.List">
+			
+			SELECT * FROM subscribers WHERE (channel_id, subscriber_id) IN 
+			(
+			
+				<foreach collection="subscribers" item="item" index="index" separator=",">
+					(#{item.channelId}, #{item.subscriberId})
+				</foreach>
+			
+			)
 		
 		</select>
 		

@@ -34,9 +34,16 @@
 			WHERE channel_id = #{oldChannel.channelId}
 		</update>
 		
-		<update id="updateSubscribes">
+		<update id="updateSubscribes" parameterType="java.util.List">
 		
-			UPDATE channel SET subs = subs + #{value} WHERE channel_id = #{channelId}
+			UPDATE channel SET subs = subs + #{value} WHERE channel_id IN
+			(
+			
+				<foreach collection="subscribers" item="item" index="index" separator=",">
+					#{item.channelId}
+				</foreach>
+			
+			)
 		
 		</update>
 		
