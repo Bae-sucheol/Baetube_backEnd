@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import Baetube_backEnd.controller.RestChannelController;
 import Baetube_backEnd.controller.RestCommunityController;
 import Baetube_backEnd.controller.RestContentsController;
+import Baetube_backEnd.controller.RestFcmController;
 import Baetube_backEnd.controller.RestFileController;
 import Baetube_backEnd.controller.RestHistoryController;
 import Baetube_backEnd.controller.RestHlsController;
@@ -128,4 +129,9 @@ public class ControllerConfig
 		return new RestPageController();
 	}
 	      
+	@Bean
+	public RestFcmController restFcmController()
+	{
+		return new RestFcmController();
+	}
 }

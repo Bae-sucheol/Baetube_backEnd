@@ -98,7 +98,7 @@ public class JwtTokenProvider
     {
         // 토큰 복호화
         Claims claims = validateToken(token);
- 
+        
         if (claims.get("auth") == null) 
         {
             throw new RuntimeException("권한 정보가 없는 토큰입니다.");
@@ -118,6 +118,7 @@ public class JwtTokenProvider
     // 토큰 정보를 검증하는 메서드
     public Claims validateToken(String token) throws ExpiredJwtException
     {
+	
         try 
         {
             return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();

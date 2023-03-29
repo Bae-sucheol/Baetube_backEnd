@@ -113,6 +113,7 @@ public class RestUserController
 		{
 			System.out.println("요청이 들어왔습니다.");
 			TokenInfo tokenInfo = userLoginService.login(request);
+			System.out.println("토큰 정보 : " + tokenInfo.getAccessToken());
 			return ResponseEntity.status(HttpStatus.OK).body(tokenInfo);
 		} 
 		catch (NullUserException e)

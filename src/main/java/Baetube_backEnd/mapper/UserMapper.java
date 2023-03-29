@@ -19,5 +19,6 @@ public interface UserMapper
 	public void changePassword(@Param("email") String email, @Param("newPassword") String newPassword);
 	public void delete(@Param("userId") Integer userId);
 	public void updateRefreshToken(@Param("email") String email , @Param("refreshToken") String refreshToken);
+	public void updateFCMToken(@Param("fcmToken") String fcmToken, @Param("email") String email);
 	public String selectRefreshToken(@Param("email") String email);
 }

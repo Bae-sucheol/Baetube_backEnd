@@ -33,7 +33,11 @@ public class WebSecurityConfig
 				.mvcMatchers("/css")
 				.mvcMatchers("/js")
 				.mvcMatchers("/images")
-				.mvcMatchers("/webjars");
+				.mvcMatchers("/webjars")
+				.antMatchers("/hls/**")
+				.antMatchers("/api/user/login")
+				.antMatchers("/api/user/regist")
+				.antMatchers("/api/generate/access");
 	}
 	
 	// security 적용 항목
@@ -64,11 +68,12 @@ public class WebSecurityConfig
 			.csrf().disable()
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and().authorizeRequests()
-			.antMatchers(HttpMethod.GET, "/hls/**").permitAll()
+			.antMatchers(HttpMethod.GET, "/**").permitAll()
+			.antMatchers(HttpMethod.POST, "/**").permitAll()
 			//.antMatchers(HttpMethod.POST, "/hls").permitAll() // 화이트 리스트 허용
-			.antMatchers(HttpMethod.POST, "/api/user/login").permitAll() // 화이트 리스트 허용
-			.antMatchers(HttpMethod.POST, "/api/user/regist").permitAll() // 화이트 리스트 허용
-			.antMatchers(HttpMethod.POST, "/api/generate/access").permitAll() // 화이트 리스트 허용
+			//.antMatchers(HttpMethod.POST, "/api/user/login").permitAll() // 화이트 리스트 허용
+			//.antMatchers(HttpMethod.POST, "/api/user/regist").permitAll() // 화이트 리스트 허용
+			//.antMatchers(HttpMethod.POST, "/api/generate/access").permitAll() // 화이트 리스트 허용
 			.anyRequest().authenticated() // 나머지는 인증 요구
 			.and().formLogin().disable()
 			.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);

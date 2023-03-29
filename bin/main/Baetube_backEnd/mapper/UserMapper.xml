@@ -56,6 +56,12 @@
 		
 		</update>
 		
+		<update id="updateFCMToken">
+		
+			UPDATE user SET fcm_token = #{fcmToken} WHERE email = #{email}
+		
+		</update>
+		
 		<delete id="delete">
 		
 			DELETE FROM user WHERE user_id = #{userId}

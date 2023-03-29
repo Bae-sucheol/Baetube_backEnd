@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import Baetube_backEnd.ErrorResponse;
 import Baetube_backEnd.exception.DuplicateUserException;
+import Baetube_backEnd.exception.NullUserException;
 import Baetube_backEnd.service.fcm.FCMSaveService;
 
 @RestController
@@ -40,7 +41,7 @@ public class RestFcmController
 			fcmSaveService.saveFCMToken(fcmToken, accessToken);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
-		catch (DuplicateUserException e)
+		catch (NullUserException e)
 		{
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
