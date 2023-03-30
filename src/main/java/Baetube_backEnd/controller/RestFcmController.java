@@ -38,6 +38,9 @@ public class RestFcmController
 		                                                 
 		try
 		{
+			System.out.println("요청이 도착했습니다.");
+			System.out.println("fcmToken : " + fcmToken);
+			System.out.println("accessToken : " + accessToken);
 			fcmSaveService.saveFCMToken(fcmToken, accessToken);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 

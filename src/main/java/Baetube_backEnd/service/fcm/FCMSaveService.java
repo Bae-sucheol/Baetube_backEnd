@@ -18,6 +18,9 @@ public class FCMSaveService
 	public void saveFCMToken(String fcmToken, String accessToken) throws NullUserException
 	{
 		// accessToken에서 정보를 추출한다.
+		
+		accessToken = accessToken.split(" ")[1].trim();
+		
 		Claims claims = jwtTokenProvider.parseToken(accessToken);
 				
 		// 유저 이메일을 가져온다.
