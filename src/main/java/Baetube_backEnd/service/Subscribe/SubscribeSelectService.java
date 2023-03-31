@@ -1,5 +1,7 @@
 package Baetube_backEnd.service.subscribe;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,5 +25,13 @@ public class SubscribeSelectService
 		}
 		
 		return subscribers;
+	}
+	
+	@Transactional
+	public List<String> selectChannelSubscribersToken(Integer channelId)
+	{
+		List<String> subscribersTokens = subscribeMapper.selectChannelSubscribers(channelId);
+		
+		return subscribersTokens;
 	}
 }

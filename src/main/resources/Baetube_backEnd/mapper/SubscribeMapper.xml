@@ -53,4 +53,12 @@
 		
 		</select>
 		
+		<select id="selectChannelSubscribers" resultType="string">
+		
+			SELECT fcm_token FROM `user` WHERE user_id IN 
+			(SELECT DISTINCT(user_id) FROM `channel` WHERE channel_id IN 
+			(SELECT subscriber_id FROM subscribers NATURAL JOIN `channel` WHERE channel_id = #{channelId}))
+		
+		</select>
+		
 	</mapper>

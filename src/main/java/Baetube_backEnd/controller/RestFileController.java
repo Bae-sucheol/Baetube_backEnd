@@ -53,7 +53,6 @@ public class RestFileController
 		{
 			System.out.println("요청이 들어왔습니다.");
 			fileUploadService.upload(type, purpose, uuid, file);
-			
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
 		catch (IOException e)

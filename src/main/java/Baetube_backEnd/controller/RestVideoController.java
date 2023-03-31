@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.checkerframework.checker.units.qual.s;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,12 +24,15 @@ import org.springframework.web.bind.annotation.RestController;
 import Baetube_backEnd.ErrorResponse;
 import Baetube_backEnd.dto.Channel;
 import Baetube_backEnd.dto.Playlist;
+import Baetube_backEnd.dto.Subscribers;
 import Baetube_backEnd.dto.User;
 import Baetube_backEnd.dto.Video;
 import Baetube_backEnd.dto.VideoViewRequest;
 import Baetube_backEnd.exception.DuplicateUserException;
 import Baetube_backEnd.exception.NullPlaylistException;
 import Baetube_backEnd.exception.NullVideoException;
+import Baetube_backEnd.service.fcm.FCMSendService;
+import Baetube_backEnd.service.subscribe.SubscribeSelectService;
 import Baetube_backEnd.service.video.ChannelVideoRequestService;
 import Baetube_backEnd.service.video.HistoryVideoRequestService;
 import Baetube_backEnd.service.video.MainVideoRequestService;
@@ -60,6 +64,10 @@ public class RestVideoController
 	private VideoViewService videoViewService;
 	@Autowired
 	private RelatedVideoRequestService relatedVideoRequestService;
+	@Autowired
+	private SubscribeSelectService subscribeSelectService;
+	@Autowired
+	private FCMSendService fcmSendService;
 	
 	@GetMapping("/api/video/channel_video/{channelId}")
 	public ResponseEntity<Object> getChannelVideo(@PathVariable Integer channelId, HttpServletResponse response) throws IOException
@@ -158,6 +166,14 @@ public class RestVideoController
 		try
 		{
 			HashMap<String, String> result = videoInsertService.insert(request);
+			List<String> subscribersTokens = subscribeSelectService.selectChannelSubscribersToken(request.getChannelId());
+			
+			// 알림을 보낼 대상이 존재한다면 알림을 보내야한다.
+			if(subscribersTokens != null)
+			{
+				fcmSendService.sendMultiMessage(subscribersTokens, request.getName() + "에서 새로운 동영상을 업로드 했습니다.");
+			}
+			
 			return ResponseEntity.status(HttpStatus.OK).body(result);
 		} 
 		catch (Exception e)
@@ -219,7 +235,6 @@ public class RestVideoController
 		} 
 		catch (NullVideoException e)
 		{
-			
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
 		
