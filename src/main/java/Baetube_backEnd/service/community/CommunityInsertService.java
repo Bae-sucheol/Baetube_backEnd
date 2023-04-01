@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import Baetube_backEnd.UUIDUtil;
 import Baetube_backEnd.dto.Community;
 import Baetube_backEnd.mapper.CommunityMapper;
+import Baetube_backEnd.service.fcm.FCMSendService;
 
 public class CommunityInsertService
 {
@@ -35,6 +36,7 @@ public class CommunityInsertService
 		// 맵을 만들어서 반환한다.
 		HashMap<String, String> result = new HashMap<>();
 				
+		result.put(FCMSendService.FCM_NOTIFICATION_COMMUNITY, request.getCommunityId().toString());
 		result.put("insertType", "community");
 		result.put("imageUUID", imageUUID);
 		result.put("communityId", String.valueOf(request.getCommunityId()));

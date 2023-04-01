@@ -171,8 +171,11 @@ public class RestVideoController
 			// 알림을 보낼 대상이 존재한다면 알림을 보내야한다.
 			if(subscribersTokens != null)
 			{
-				fcmSendService.sendMultiMessage(subscribersTokens, request.getName() + "에서 새로운 동영상을 업로드 했습니다.");
+				fcmSendService.sendMultiMessage(subscribersTokens, request.getName() + "에서 새로운 동영상을 업로드 했습니다.",
+						FCMSendService.FCM_NOTIFICATION_VIDEO, result.get(FCMSendService.FCM_NOTIFICATION_VIDEO));
 			}
+			
+			result.remove(FCMSendService.FCM_NOTIFICATION_VIDEO);
 			
 			return ResponseEntity.status(HttpStatus.OK).body(result);
 		} 

@@ -21,4 +21,15 @@
 		
 		</select>
 		
+		<select id="selectFCMTokenByContentsId" statementType="CALLABLE" parameterType="map">
+		
+			CALL select_fcm_token(
+				#{contentsId},
+				#{fcmToken, mode=OUT, jdbcType=VARCHAR, javaType=string},
+				#{type, mode=OUT, jdbcType=INTEGER, javaType=int},
+				#{resultId, mode=OUT, jdbcType=INTEGER, javaType=int}
+			)
+		
+		</select>
+		
 	</mapper>

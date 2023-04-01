@@ -12,7 +12,12 @@ import com.google.firebase.messaging.MulticastMessage;
 
 public class FCMSendService
 {
-	public void sendMultiMessage(List<String> registrationTokens, String bodyMessage) throws FirebaseMessagingException
+	public static final String FCM_NOTIFICATION_VIDEO = "videoId";
+	public static final String FCM_NOTIFICATION_COMMUNITY = "communityId";
+	public static final String FCM_NOTIFICATION_REPLY = "replyId";
+	public static final String FCM_NOTIFICATION_NESTED_REPLY = "nestedReplyId";
+	
+	public void sendMultiMessage(List<String> registrationTokens, String bodyMessage, String notificationType, String data) throws FirebaseMessagingException
 	{
 		
 		MulticastMessage message = MulticastMessage.builder()
@@ -26,14 +31,16 @@ public class FCMSendService
 								.setBody(bodyMessage)
 								.build())
 						.build())
+				.putData(notificationType, data)
 				.addAllTokens(registrationTokens)
 				.build();
 		
 		BatchResponse batchResponse = FirebaseMessaging.getInstance().sendMulticast(message);
 	}
 	
-	
-	public void sendMessage(String registrationTokens, String bodyMessage) throws FirebaseMessagingException
+	// 여기서 말하는 contentsId 는 video_id 또는 community_id를 의미한다.
+	public void sendMessage(String registrationTokens, String bodyMessage, String notificationType, String data,
+			String contentsType, String contentsId) throws FirebaseMessagingException
 	{
 		
 		Message message = Message.builder()
@@ -47,6 +54,8 @@ public class FCMSendService
 								.setBody(bodyMessage)
 								.build())
 						.build())
+				.putData(notificationType, data)
+				.putData(contentsType, contentsId)
 				.setToken(registrationTokens)
 				.build();
 		

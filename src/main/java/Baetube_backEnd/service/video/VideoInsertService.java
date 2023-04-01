@@ -7,11 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import Baetube_backEnd.UUIDUtil;
 import Baetube_backEnd.dto.Video;
 import Baetube_backEnd.mapper.VideoMapper;
+import Baetube_backEnd.service.fcm.FCMSendService;
 
 public class VideoInsertService
 {
 	@Autowired
-	private VideoMapper videoMaper;
+	private VideoMapper videoMapper;
 	
 	public HashMap<String, String> insert(Video request)
 	{
@@ -24,11 +25,12 @@ public class VideoInsertService
 		request.setThumbnail(thumbnailUUID);
 		
 		// 동영상 파일
-		videoMaper.insert(request);
+		videoMapper.insert(request);
 		
 		// 맵을 만들어서 반환한다.
 		HashMap<String, String> result = new HashMap<>();
 		
+		result.put(FCMSendService.FCM_NOTIFICATION_VIDEO, request.getVideoId().toString());
 		result.put("insertType", "video");
 		result.put("videoUUID", videoUUID);
 		result.put("thumbnailUUID", thumbnailUUID);

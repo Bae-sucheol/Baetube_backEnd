@@ -19,15 +19,40 @@ public class Community
 		private String option;
 		private Integer count;	
 		private Integer selectedChannelId;
+		private String name;
 	    
 	    // constructor
-	    
-	    public Community()
+		public Community()
 		{
 			super();
 		}
-	    
+
 	    public Community(Integer communityId, Long contentsId, Integer channelId, Integer likeCount, Integer hateCount,
+				Integer replyCount, String imageUrl, String comment, Timestamp date, Integer voteId, String title,
+				Integer voteOptionId, String option, Integer count, Integer selectedChannelId, String name)
+		{
+			super();
+			this.communityId = communityId;
+			this.contentsId = contentsId;
+			this.channelId = channelId;
+			this.likeCount = likeCount;
+			this.hateCount = hateCount;
+			this.replyCount = replyCount;
+			this.imageUrl = imageUrl;
+			this.comment = comment;
+			this.date = date;
+			this.voteId = voteId;
+			this.title = title;
+			this.voteOptionId = voteOptionId;
+			this.option = option;
+			this.count = count;
+			this.selectedChannelId = selectedChannelId;
+			this.name = name;
+		}
+
+
+
+		public Community(Integer communityId, Long contentsId, Integer channelId, Integer likeCount, Integer hateCount,
 				Integer replyCount, String imageUrl, String comment, Timestamp date, Integer voteId, String title,
 				Integer voteOptionId, String option, Integer count, Integer selectedChannelId)
 		{
@@ -131,6 +156,10 @@ public class Community
 		{
 			return date;
 		}
+		public String getName()
+		{
+			return name;
+		}
 		
 		
 		public Integer getVoteId()
@@ -229,6 +258,11 @@ public class Community
 		public void setSelectedChannelId(Integer selectedChannelId)
 		{
 			this.selectedChannelId = selectedChannelId;
+		}
+		
+		public void setName(String name)
+		{
+			this.name = name;
 		}
 	    
 }

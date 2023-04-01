@@ -11,7 +11,8 @@
 				#{nestedReply.replyId},
 				#{nestedReply.channelId},
 				#{nestedReply.comment},
-				#{nestedReply.attachedId}
+				#{nestedReply.attachedId},
+				#{nestedReply.nestedReplyId, mode=OUT, jdbcType=INTEGER, javaType=int}
 			)
 		</insert>
 		

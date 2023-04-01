@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.firebase.messaging.FirebaseMessagingException;
+
 import Baetube_backEnd.ErrorResponse;
 import Baetube_backEnd.dto.Community;
 import Baetube_backEnd.exception.DuplicateUserException;
@@ -27,6 +29,8 @@ import Baetube_backEnd.exception.NullCommunityException;
 import Baetube_backEnd.service.community.CommunityChannelVisitService;
 import Baetube_backEnd.service.community.CommunityDeleteService;
 import Baetube_backEnd.service.community.CommunityInsertService;
+import Baetube_backEnd.service.fcm.FCMSendService;
+import Baetube_backEnd.service.subscribe.SubscribeSelectService;
 
 @RestController
 public class RestCommunityController
@@ -37,6 +41,10 @@ public class RestCommunityController
 	private CommunityDeleteService communityDeleteService;
 	@Autowired
 	private CommunityInsertService communityInsertService;
+	@Autowired
+	private SubscribeSelectService subscribeSelectService;
+	@Autowired
+	private FCMSendService fcmSendService;
 
 	@GetMapping("/api/community/channel_visit/{channelId}/{requestChannelId}")
 	public ResponseEntity<Object> getChannelCommunity(@PathVariable Integer channelId, @PathVariable Integer requestChannelId, HttpServletResponse response) throws IOException
@@ -80,7 +88,7 @@ public class RestCommunityController
 	
 	@PostMapping("/api/community/insert")
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<Object> getHistoryVideo(@RequestBody @Valid Community request, Errors errors, HttpServletResponse response) throws IOException
+	public ResponseEntity<Object> getHistoryVideo(@RequestBody @Valid Community request, Errors errors, HttpServletResponse response) throws IOException, FirebaseMessagingException
 	{
 		
 		if(errors.hasErrors())
@@ -93,6 +101,16 @@ public class RestCommunityController
 		try
 		{
 			HashMap<String, String> result = communityInsertService.insertCommunity(request);
+			List<String> subscribersTokens = subscribeSelectService.selectChannelSubscribersToken(request.getChannelId());
+			
+			// 알림을 보낼 대상이 존재한다면 알림을 보내야한다.
+			if(subscribersTokens != null)
+			{
+				fcmSendService.sendMultiMessage(subscribersTokens, request.getName() + "에서 새로운 게시글을 업로드 했습니다.",
+						FCMSendService.FCM_NOTIFICATION_COMMUNITY, result.get(FCMSendService.FCM_NOTIFICATION_COMMUNITY));
+			}
+			
+			result.remove(FCMSendService.FCM_NOTIFICATION_COMMUNITY);
 			return ResponseEntity.status(HttpStatus.OK).body(result);
 		} 
 		catch (DuplicateUserException e)

@@ -10,7 +10,8 @@
 			CALL insert_reply(
 				#{reply.attachedId},
 				#{reply.channelId},
-				#{reply.comment}
+				#{reply.comment},
+				#{reply.replyId, mode=OUT, jdbcType=INTEGER, javaType=int}
 			)
 		</insert>
 		
