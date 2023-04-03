@@ -31,6 +31,7 @@ public class VideoInsertService
 		HashMap<String, String> result = new HashMap<>();
 		
 		result.put(FCMSendService.FCM_NOTIFICATION_VIDEO, request.getVideoId().toString());
+		result.put("contentsId", request.getContentsId().toString());
 		result.put("insertType", "video");
 		result.put("videoUUID", videoUUID);
 		result.put("thumbnailUUID", thumbnailUUID);

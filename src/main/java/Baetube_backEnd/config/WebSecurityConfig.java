@@ -37,7 +37,7 @@ public class WebSecurityConfig
 				.antMatchers("/hls/**")
 				.antMatchers("/api/user/login")
 				.antMatchers("/api/user/regist")
-				.antMatchers("/api/generate/access");
+				.antMatchers("/api/video/insert");
 	}
 	
 	// security 적용 항목

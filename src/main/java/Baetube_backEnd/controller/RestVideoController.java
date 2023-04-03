@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.checkerframework.checker.units.qual.s;
+import org.modelmapper.internal.bytebuddy.dynamic.scaffold.MethodRegistry.Handler.ForImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.firebase.messaging.FirebaseMessagingException;
+
 import Baetube_backEnd.ErrorResponse;
 import Baetube_backEnd.dto.Channel;
 import Baetube_backEnd.dto.Playlist;
@@ -32,6 +35,7 @@ import Baetube_backEnd.exception.DuplicateUserException;
 import Baetube_backEnd.exception.NullPlaylistException;
 import Baetube_backEnd.exception.NullVideoException;
 import Baetube_backEnd.service.fcm.FCMSendService;
+import Baetube_backEnd.service.notification.NotificationInsertService;
 import Baetube_backEnd.service.subscribe.SubscribeSelectService;
 import Baetube_backEnd.service.video.ChannelVideoRequestService;
 import Baetube_backEnd.service.video.HistoryVideoRequestService;
@@ -68,6 +72,8 @@ public class RestVideoController
 	private SubscribeSelectService subscribeSelectService;
 	@Autowired
 	private FCMSendService fcmSendService;
+	@Autowired
+	private NotificationInsertService notificationInsertService;
 	
 	@GetMapping("/api/video/channel_video/{channelId}")
 	public ResponseEntity<Object> getChannelVideo(@PathVariable Integer channelId, HttpServletResponse response) throws IOException
@@ -153,7 +159,7 @@ public class RestVideoController
 	}
 	
 	@PostMapping("/api/video/insert")
-	public ResponseEntity<Object> insertVideo(@RequestBody @Valid Video request, Errors errors, HttpServletResponse response) throws IOException
+	public ResponseEntity<Object> insertVideo(@RequestBody @Valid Video request, Errors errors, HttpServletResponse response) throws IOException, FirebaseMessagingException
 	{
 		
 		if(errors.hasErrors())
@@ -166,17 +172,23 @@ public class RestVideoController
 		try
 		{
 			HashMap<String, String> result = videoInsertService.insert(request);
+			
+			// 삽입 후 notification 테이블에 삽입하기 위해 구독자 userId를 select 한다.
+			List<Integer> subscribersUserId = subscribeSelectService.selectChannelSubscribersUserId(request.getChannelId());
+			// notification 테이블에 삽입.
+			notificationInsertService.insert(subscribersUserId, Long.parseLong(result.get("contentsId")));
+			
 			List<String> subscribersTokens = subscribeSelectService.selectChannelSubscribersToken(request.getChannelId());
 			
 			// 알림을 보낼 대상이 존재한다면 알림을 보내야한다.
-			if(subscribersTokens != null)
+			if(!subscribersTokens.isEmpty())
 			{
 				fcmSendService.sendMultiMessage(subscribersTokens, request.getName() + "에서 새로운 동영상을 업로드 했습니다.",
 						FCMSendService.FCM_NOTIFICATION_VIDEO, result.get(FCMSendService.FCM_NOTIFICATION_VIDEO));
 			}
-			
+
 			result.remove(FCMSendService.FCM_NOTIFICATION_VIDEO);
-			
+			result.remove("contentsId");
 			return ResponseEntity.status(HttpStatus.OK).body(result);
 		} 
 		catch (Exception e)

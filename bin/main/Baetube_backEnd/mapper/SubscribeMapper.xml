@@ -61,4 +61,11 @@
 		
 		</select>
 		
+		<select id="selectChannelSubscribersUserId" resultType="integer">
+		
+			SELECT DISTINCT(user_id) FROM `channel` WHERE channel_id IN 
+			(SELECT subscriber_id FROM subscribers NATURAL JOIN `channel` WHERE channel_id = #{channelId})
+		
+		</select>
+		
 	</mapper>

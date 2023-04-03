@@ -30,6 +30,7 @@ import Baetube_backEnd.service.community.CommunityChannelVisitService;
 import Baetube_backEnd.service.community.CommunityDeleteService;
 import Baetube_backEnd.service.community.CommunityInsertService;
 import Baetube_backEnd.service.fcm.FCMSendService;
+import Baetube_backEnd.service.notification.NotificationInsertService;
 import Baetube_backEnd.service.subscribe.SubscribeSelectService;
 
 @RestController
@@ -45,6 +46,8 @@ public class RestCommunityController
 	private SubscribeSelectService subscribeSelectService;
 	@Autowired
 	private FCMSendService fcmSendService;
+	@Autowired
+	private NotificationInsertService notificationInsertService;
 
 	@GetMapping("/api/community/channel_visit/{channelId}/{requestChannelId}")
 	public ResponseEntity<Object> getChannelCommunity(@PathVariable Integer channelId, @PathVariable Integer requestChannelId, HttpServletResponse response) throws IOException
@@ -100,17 +103,24 @@ public class RestCommunityController
 		                                                 
 		try
 		{
+			// 삽입 후 결과를 받아온다.
 			HashMap<String, String> result = communityInsertService.insertCommunity(request);
+			// 삽입 후 notification 테이블에 삽입하기 위해 구독자 userId를 select 한다.
+			List<Integer> subscribersUserId = subscribeSelectService.selectChannelSubscribersUserId(request.getChannelId());
+			// notification 테이블에 삽입.
+			notificationInsertService.insert(subscribersUserId, Long.parseLong(result.get("contentsId")));
+			
 			List<String> subscribersTokens = subscribeSelectService.selectChannelSubscribersToken(request.getChannelId());
 			
 			// 알림을 보낼 대상이 존재한다면 알림을 보내야한다.
-			if(subscribersTokens != null)
+			if(!subscribersTokens.isEmpty())
 			{
 				fcmSendService.sendMultiMessage(subscribersTokens, request.getName() + "에서 새로운 게시글을 업로드 했습니다.",
 						FCMSendService.FCM_NOTIFICATION_COMMUNITY, result.get(FCMSendService.FCM_NOTIFICATION_COMMUNITY));
 			}
 			
 			result.remove(FCMSendService.FCM_NOTIFICATION_COMMUNITY);
+			result.remove("contentsId");
 			return ResponseEntity.status(HttpStatus.OK).body(result);
 		} 
 		catch (DuplicateUserException e)

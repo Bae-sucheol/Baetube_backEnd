@@ -37,9 +37,9 @@ public class CommunityInsertService
 		HashMap<String, String> result = new HashMap<>();
 				
 		result.put(FCMSendService.FCM_NOTIFICATION_COMMUNITY, request.getCommunityId().toString());
+		result.put("contentsId", request.getContentsId().toString());
 		result.put("insertType", "community");
 		result.put("imageUUID", imageUUID);
-		result.put("communityId", String.valueOf(request.getCommunityId()));
 		
 		return result;
 	}

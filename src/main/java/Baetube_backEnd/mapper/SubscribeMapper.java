@@ -17,4 +17,5 @@ public interface SubscribeMapper
 	public Subscribers select(@Param("channelId") Integer channelId, @Param("subscriberId") Integer subscriberId);
 	public List<Subscribers> selectSubscribersList(@Param("subscribers") List<Subscribers> subscribers);
 	public List<String> selectChannelSubscribers(@Param("channelId") Integer channelId);
+	public List<Integer> selectChannelSubscribersUserId(@Param("channelId") Integer channelId);
 }

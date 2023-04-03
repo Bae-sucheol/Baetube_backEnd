@@ -17,7 +17,8 @@
 				#{video.location},
 				#{video.age},
 				#{video.categoryId},
-				#{video.videoId, mode=OUT, jdbcType=INTEGER, javaType=int}
+				#{video.videoId, mode=OUT, jdbcType=INTEGER, javaType=int},
+				#{video.contentsId, mode=OUT, jdbcType=BIGINT, javaType=long}
 			)
 		</insert>
 		

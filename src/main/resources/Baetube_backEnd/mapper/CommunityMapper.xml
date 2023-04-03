@@ -12,7 +12,8 @@
 				#{community.imageUrl, mode=IN, jdbcType=VARCHAR, javaType=String},
 				#{community.comment, mode=IN, jdbcType=VARCHAR, javaType=String},
 				NOW(),
-				#{community.communityId, mode=OUT, jdbcType=INTEGER, javaType=int}
+				#{community.communityId, mode=OUT, jdbcType=INTEGER, javaType=int},
+				#{community.contentsId, mode=OUT, jdbcType=BIGINT, javaType=long}
 			)
 		</insert>
 		

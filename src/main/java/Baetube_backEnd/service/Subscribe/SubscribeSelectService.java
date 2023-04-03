@@ -34,4 +34,12 @@ public class SubscribeSelectService
 		
 		return subscribersTokens;
 	}
+	
+	@Transactional
+	public List<Integer> selectChannelSubscribersUserId(Integer channelId)
+	{
+		List<Integer> subscribersUserId = subscribeMapper.selectChannelSubscribersUserId(channelId);
+		
+		return subscribersUserId;
+	}
 }

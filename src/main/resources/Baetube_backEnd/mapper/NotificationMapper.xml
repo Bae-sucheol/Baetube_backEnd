@@ -17,5 +17,14 @@
 			DELETE FROM notification WHERE user_id = #{userId} AND contents_id = #{contentsId}
 		
 		</delete>
+		
+		<insert id="insert" parameterType="java.util.List">
+		
+			INSERT INTO notification(user_id, contents_id, date)
+			VALUES
+				<foreach collection="subscribersUserId" item="item" index="index" separator=",">
+					(#{item}, #{contentsId}, NOW())
+				</foreach>
+		</insert>
 
 	</mapper>
