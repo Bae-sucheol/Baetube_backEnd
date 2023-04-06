@@ -34,7 +34,7 @@ public class JwtTokenProvider
 	private static String secret = "VlwEyVBsYt9V7zq57TejMnVUyzblYcfPQye08f7MGVA9XkHa";
 	// 테스트용으로 짧게 
 	private static final int day = 60 * 1000; // 1분
-	private static final int accessTokenTime = 10; // 5분
+	private static final int accessTokenTime = 1; // 5분
 	private static final int refreshTokenTime = 60; // 10분 
 	/*
 	private static final int day = 24 * 60 * 60 * 1000; // 하루
@@ -145,7 +145,7 @@ public class JwtTokenProvider
     }
     
     // 토큰이 유효하던 아니던 무조건 파싱해서 데이터를 넘겨주는 메소드.
-    public Claims parseToken(String token)
+    public Claims parseToken(String token) throws ExpiredJwtException
     {
     	try 
         {
@@ -153,7 +153,7 @@ public class JwtTokenProvider
         } 
         catch (ExpiredJwtException e)
         {
-        	return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
+        	return e.getClaims();
         } 
     }
     

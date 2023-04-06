@@ -8,7 +8,7 @@
 	
 		<select id="selectByEmail" parameterType="string" resultType="userDto">
 			SELECT user_id as userId, email, password, name, gender, birth, fcm_token as fcmToken,
-				phone, address, reg_date as regDate from user WHERE email = #{email}
+				phone, address, reg_date as regDate, refresh_token as refreshToken from user WHERE email = #{email}
 		</select>
 		
 		<select id="selectRefreshToken" parameterType="string" resultType="string">

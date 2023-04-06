@@ -230,6 +230,7 @@ public class RestUserController
 		try
 		{
 			TokenInfo tokenInfo = JwtAccessTokenService.generateToken(request);
+			System.out.println("엑세스 토큰 재발급 요청 : " + tokenInfo.getAccessToken());
 			return ResponseEntity.status(HttpStatus.OK).body(tokenInfo);
 		} 
 		catch (ExpiredRefreshTokenException e)
