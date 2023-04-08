@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 
 import Baetube_backEnd.JwtTokenProvider;
 import Baetube_backEnd.service.jwt.JwtAccessTokenService;
+import Baetube_backEnd.service.jwt.JwtTokenDataExtractService;
 
 @Configuration
 public class JwtConfig
@@ -19,5 +20,11 @@ public class JwtConfig
 	public JwtAccessTokenService jwtAccessTokenService()
 	{
 		return new JwtAccessTokenService();
+	}
+	
+	@Bean
+	public JwtTokenDataExtractService jwtTokenDataExtractService()
+	{
+		return new JwtTokenDataExtractService();
 	}
 }

@@ -6,8 +6,6 @@ public class ChangePasswordRequest
 	private String password;
 	private String newPassword;
 	
-	
-	
 	public ChangePasswordRequest()
 	{
 		super();
@@ -21,6 +19,8 @@ public class ChangePasswordRequest
 		this.newPassword = newPassword;
 	}
 
+	
+	
 	public String getEmail()
 	{
 		return email;
@@ -40,7 +40,7 @@ public class ChangePasswordRequest
 	{
 		this.email = email;
 	}
-
+	
 	public void setPassword(String password)
 	{
 		this.password = password;

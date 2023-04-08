@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.firebase.messaging.FirebaseMessagingException;
@@ -35,6 +36,7 @@ import Baetube_backEnd.exception.DuplicateUserException;
 import Baetube_backEnd.exception.NullPlaylistException;
 import Baetube_backEnd.exception.NullVideoException;
 import Baetube_backEnd.service.fcm.FCMSendService;
+import Baetube_backEnd.service.jwt.JwtTokenDataExtractService;
 import Baetube_backEnd.service.notification.NotificationInsertService;
 import Baetube_backEnd.service.subscribe.SubscribeSelectService;
 import Baetube_backEnd.service.video.ChannelVideoRequestService;
@@ -74,6 +76,8 @@ public class RestVideoController
 	private FCMSendService fcmSendService;
 	@Autowired
 	private NotificationInsertService notificationInsertService;
+	@Autowired
+	private JwtTokenDataExtractService jwtTokenDataExtractService;
 	
 	@GetMapping("/api/video/channel_video/{channelId}")
 	public ResponseEntity<Object> getChannelVideo(@PathVariable Integer channelId, HttpServletResponse response) throws IOException
@@ -107,17 +111,17 @@ public class RestVideoController
 		
 	}
 	
-	@GetMapping("/api/video/main_video/{userId}")
-	public ResponseEntity<Object> getMainVideo(@PathVariable Integer userId, HttpServletResponse response) throws IOException
+	@GetMapping("/api/video/main_video")
+	public ResponseEntity<Object> getMainVideo(HttpServletResponse response) throws IOException
 	{                                         
 		try
 		{
-			List<Video> videoList = mainVideoRequestService.requestVideo(userId);
+			User user = jwtTokenDataExtractService.getUserData(response);
+			List<Video> videoList = mainVideoRequestService.requestVideo(user.getUserId());
 			return ResponseEntity.status(HttpStatus.OK).body(videoList);
 		} 
 		catch (NullVideoException e)
 		{
-			
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
 		
@@ -142,12 +146,13 @@ public class RestVideoController
 		
 	}
 	
-	@GetMapping("/api/video/subscribe_video/{channelId}")
-	public ResponseEntity<Object> getSubscribeVideo(@PathVariable Integer channelId, HttpServletResponse response) throws IOException
+	@GetMapping("/api/video/subscribe_video/{channelSequence}")
+	public ResponseEntity<Object> getSubscribeVideo(@PathVariable Integer channelSequence, HttpServletResponse response) throws IOException
 	{                                         
 		try
 		{
-			List<Video> videoList = subscribeVideoRequestService.requestVideo(channelId);
+			Channel channel = jwtTokenDataExtractService.getChannelData(response, channelSequence);
+			List<Video> videoList = subscribeVideoRequestService.requestVideo(channel.getChannelId());
 			return ResponseEntity.status(HttpStatus.OK).body(videoList);
 		} 
 		catch (NullVideoException e)
@@ -171,6 +176,11 @@ public class RestVideoController
 		                                                 
 		try
 		{
+			// channelId를 사용하여 channelSequence를 대체한다.
+			// 이 메소드가 실행되고 난 이후 channel 객체의 channelId 속성을 request 객체에 다시 적용한다.
+			Channel channel = jwtTokenDataExtractService.getChannelData(response, request.getChannelId());
+			request.setChannelId(channel.getChannelId());
+			
 			HashMap<String, String> result = videoInsertService.insert(request);
 			
 			// 삽입 후 notification 테이블에 삽입하기 위해 구독자 userId를 select 한다.
@@ -212,7 +222,6 @@ public class RestVideoController
 		                                                 
 		try
 		{
-			System.out.println("요청이 도착했습니다.");
 			videoUpdateService.update(request);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
@@ -224,12 +233,13 @@ public class RestVideoController
 		
 	}
 	
-	@GetMapping("/api/video/view_video/{userId}/{videoId}")
-	public ResponseEntity<Object> viewVideo(@PathVariable Integer userId, @PathVariable Integer videoId, HttpServletResponse response) throws IOException
+	@GetMapping("/api/video/view_video/{videoId}")
+	public ResponseEntity<Object> viewVideo(@PathVariable Integer videoId, HttpServletResponse response) throws IOException
 	{                                            
 		try
 		{
-			Video video = videoViewService.selectVideo(userId, videoId);
+			User user = jwtTokenDataExtractService.getUserData(response);
+			Video video = videoViewService.selectVideo(user.getUserId(), videoId);
 			return ResponseEntity.status(HttpStatus.OK).body(video);
 		} 
 		catch (NullVideoException e)

@@ -66,4 +66,12 @@
 		
 		</select>
 		
+		<select id="selectChannelByUserEmail" resultType="channelDto">
+		
+			SELECT channel.channel_id AS channelId, user.user_id AS userId, channel.subs, channel.video_count AS videoCount, 
+			channel.name, channel.description, channel.arts, channel.reg_date AS regDate, channel.profile
+			FROM `user` JOIN `channel` USING(user_id) WHERE email = #{email}; 
+		
+		</select>
+		
 	</mapper>

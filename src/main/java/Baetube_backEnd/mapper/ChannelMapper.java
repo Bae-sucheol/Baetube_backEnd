@@ -16,4 +16,5 @@ public interface ChannelMapper
 	public void updateVideoCount(@Param("channelId") Integer channelId, @Param("value") Integer value);
 	public Channel select(@Param("channelId") Integer channelId);	
 	public List<Channel> selectSubscribers(@Param("channelId") Integer channelId);
+	public List<Channel> selectChannelByUserEmail(@Param("email") String email);
 }

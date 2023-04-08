@@ -17,6 +17,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,12 +30,15 @@ import Baetube_backEnd.dto.User;
 import Baetube_backEnd.exception.DuplicateUserException;
 import Baetube_backEnd.exception.ExpiredAccessTokenException;
 import Baetube_backEnd.exception.ExpiredRefreshTokenException;
+import Baetube_backEnd.exception.NullChannelException;
 import Baetube_backEnd.exception.NullUserException;
 import Baetube_backEnd.exception.WrongIdPasswordException;
 import Baetube_backEnd.service.channel.ChannelInsertService;
 import Baetube_backEnd.service.jwt.JwtAccessTokenService;
+import Baetube_backEnd.service.jwt.JwtTokenDataExtractService;
 import Baetube_backEnd.service.playlist.PlaylistInsertService;
 import Baetube_backEnd.service.user.ChangePasswordService;
+import Baetube_backEnd.service.user.UserDataFromTokenService;
 import Baetube_backEnd.service.user.UserLoginService;
 import Baetube_backEnd.service.user.UserRegisterService;
 import Baetube_backEnd.service.user.UserUnregisterService;
@@ -61,6 +65,8 @@ public class RestUserController
 	private PlaylistInsertService playlistInsertService;
 	@Autowired
 	private ChannelInsertService channelInsertService;
+	@Autowired
+	private JwtTokenDataExtractService jwtTokenDataExtractService;
 
 	@PostMapping("/api/user/regist")
 	public ResponseEntity<Object> newUser(@RequestBody User request, Errors errors, HttpServletResponse response) throws IOException
@@ -75,7 +81,6 @@ public class RestUserController
 		                                                 
 		try
 		{
-			System.out.println("요청이 들어왔습니다.");
 			User newUser = userRegisterService.regist(request);
 			
 			// 회원 가입 후 기본적으로 채널을 하나 삽입해야한다.
@@ -111,9 +116,7 @@ public class RestUserController
 		                                                 
 		try
 		{
-			System.out.println("요청이 들어왔습니다.");
 			TokenInfo tokenInfo = userLoginService.login(request);
-			System.out.println("토큰 정보 : " + tokenInfo.getAccessToken());
 			return ResponseEntity.status(HttpStatus.OK).body(tokenInfo);
 		} 
 		catch (NullUserException e)
@@ -195,42 +198,18 @@ public class RestUserController
 		}
 	}
 	
-	@PostMapping("/api/test")
-	public ResponseEntity<Object> usertest(@RequestBody User request, Errors errors, HttpServletResponse response) throws IOException
-	{
-		if(errors.hasErrors())
-		{
-			String errorCodes = errors.getAllErrors().stream().map(error -> error.getCodes()[0]).collect(Collectors.joining(","));
-			
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse("errorCodes = " + errorCodes));
-		}
-		                                                 
-		try
-		{
-			System.out.println("요구가 도착했습니다.");
-			return ResponseEntity.status(HttpStatus.OK).build();
-		} 
-		catch (ExpiredAccessTokenException e)
-		{
-			return ResponseEntity.status(HttpStatus.CONFLICT).body("ExpiredAccessTokenException");
-		}
-
-	}
-	
 	@PostMapping("/api/generate/access")
 	public ResponseEntity<Object> generateAccessToken(@RequestBody TokenInfo request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		if(errors.hasErrors())
 		{
 			String errorCodes = errors.getAllErrors().stream().map(error -> error.getCodes()[0]).collect(Collectors.joining(","));
-			
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse("errorCodes = " + errorCodes));
 		}
 		                                                 
 		try
 		{
 			TokenInfo tokenInfo = JwtAccessTokenService.generateToken(request);
-			System.out.println("엑세스 토큰 재발급 요청 : " + tokenInfo.getAccessToken());
 			return ResponseEntity.status(HttpStatus.OK).body(tokenInfo);
 		} 
 		catch (ExpiredRefreshTokenException e)
@@ -240,16 +219,20 @@ public class RestUserController
 
 	}
 	
-	@GetMapping("/api/members")
-	public List<User> member()
+	@GetMapping("/api/user/data")
+	public ResponseEntity<Object> getUserDataFromToken(HttpServletResponse response) throws IOException
 	{
-		ArrayList<User> list = new ArrayList<>();
-		list.add(new User(1, "test@naver.com", "1234", "test", 1, null, "1234", "1234", "1234", null));
-		list.add(new User(1, "test2@naver.com", "1234", "test2", 1, null, "1234", "1234", "1234", null));
-		list.add(new User(1, "test3@naver.com", "1234", "test3", 1, null, "1234", "1234", "1234", null));
+                                           
+		try
+		{
+			User user = jwtTokenDataExtractService.getUserData(response);
+			return ResponseEntity.status(HttpStatus.OK).body(user);
+		} 
+		catch (NullUserException e)
+		{
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+		}
 		
-		return list;
 	}
-	
 	
 }

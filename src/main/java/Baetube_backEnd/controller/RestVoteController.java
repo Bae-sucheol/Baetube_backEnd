@@ -22,10 +22,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import Baetube_backEnd.ErrorResponse;
+import Baetube_backEnd.dto.Channel;
 import Baetube_backEnd.dto.Vote;
 import Baetube_backEnd.exception.DuplicateVoteException;
 import Baetube_backEnd.exception.DuplicateVoteOptionException;
 import Baetube_backEnd.exception.NullVoteException;
+import Baetube_backEnd.service.jwt.JwtTokenDataExtractService;
 import Baetube_backEnd.service.vote.CancelVoteOptionService;
 import Baetube_backEnd.service.vote.CastVoteOptionService;
 import Baetube_backEnd.service.vote.VoteDeleteOptionMultiService;
@@ -63,6 +65,8 @@ public class RestVoteController
 	private CastVoteOptionService castVoteOptionService;
 	@Autowired
 	private CancelVoteOptionService cancelVoteOptionService;
+	@Autowired
+	private JwtTokenDataExtractService jwtTokenDataExtractService;
 	
 	@PostMapping("/api/vote/insert")
 	public ResponseEntity<Object> insertVote(@RequestBody @Valid Vote request, Errors errors, HttpServletResponse response) throws IOException
@@ -136,8 +140,8 @@ public class RestVoteController
 		
 	}
 	
-	@PostMapping("/api/vote/cast")
-	public ResponseEntity<Object> castVoteOption(@RequestBody @Valid Vote request, Errors errors, HttpServletResponse response) throws IOException
+	@PostMapping("/api/vote/cast/{channelSequence}")
+	public ResponseEntity<Object> castVoteOption(@PathVariable Integer channelSequence, @RequestBody @Valid Vote request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		
 		if(errors.hasErrors())
@@ -149,6 +153,10 @@ public class RestVoteController
 		                                                 
 		try
 		{
+			// Vote request객체에 있는 communityId 속성은 해당 메소드에서 channelId로 사용하기 때문에 
+			// channelId를 조회하여 다시 적용한다.
+			Channel channel = jwtTokenDataExtractService.getChannelData(response, channelSequence);
+			request.setCommunityId(channel.getChannelId());
 			castVoteOptionService.castVoteOption(request);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
@@ -159,8 +167,8 @@ public class RestVoteController
 		
 	}
 	
-	@PostMapping("/api/vote/cancel")
-	public ResponseEntity<Object> cancelVoteOption(@RequestBody @Valid Vote request, Errors errors, HttpServletResponse response) throws IOException
+	@PostMapping("/api/vote/cancel/{channelSequence}")
+	public ResponseEntity<Object> cancelVoteOption(@PathVariable Integer channelSequence, @RequestBody @Valid Vote request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		
 		if(errors.hasErrors())
@@ -172,6 +180,10 @@ public class RestVoteController
 		                                                 
 		try
 		{
+			// Vote request객체에 있는 communityId 속성은 해당 메소드에서 channelId로 사용하기 때문에 
+			// channelId를 조회하여 다시 적용한다.
+			Channel channel = jwtTokenDataExtractService.getChannelData(response, channelSequence);
+			request.setCommunityId(channel.getChannelId());
 			cancelVoteOptionService.cancelVoteOption(request);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
@@ -195,7 +207,6 @@ public class RestVoteController
 		                                                 
 		try
 		{
-			System.out.println("요청이 도착했습니다.");
 			voteDeleteService.delete(request.getVoteId());
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
@@ -312,7 +323,6 @@ public class RestVoteController
 		} 
 		catch (NullVoteException e)
 		{
-			
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
 		

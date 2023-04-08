@@ -26,6 +26,8 @@ import Baetube_backEnd.service.channel.ChannelInsertService;
 import Baetube_backEnd.service.channel.ChannelSubscribersService;
 import Baetube_backEnd.service.channel.ChannelUpdateService;
 import Baetube_backEnd.service.channel.ChannelVisitService;
+import Baetube_backEnd.service.jwt.JwtTokenDataExtractService;
+import Baetube_backEnd.service.user.UserDataFromTokenService;
  
 @RestController
 public class RestChannelController
@@ -40,6 +42,8 @@ public class RestChannelController
 	private ChannelVisitService channelVisitService;
 	@Autowired
 	private ChannelSubscribersService channelSubscribersService;
+	@Autowired
+	private JwtTokenDataExtractService jwtTokenDataExtractService;
 	
 	@PostMapping("/api/channel/delete")
 	//@ExceptionHandler(MethodArgumentNotValidException.class)
@@ -68,7 +72,6 @@ public class RestChannelController
 	}
 	
 	@PostMapping("/api/channel/insert")
-	//@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Object> insertChannel(@RequestBody @Valid Channel request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		
@@ -107,9 +110,6 @@ public class RestChannelController
 		                                                 
 		try
 		{
-			System.out.println("요청이 들어왔습니다.");
-			System.out.println("id : " + request.getChannelId());
-			System.out.println("name : " + request.getName());
 			channelUpdateService.updateChannel(request);
 			
 			return ResponseEntity.status(HttpStatus.OK).build();
@@ -130,7 +130,6 @@ public class RestChannelController
 		                            
 		try
 		{
-			System.out.println("요청이 들어왔습니다.");
 			Channel channel = channelVisitService.selectChannel(channelId);
 			return ResponseEntity.status(HttpStatus.OK).body(channel);
 		} 
@@ -151,6 +150,23 @@ public class RestChannelController
 		{
 			List<Channel> subscriberList = channelSubscribersService.selectSubscribers(channelId);
 			return ResponseEntity.status(HttpStatus.OK).body(subscriberList);
+		} 
+		catch (NullChannelException e)
+		{
+			
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+		}
+		
+	}
+	
+	@GetMapping("/api/channel/data")
+	public ResponseEntity<Object> selectChannelData(@PathVariable Integer channelSequence, HttpServletResponse response) throws IOException
+	{
+                                           
+		try
+		{
+			Channel channel = jwtTokenDataExtractService.getChannelData(response, channelSequence);
+			return ResponseEntity.status(HttpStatus.OK).body(channel);
 		} 
 		catch (NullChannelException e)
 		{
