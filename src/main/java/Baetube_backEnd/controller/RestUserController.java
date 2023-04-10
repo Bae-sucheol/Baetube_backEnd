@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import Baetube_backEnd.dto.ChangePasswordRequest;
@@ -38,7 +39,6 @@ import Baetube_backEnd.service.jwt.JwtAccessTokenService;
 import Baetube_backEnd.service.jwt.JwtTokenDataExtractService;
 import Baetube_backEnd.service.playlist.PlaylistInsertService;
 import Baetube_backEnd.service.user.ChangePasswordService;
-import Baetube_backEnd.service.user.UserDataFromTokenService;
 import Baetube_backEnd.service.user.UserLoginService;
 import Baetube_backEnd.service.user.UserRegisterService;
 import Baetube_backEnd.service.user.UserUnregisterService;
@@ -220,12 +220,12 @@ public class RestUserController
 	}
 	
 	@GetMapping("/api/user/data")
-	public ResponseEntity<Object> getUserDataFromToken(HttpServletResponse response) throws IOException
+	public ResponseEntity<Object> getUserDataFromToken(@RequestHeader("Authorization") String bearerToken, HttpServletResponse response) throws IOException
 	{
                                            
 		try
 		{
-			User user = jwtTokenDataExtractService.getUserData(response);
+			User user = jwtTokenDataExtractService.getUserData(bearerToken);
 			return ResponseEntity.status(HttpStatus.OK).body(user);
 		} 
 		catch (NullUserException e)

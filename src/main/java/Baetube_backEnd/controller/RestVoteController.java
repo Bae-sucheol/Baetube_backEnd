@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import Baetube_backEnd.ErrorResponse;
@@ -141,7 +142,7 @@ public class RestVoteController
 	}
 	
 	@PostMapping("/api/vote/cast/{channelSequence}")
-	public ResponseEntity<Object> castVoteOption(@PathVariable Integer channelSequence, @RequestBody @Valid Vote request, Errors errors, HttpServletResponse response) throws IOException
+	public ResponseEntity<Object> castVoteOption(@RequestHeader("Authorization") String bearerToken, @PathVariable Integer channelSequence, @RequestBody @Valid Vote request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		
 		if(errors.hasErrors())
@@ -155,7 +156,7 @@ public class RestVoteController
 		{
 			// Vote request객체에 있는 communityId 속성은 해당 메소드에서 channelId로 사용하기 때문에 
 			// channelId를 조회하여 다시 적용한다.
-			Channel channel = jwtTokenDataExtractService.getChannelData(response, channelSequence);
+			Channel channel = jwtTokenDataExtractService.getChannelData(bearerToken, channelSequence);
 			request.setCommunityId(channel.getChannelId());
 			castVoteOptionService.castVoteOption(request);
 			return ResponseEntity.status(HttpStatus.OK).build();
@@ -168,7 +169,7 @@ public class RestVoteController
 	}
 	
 	@PostMapping("/api/vote/cancel/{channelSequence}")
-	public ResponseEntity<Object> cancelVoteOption(@PathVariable Integer channelSequence, @RequestBody @Valid Vote request, Errors errors, HttpServletResponse response) throws IOException
+	public ResponseEntity<Object> cancelVoteOption(@RequestHeader("Authorization") String bearerToken, @PathVariable Integer channelSequence, @RequestBody @Valid Vote request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		
 		if(errors.hasErrors())
@@ -182,7 +183,7 @@ public class RestVoteController
 		{
 			// Vote request객체에 있는 communityId 속성은 해당 메소드에서 channelId로 사용하기 때문에 
 			// channelId를 조회하여 다시 적용한다.
-			Channel channel = jwtTokenDataExtractService.getChannelData(response, channelSequence);
+			Channel channel = jwtTokenDataExtractService.getChannelData(bearerToken, channelSequence);
 			request.setCommunityId(channel.getChannelId());
 			cancelVoteOptionService.cancelVoteOption(request);
 			return ResponseEntity.status(HttpStatus.OK).build();

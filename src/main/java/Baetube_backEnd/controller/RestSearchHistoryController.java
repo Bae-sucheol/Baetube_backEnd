@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import Baetube_backEnd.ErrorResponse;
@@ -25,6 +26,7 @@ import Baetube_backEnd.dto.SearchHistory;
 import Baetube_backEnd.dto.User;
 import Baetube_backEnd.exception.NullSearchHistoryException;
 import Baetube_backEnd.exception.WrongIdPasswordException;
+import Baetube_backEnd.service.jwt.JwtTokenDataExtractService;
 import Baetube_backEnd.service.searchhistory.SearchHistoryDeleteService;
 import Baetube_backEnd.service.searchhistory.SearchHistoryInsertService;
 import Baetube_backEnd.service.searchhistory.SearchHistorySelectService;
@@ -38,10 +40,12 @@ public class RestSearchHistoryController
 	private SearchHistoryInsertService searchHistoryInsertService;
 	@Autowired
 	private SearchHistorySelectService searchHistorySelectService;
+	@Autowired
+	private JwtTokenDataExtractService jwtTokenDataExtractService;
 	
 	@PostMapping("/api/search_history/insert")
 	//@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<Object> insertSearchHistory(@RequestBody @Valid SearchHistory request, Errors errors, HttpServletResponse response) throws IOException
+	public ResponseEntity<Object> insertSearchHistory(@RequestHeader("Authorization") String bearerToken, @RequestBody @Valid String keywords, Errors errors, HttpServletResponse response) throws IOException
 	{
 		if(errors.hasErrors())
 		{
@@ -52,7 +56,9 @@ public class RestSearchHistoryController
 		                                                 
 		try
 		{
-			searchHistoryInsertService.insert(request);
+			User user = jwtTokenDataExtractService.getUserData(bearerToken);
+			SearchHistory searchHistory = new SearchHistory(user.getUserId(), keywords);
+			searchHistoryInsertService.insert(searchHistory);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
 		catch (WrongIdPasswordException e)
@@ -63,7 +69,7 @@ public class RestSearchHistoryController
 	}
 	
 	@PostMapping("/api/search_history/delete")
-	public ResponseEntity<Object> deleteSearchHistory(@RequestBody @Valid SearchHistory request, Errors errors, HttpServletResponse response) throws IOException
+	public ResponseEntity<Object> deleteSearchHistory(@RequestHeader("Authorization") String bearerToken, @RequestBody @Valid String keywords, Errors errors, HttpServletResponse response) throws IOException
 	{
 		if(errors.hasErrors())
 		{
@@ -74,7 +80,9 @@ public class RestSearchHistoryController
 		                                                 
 		try
 		{
-			searchHistoryDeleteService.delete(request); 
+			User user = jwtTokenDataExtractService.getUserData(bearerToken);
+			SearchHistory searchHistory = new SearchHistory(user.getUserId(), keywords);
+			searchHistoryDeleteService.delete(searchHistory); 
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
 		catch (NullSearchHistoryException e)
@@ -84,13 +92,14 @@ public class RestSearchHistoryController
 		}
 	}
 	
-	@GetMapping("/api/search_history/select/{userId}")
+	@GetMapping("/api/search_history/select")
 	//@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<Object> selectSearchHistory(@PathVariable Integer userId, HttpServletResponse response) throws IOException
+	public ResponseEntity<Object> selectSearchHistory(@RequestHeader("Authorization") String bearerToken, HttpServletResponse response) throws IOException
 	{                                          
 		try
 		{
-			List<SearchHistory> searchHistoryList = searchHistorySelectService.select(userId);
+			User user = jwtTokenDataExtractService.getUserData(bearerToken);
+			List<SearchHistory> searchHistoryList = searchHistorySelectService.select(user.getUserId());
 			return ResponseEntity.status(HttpStatus.OK).body(searchHistoryList);
 		} 
 		catch (NullSearchHistoryException e)

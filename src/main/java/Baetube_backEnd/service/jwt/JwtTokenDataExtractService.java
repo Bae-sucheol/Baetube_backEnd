@@ -32,11 +32,10 @@ public class JwtTokenDataExtractService
 	 * @param response
 	 * @return
 	 */
-	public String getAccessToken(HttpServletResponse response)
+	public String getAccessToken(String bearerToken)
 	{
-		String accessToken = response.getHeader("Authorization");
-		
-		accessToken = accessToken.split(" ")[1].trim();
+
+		String accessToken = bearerToken.split(" ")[1].trim();
 		
 		return accessToken;
 	}
@@ -56,10 +55,10 @@ public class JwtTokenDataExtractService
 	}
 	
 	@Transactional
-	public User getUserData(HttpServletResponse response) throws NullUserException
+	public User getUserData(String bearerToken) throws NullUserException
 	{
 		// 엑세스 토큰 추출
-		String accessToken = getAccessToken(response);
+		String accessToken = getAccessToken(bearerToken);
 
 		// 엑세스 토큰을 사용하여 유저 이메일을 가져온다.
 		String email = getUserEmail(accessToken);
@@ -84,10 +83,10 @@ public class JwtTokenDataExtractService
 	 * @throws NullChannelException
 	 */
 	@Transactional
-	public Channel getChannelData(HttpServletResponse response, Integer channelSequence) throws NullChannelException
+	public Channel getChannelData(String bearerToken, Integer channelSequence) throws NullChannelException
 	{
 		// 엑세스 토큰 추출
-		String accessToken = getAccessToken(response);
+		String accessToken = getAccessToken(bearerToken);
 
 		// 엑세스 토큰을 사용하여 유저 이메일을 가져온다.
 		String email = getUserEmail(accessToken);

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -112,11 +113,11 @@ public class RestVideoController
 	}
 	
 	@GetMapping("/api/video/main_video")
-	public ResponseEntity<Object> getMainVideo(HttpServletResponse response) throws IOException
+	public ResponseEntity<Object> getMainVideo(@RequestHeader("Authorization") String bearerToken, HttpServletResponse response) throws IOException
 	{                                         
 		try
 		{
-			User user = jwtTokenDataExtractService.getUserData(response);
+			User user = jwtTokenDataExtractService.getUserData(bearerToken);
 			List<Video> videoList = mainVideoRequestService.requestVideo(user.getUserId());
 			return ResponseEntity.status(HttpStatus.OK).body(videoList);
 		} 
@@ -147,11 +148,11 @@ public class RestVideoController
 	}
 	
 	@GetMapping("/api/video/subscribe_video/{channelSequence}")
-	public ResponseEntity<Object> getSubscribeVideo(@PathVariable Integer channelSequence, HttpServletResponse response) throws IOException
+	public ResponseEntity<Object> getSubscribeVideo(@RequestHeader("Authorization") String bearerToken, @PathVariable Integer channelSequence, HttpServletResponse response) throws IOException
 	{                                         
 		try
 		{
-			Channel channel = jwtTokenDataExtractService.getChannelData(response, channelSequence);
+			Channel channel = jwtTokenDataExtractService.getChannelData(bearerToken, channelSequence);
 			List<Video> videoList = subscribeVideoRequestService.requestVideo(channel.getChannelId());
 			return ResponseEntity.status(HttpStatus.OK).body(videoList);
 		} 
@@ -164,7 +165,7 @@ public class RestVideoController
 	}
 	
 	@PostMapping("/api/video/insert")
-	public ResponseEntity<Object> insertVideo(@RequestBody @Valid Video request, Errors errors, HttpServletResponse response) throws IOException, FirebaseMessagingException
+	public ResponseEntity<Object> insertVideo(@RequestHeader("Authorization") String bearerToken, @RequestBody @Valid Video request, Errors errors, HttpServletResponse response) throws IOException, FirebaseMessagingException
 	{
 		
 		if(errors.hasErrors())
@@ -178,7 +179,7 @@ public class RestVideoController
 		{
 			// channelId를 사용하여 channelSequence를 대체한다.
 			// 이 메소드가 실행되고 난 이후 channel 객체의 channelId 속성을 request 객체에 다시 적용한다.
-			Channel channel = jwtTokenDataExtractService.getChannelData(response, request.getChannelId());
+			Channel channel = jwtTokenDataExtractService.getChannelData(bearerToken, request.getChannelId());
 			request.setChannelId(channel.getChannelId());
 			
 			HashMap<String, String> result = videoInsertService.insert(request);
@@ -234,11 +235,11 @@ public class RestVideoController
 	}
 	
 	@GetMapping("/api/video/view_video/{videoId}")
-	public ResponseEntity<Object> viewVideo(@PathVariable Integer videoId, HttpServletResponse response) throws IOException
+	public ResponseEntity<Object> viewVideo(@RequestHeader("Authorization") String bearerToken, @PathVariable Integer videoId, HttpServletResponse response) throws IOException
 	{                                            
 		try
 		{
-			User user = jwtTokenDataExtractService.getUserData(response);
+			User user = jwtTokenDataExtractService.getUserData(bearerToken);
 			Video video = videoViewService.selectVideo(user.getUserId(), videoId);
 			return ResponseEntity.status(HttpStatus.OK).body(video);
 		} 

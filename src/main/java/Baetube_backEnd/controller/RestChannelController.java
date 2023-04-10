@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import Baetube_backEnd.ErrorResponse;
@@ -27,7 +28,6 @@ import Baetube_backEnd.service.channel.ChannelSubscribersService;
 import Baetube_backEnd.service.channel.ChannelUpdateService;
 import Baetube_backEnd.service.channel.ChannelVisitService;
 import Baetube_backEnd.service.jwt.JwtTokenDataExtractService;
-import Baetube_backEnd.service.user.UserDataFromTokenService;
  
 @RestController
 public class RestChannelController
@@ -159,13 +159,13 @@ public class RestChannelController
 		
 	}
 	
-	@GetMapping("/api/channel/data")
-	public ResponseEntity<Object> selectChannelData(@PathVariable Integer channelSequence, HttpServletResponse response) throws IOException
+	@GetMapping("/api/channel/data/{channelSequence}")
+	public ResponseEntity<Object> selectChannelData(@RequestHeader("Authorization") String bearerToken, @PathVariable Integer channelSequence, HttpServletResponse response) throws IOException
 	{
                                            
 		try
 		{
-			Channel channel = jwtTokenDataExtractService.getChannelData(response, channelSequence);
+			Channel channel = jwtTokenDataExtractService.getChannelData(bearerToken, channelSequence);
 			return ResponseEntity.status(HttpStatus.OK).body(channel);
 		} 
 		catch (NullChannelException e)

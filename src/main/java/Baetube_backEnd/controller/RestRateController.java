@@ -10,14 +10,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import Baetube_backEnd.ErrorResponse;
+import Baetube_backEnd.dto.Channel;
 import Baetube_backEnd.dto.Contents;
 import Baetube_backEnd.dto.Rate;
 import Baetube_backEnd.exception.NullRateResultException;
+import Baetube_backEnd.service.jwt.JwtTokenDataExtractService;
 import Baetube_backEnd.service.rate.RateService;
 
 @RestController
@@ -25,10 +29,12 @@ public class RestRateController
 {
 	@Autowired
 	private RateService rateService;
+	@Autowired
+	private JwtTokenDataExtractService jwtTokenDataExtractService;
 	
-	@PostMapping("/api/rate")
+	@PostMapping("/api/rate/{channelSequence}")
 	//@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<Object> rateContents(@RequestBody @Valid Rate request, Errors errors, HttpServletResponse response) throws IOException
+	public ResponseEntity<Object> rateContents(@RequestHeader("Authorization") String bearerToken, @PathVariable Integer channelSequence, @RequestBody @Valid Rate request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		if(errors.hasErrors())
 		{
@@ -39,6 +45,8 @@ public class RestRateController
 		                                                 
 		try
 		{
+			Channel channel = jwtTokenDataExtractService.getChannelData(bearerToken, channelSequence);
+			request.setChannelId(channel.getChannelId());
 			Contents result = rateService.rate(request);
 			return ResponseEntity.status(HttpStatus.OK).body(result);
 		} 

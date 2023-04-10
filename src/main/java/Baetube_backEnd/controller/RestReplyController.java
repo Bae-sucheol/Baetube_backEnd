@@ -16,15 +16,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.firebase.messaging.FirebaseMessagingException;
 
 import Baetube_backEnd.ErrorResponse;
+import Baetube_backEnd.dto.Channel;
 import Baetube_backEnd.dto.Reply;
 import Baetube_backEnd.exception.NullReplyException;
 import Baetube_backEnd.exception.WrongIdPasswordException;
 import Baetube_backEnd.service.fcm.FCMSendService;
+import Baetube_backEnd.service.jwt.JwtTokenDataExtractService;
 import Baetube_backEnd.service.reply.ReplyInsertService;
 import Baetube_backEnd.service.reply.ReplySelectService;
 import Baetube_backEnd.service.reply.ReplyUpdateService;
@@ -40,10 +43,12 @@ public class RestReplyController
 	private ReplyUpdateService replyUpdateService;
 	@Autowired
 	private FCMSendService fcmSendService;
+	@Autowired
+	private JwtTokenDataExtractService jwtTokenDataExtractService;
 	
-	@PostMapping("/api/reply/insert")
+	@PostMapping("/api/reply/insert/{channelSequence}")
 	//@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<Object> insertReply(@RequestBody @Valid Reply request, Errors errors, HttpServletResponse response) throws IOException, FirebaseMessagingException
+	public ResponseEntity<Object> insertReply(@RequestHeader("Authorization") String bearerToken, @PathVariable Integer channelSequence, @RequestBody @Valid Reply request, Errors errors, HttpServletResponse response) throws IOException, FirebaseMessagingException
 	{
 		if(errors.hasErrors())
 		{
@@ -54,6 +59,8 @@ public class RestReplyController
 		                                                 
 		try
 		{
+			Channel channel = jwtTokenDataExtractService.getChannelData(bearerToken, channelSequence);
+			request.setChannelId(channel.getChannelId());
 			HashMap<String, String> result = replyInsertService.insertReply(request);
 			
 			// 타입이 0이면(동영상이면) 
@@ -108,7 +115,6 @@ public class RestReplyController
 		                                                 
 		try
 		{
-			
 			replyUpdateService.updateReply(request);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
