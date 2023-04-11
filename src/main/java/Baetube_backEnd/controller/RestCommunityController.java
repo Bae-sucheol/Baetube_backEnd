@@ -18,11 +18,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.firebase.messaging.FirebaseMessagingException;
 
 import Baetube_backEnd.ErrorResponse;
+import Baetube_backEnd.dto.Channel;
 import Baetube_backEnd.dto.Community;
 import Baetube_backEnd.exception.DuplicateUserException;
 import Baetube_backEnd.exception.NullCommunityException;
@@ -30,6 +32,7 @@ import Baetube_backEnd.service.community.CommunityChannelVisitService;
 import Baetube_backEnd.service.community.CommunityDeleteService;
 import Baetube_backEnd.service.community.CommunityInsertService;
 import Baetube_backEnd.service.fcm.FCMSendService;
+import Baetube_backEnd.service.jwt.JwtTokenDataExtractService;
 import Baetube_backEnd.service.notification.NotificationInsertService;
 import Baetube_backEnd.service.subscribe.SubscribeSelectService;
 
@@ -48,13 +51,16 @@ public class RestCommunityController
 	private FCMSendService fcmSendService;
 	@Autowired
 	private NotificationInsertService notificationInsertService;
+	@Autowired
+	private JwtTokenDataExtractService jwtTokenDataExtractService;
 
-	@GetMapping("/api/community/channel_visit/{channelId}/{requestChannelId}")
-	public ResponseEntity<Object> getChannelCommunity(@PathVariable Integer channelId, @PathVariable Integer requestChannelId, HttpServletResponse response) throws IOException
+	@GetMapping("/api/community/channel_visit/{channelId}/{channelSequence}")
+	public ResponseEntity<Object> getChannelCommunity(@RequestHeader("Authorization") String bearerToken, @PathVariable Integer channelId, @PathVariable Integer channelSequence, HttpServletResponse response) throws IOException
 	{
 		try
 		{
-			List<Community> communityList = communityChannelVisitService.selectCommunity(channelId, requestChannelId);
+			Channel requestChannel = jwtTokenDataExtractService.getChannelData(bearerToken, channelSequence);
+			List<Community> communityList = communityChannelVisitService.selectCommunity(channelId, requestChannel.getChannelId());
 			return ResponseEntity.status(HttpStatus.OK).body(communityList);
 		} 
 		catch (NullCommunityException e)
@@ -89,9 +95,9 @@ public class RestCommunityController
 		
 	}
 	
-	@PostMapping("/api/community/insert")
+	@PostMapping("/api/community/insert/{channelSequence}")
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<Object> getHistoryVideo(@RequestBody @Valid Community request, Errors errors, HttpServletResponse response) throws IOException, FirebaseMessagingException
+	public ResponseEntity<Object> insertCommunity(@RequestHeader("Authorization") String bearerToken, @PathVariable Integer channelSequence, @RequestBody @Valid Community request, Errors errors, HttpServletResponse response) throws IOException, FirebaseMessagingException
 	{
 		
 		if(errors.hasErrors())
@@ -103,6 +109,8 @@ public class RestCommunityController
 		                                                 
 		try
 		{
+			Channel channel = jwtTokenDataExtractService.getChannelData(bearerToken, channelSequence);
+			request.setChannelId(channel.getChannelId());
 			// 삽입 후 결과를 받아온다.
 			HashMap<String, String> result = communityInsertService.insertCommunity(request);
 			// 삽입 후 notification 테이블에 삽입하기 위해 구독자 userId를 select 한다.

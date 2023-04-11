@@ -12,11 +12,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import Baetube_backEnd.ErrorResponse;
 import Baetube_backEnd.dto.Notification;
+import Baetube_backEnd.dto.User;
 import Baetube_backEnd.exception.NullNotificationException;
+import Baetube_backEnd.service.jwt.JwtTokenDataExtractService;
 import Baetube_backEnd.service.notification.NotificationDeleteService;
 
 @RestController
@@ -24,10 +27,12 @@ public class RestNotificationController
 {
 	@Autowired
 	private NotificationDeleteService notificationDeleteService;
+	@Autowired
+	private JwtTokenDataExtractService jwtTokenDataExtractService;
 	
 	@PostMapping("/api/notification/delete")
 	//@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<Object> insertNestedReply(@RequestBody @Valid Notification request, Errors errors, HttpServletResponse response) throws IOException
+	public ResponseEntity<Object> insertNestedReply(@RequestHeader("Authorization") String bearerToken, @RequestBody @Valid Long contentsId, Errors errors, HttpServletResponse response) throws IOException
 	{
 		if(errors.hasErrors())
 		{
@@ -38,8 +43,9 @@ public class RestNotificationController
 		                                                 
 		try
 		{
-			
-			notificationDeleteService.delete(request);
+			User user = jwtTokenDataExtractService.getUserData(bearerToken);
+			Notification notification = new Notification(user.getUserId(), contentsId);
+			notificationDeleteService.delete(notification);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
 		catch (NullNotificationException e)

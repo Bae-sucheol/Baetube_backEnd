@@ -14,22 +14,27 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import Baetube_backEnd.ErrorResponse;
 import Baetube_backEnd.dto.History;
+import Baetube_backEnd.dto.User;
 import Baetube_backEnd.exception.DuplicateUserException;
 import Baetube_backEnd.exception.NullHistoryException;
 import Baetube_backEnd.service.history.HistoryDeleteService;
+import Baetube_backEnd.service.jwt.JwtTokenDataExtractService;
 
 @RestController
 public class RestHistoryController
 {
 	@Autowired
 	private HistoryDeleteService historyDeleteService;
+	@Autowired
+	private JwtTokenDataExtractService jwtTokenDataExtractService;
 	
 	@PostMapping("/api/history/delete")
-	public ResponseEntity<Object> deleteHistory(@RequestBody @Valid History request, Errors errors, HttpServletResponse response) throws IOException
+	public ResponseEntity<Object> deleteHistory(@RequestHeader("Authorization") String bearerToken, @RequestBody @Valid History request, Errors errors, HttpServletResponse response) throws IOException
 	{
 		
 		if(errors.hasErrors())
@@ -41,6 +46,8 @@ public class RestHistoryController
 		                                                 
 		try
 		{
+			User user = jwtTokenDataExtractService.getUserData(bearerToken);
+			request.setUserId(user.getUserId());
 			historyDeleteService.deleteHistory(request);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 

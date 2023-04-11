@@ -15,11 +15,11 @@ public class FCMSaveService
 	@Autowired
 	private UserMapper userMapper;
 	
-	public void saveFCMToken(String fcmToken, String accessToken) throws NullUserException
+	public void saveFCMToken(String fcmToken, String bearerToken) throws NullUserException
 	{
 		// accessToken에서 정보를 추출한다.
 		
-		accessToken = accessToken.split(" ")[1].trim();
+		String accessToken = bearerToken.split(" ")[1].trim();
 		
 		Claims claims = jwtTokenProvider.parseToken(accessToken);
 				

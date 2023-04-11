@@ -18,14 +18,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.firebase.messaging.FirebaseMessagingException;
 
 import Baetube_backEnd.ErrorResponse;
+import Baetube_backEnd.dto.Channel;
 import Baetube_backEnd.dto.NestedReply;
 import Baetube_backEnd.exception.NullReplyException;
 import Baetube_backEnd.service.fcm.FCMSendService;
+import Baetube_backEnd.service.jwt.JwtTokenDataExtractService;
 import Baetube_backEnd.service.nestedreply.NestedReplyInsertService;
 import Baetube_backEnd.service.nestedreply.NestedReplySelectService;
 import Baetube_backEnd.service.nestedreply.NestedReplyUpdateService;
@@ -42,10 +45,12 @@ public class RestNestedReplyController
 	private NestedReplyUpdateService nestedReplyUpdateService;
 	@Autowired
 	private FCMSendService fcmSendService;
+	@Autowired
+	private JwtTokenDataExtractService jwtTokenDataExtractService;
 	
-	@PostMapping("/api/nestedreply/insert")
+	@PostMapping("/api/nestedreply/insert/{channelSequence}")
 	//@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<Object> insertNestedReply(@RequestBody @Valid NestedReply request, Errors errors, HttpServletResponse response) throws IOException, FirebaseMessagingException
+	public ResponseEntity<Object> insertNestedReply(@RequestHeader("Authorization") String bearerToken, @PathVariable Integer channelSequence, @RequestBody @Valid NestedReply request, Errors errors, HttpServletResponse response) throws IOException, FirebaseMessagingException
 	{
 		if(errors.hasErrors())
 		{
@@ -56,6 +61,8 @@ public class RestNestedReplyController
 		                                                 
 		try
 		{
+			Channel channel = jwtTokenDataExtractService.getChannelData(bearerToken, channelSequence);
+			request.setChannelId(channel.getChannelId());
 			HashMap<String, String> result = nestedReplyInsertService.insertNestedReply(request);
 			
 			// 타입이 0이면(동영상이면) 

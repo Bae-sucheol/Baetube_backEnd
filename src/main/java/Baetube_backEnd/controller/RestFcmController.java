@@ -26,7 +26,7 @@ public class RestFcmController
 	private FCMSaveService fcmSaveService;
 	
 	@PostMapping("/api/fcm/save")
-	public ResponseEntity<Object> saveFCMToken(@RequestHeader("Authorization") String accessToken, @RequestBody String fcmToken, Errors errors, HttpServletResponse response) throws IOException
+	public ResponseEntity<Object> saveFCMToken(@RequestHeader("Authorization") String bearerToken, @RequestBody String fcmToken, Errors errors, HttpServletResponse response) throws IOException
 	{
 		
 		if(errors.hasErrors())
@@ -38,10 +38,7 @@ public class RestFcmController
 		                                                 
 		try
 		{
-			System.out.println("요청이 도착했습니다.");
-			System.out.println("fcmToken : " + fcmToken);
-			System.out.println("accessToken : " + accessToken);
-			fcmSaveService.saveFCMToken(fcmToken, accessToken);
+			fcmSaveService.saveFCMToken(fcmToken, bearerToken);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
 		catch (NullUserException e)
