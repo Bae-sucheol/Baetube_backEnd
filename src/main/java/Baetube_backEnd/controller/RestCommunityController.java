@@ -31,6 +31,7 @@ import Baetube_backEnd.exception.NullCommunityException;
 import Baetube_backEnd.service.community.CommunityChannelVisitService;
 import Baetube_backEnd.service.community.CommunityDeleteService;
 import Baetube_backEnd.service.community.CommunityInsertService;
+import Baetube_backEnd.service.community.CommunityUpdateService;
 import Baetube_backEnd.service.fcm.FCMSendService;
 import Baetube_backEnd.service.jwt.JwtTokenDataExtractService;
 import Baetube_backEnd.service.notification.NotificationInsertService;
@@ -53,6 +54,8 @@ public class RestCommunityController
 	private NotificationInsertService notificationInsertService;
 	@Autowired
 	private JwtTokenDataExtractService jwtTokenDataExtractService;
+	@Autowired
+	private CommunityUpdateService communityUpdateService;
 
 	@GetMapping("/api/community/channel_visit/{channelId}/{channelSequence}")
 	public ResponseEntity<Object> getChannelCommunity(@RequestHeader("Authorization") String bearerToken, @PathVariable Integer channelId, @PathVariable Integer channelSequence, HttpServletResponse response) throws IOException
@@ -130,6 +133,31 @@ public class RestCommunityController
 			result.remove(FCMSendService.FCM_NOTIFICATION_COMMUNITY);
 			result.remove("contentsId");
 			return ResponseEntity.status(HttpStatus.OK).body(result);
+		} 
+		catch (DuplicateUserException e)
+		{
+			
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+		}
+		
+	}
+	
+	@PostMapping("/api/community/update")
+	public ResponseEntity<Object> updateCommunity(@RequestBody @Valid Community request, Errors errors, HttpServletResponse response) throws IOException, FirebaseMessagingException
+	{
+		
+		if(errors.hasErrors())
+		{
+			String errorCodes = errors.getAllErrors().stream().map(error -> error.getCodes()[0]).collect(Collectors.joining(","));
+			
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse("errorCodes = " + errorCodes));
+		}
+		                                                 
+		try
+		{
+			HashMap<String, String> isChangedImage = communityUpdateService.updateCommunity(request);
+			
+			return ResponseEntity.status(HttpStatus.OK).body(isChangedImage);
 		} 
 		catch (DuplicateUserException e)
 		{

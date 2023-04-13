@@ -86,7 +86,26 @@ public class FileUploadService
 		return true;
 	}
 	
-	//
+	public void deleteImage(String type, String purpose, String fileName) throws IOException
+	{
+		valid(type, purpose);
+		// 베이스 폴더 path와 파일의 타입(이미지, 동영상) 별 폴더를 조합한 path를 baseFolderPath로 지정.
+		String baseFolderPath = Paths.get(BASE_FILE_PATH, type).toString();
+				
+		// 타입이 video가 아니면 즉 파일이 이미지면 목적에 맞게(프로필 사진, 채널배너, 게시글 이미지) 폴더를 생성하기 위한 path를 생성.
+		baseFolderPath = Paths.get(baseFolderPath, purpose).toString();
+		String fileNamePrefix = fileName + ".jpg";
+		String destinationPath = Paths.get(baseFolderPath, fileNamePrefix).toString();
+		File selectedImage = new File(destinationPath);
+		
+		// 파일이 존재한다면 삭제한다.
+		if(selectedImage.exists())
+		{
+			selectedImage.delete();
+		}
+	}
+	
+	// 
 	private void saveImage(InputStream fileStream, File storageFile) throws IOException
 	{
 		BufferedImage resizedImage = resize(fileStream);

@@ -96,12 +96,13 @@ public class RestVideoController
 		
 	}
 	
-	@GetMapping("/api/video/history_video/{userId}")
-	public ResponseEntity<Object> getHistoryVideo(@PathVariable Integer userId, HttpServletResponse response) throws IOException
+	@GetMapping("/api/video/history_video")
+	public ResponseEntity<Object> getHistoryVideo(@RequestHeader("Authorization") String bearerToken, HttpServletResponse response) throws IOException
 	{                                           
 		try
 		{
-			List<Video> videoList = historyVideoRequestService.requestVideo(userId);
+			User user = jwtTokenDataExtractService.getUserData(bearerToken);
+			List<Video> videoList = historyVideoRequestService.requestVideo(user.getUserId());
 			return ResponseEntity.status(HttpStatus.OK).body(videoList);
 		} 
 		catch (NullVideoException e)
@@ -164,8 +165,8 @@ public class RestVideoController
 		
 	}
 	
-	@PostMapping("/api/video/insert")
-	public ResponseEntity<Object> insertVideo(@RequestHeader("Authorization") String bearerToken, @RequestBody @Valid Video request, Errors errors, HttpServletResponse response) throws IOException, FirebaseMessagingException
+	@PostMapping("/api/video/insert/{channelSequence}")
+	public ResponseEntity<Object> insertVideo(@RequestHeader("Authorization") String bearerToken, @PathVariable Integer channelSequence, @RequestBody @Valid Video request, Errors errors, HttpServletResponse response) throws IOException, FirebaseMessagingException
 	{
 		
 		if(errors.hasErrors())
@@ -177,9 +178,8 @@ public class RestVideoController
 		                                                 
 		try
 		{
-			// channelId를 사용하여 channelSequence를 대체한다.
 			// 이 메소드가 실행되고 난 이후 channel 객체의 channelId 속성을 request 객체에 다시 적용한다.
-			Channel channel = jwtTokenDataExtractService.getChannelData(bearerToken, request.getChannelId());
+			Channel channel = jwtTokenDataExtractService.getChannelData(bearerToken, channelSequence);
 			request.setChannelId(channel.getChannelId());
 			
 			HashMap<String, String> result = videoInsertService.insert(request);
@@ -223,8 +223,8 @@ public class RestVideoController
 		                                                 
 		try
 		{
-			videoUpdateService.update(request);
-			return ResponseEntity.status(HttpStatus.OK).build();
+			HashMap<String, String> isChangedImage = videoUpdateService.update(request);
+			return ResponseEntity.status(HttpStatus.OK).body(isChangedImage);
 		} 
 		catch (NullVideoException e)
 		{

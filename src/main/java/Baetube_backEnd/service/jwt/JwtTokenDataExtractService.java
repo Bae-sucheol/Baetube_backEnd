@@ -63,11 +63,14 @@ public class JwtTokenDataExtractService
 		// 엑세스 토큰을 사용하여 유저 이메일을 가져온다.
 		String email = getUserEmail(accessToken);
 		
+		System.out.println("이메일 : " + email);
+		
 		// 유저 매퍼를 통해 유저의 정보를 조회한다.
 		User user = userMapper.selectByEmail(email);
 		
 		if(user == null)
 		{
+			System.out.println("없는데?");
 			throw new NullUserException();
 		}
 		

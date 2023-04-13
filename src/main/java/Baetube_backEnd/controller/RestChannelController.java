@@ -1,6 +1,7 @@
 package Baetube_backEnd.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -110,9 +111,9 @@ public class RestChannelController
 		                                                 
 		try
 		{
-			channelUpdateService.updateChannel(request);
+			HashMap<String, String> isChangedImages = channelUpdateService.updateChannel(request);
 			
-			return ResponseEntity.status(HttpStatus.OK).build();
+			return ResponseEntity.status(HttpStatus.OK).body(isChangedImages);
 		} 
 		catch (NullChannelException e)
 		{
@@ -141,14 +142,15 @@ public class RestChannelController
 		
 	}
 	
-	@GetMapping("/api/channel/subscribers/{channelId}")
+	@GetMapping("/api/channel/subscribers/{channelSequence}")
 	//@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<Object> selectSubscribers(@PathVariable Integer channelId, HttpServletResponse response) throws IOException
+	public ResponseEntity<Object> selectSubscribers(@RequestHeader("Authorization") String bearerToken, @PathVariable Integer channelSequence, HttpServletResponse response) throws IOException
 	{
                                            
 		try
 		{
-			List<Channel> subscriberList = channelSubscribersService.selectSubscribers(channelId);
+			Channel channel = jwtTokenDataExtractService.getChannelData(bearerToken, channelSequence);
+			List<Channel> subscriberList = channelSubscribersService.selectSubscribers(channel.getChannelId());
 			return ResponseEntity.status(HttpStatus.OK).body(subscriberList);
 		} 
 		catch (NullChannelException e)
