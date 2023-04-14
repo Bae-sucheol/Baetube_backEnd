@@ -164,7 +164,7 @@ public class RestChannelController
 	@GetMapping("/api/channel/data/{channelSequence}")
 	public ResponseEntity<Object> selectChannelData(@RequestHeader("Authorization") String bearerToken, @PathVariable Integer channelSequence, HttpServletResponse response) throws IOException
 	{
-                                           
+                                          
 		try
 		{
 			Channel channel = jwtTokenDataExtractService.getChannelData(bearerToken, channelSequence);
