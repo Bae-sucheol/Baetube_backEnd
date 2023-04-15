@@ -29,15 +29,17 @@ public class CommunityUpdateService
 			throw new NullCommunityException();
 		}
 		
-		communityMapper.update(community, request);
-		
 		HashMap<String, String> isChangedImage = new HashMap<>();
 		
 		if(community.equals(request.getImageUrl()))
 		{
 			fileUploadService.deleteImage("image", "community", community.getImageUrl());
-			isChangedImage.put("imageUrl", UUIDUtil.createUUID());
+			String imageUrl = UUIDUtil.createUUID();
+			isChangedImage.put("imageUrl", imageUrl);
+			request.setImageUrl(imageUrl);
 		}
+		
+		communityMapper.update(community, request);
 		
 		return isChangedImage;
 	}

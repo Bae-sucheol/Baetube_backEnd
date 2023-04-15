@@ -31,6 +31,7 @@ import Baetube_backEnd.exception.NullCommunityException;
 import Baetube_backEnd.service.community.CommunityChannelVisitService;
 import Baetube_backEnd.service.community.CommunityDeleteService;
 import Baetube_backEnd.service.community.CommunityInsertService;
+import Baetube_backEnd.service.community.CommunitySelectService;
 import Baetube_backEnd.service.community.CommunityUpdateService;
 import Baetube_backEnd.service.fcm.FCMSendService;
 import Baetube_backEnd.service.jwt.JwtTokenDataExtractService;
@@ -56,6 +57,8 @@ public class RestCommunityController
 	private JwtTokenDataExtractService jwtTokenDataExtractService;
 	@Autowired
 	private CommunityUpdateService communityUpdateService;
+	@Autowired
+	private CommunitySelectService communitySelectService;
 
 	@GetMapping("/api/community/channel_visit/{channelId}/{channelSequence}")
 	public ResponseEntity<Object> getChannelCommunity(@RequestHeader("Authorization") String bearerToken, @PathVariable Integer channelId, @PathVariable Integer channelSequence, HttpServletResponse response) throws IOException
@@ -165,5 +168,20 @@ public class RestCommunityController
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
 		
+	}
+	
+	@GetMapping("/api/community/select/{communityId}")
+	public ResponseEntity<Object> selectCommunity(@PathVariable Integer communityId, Errors errors, HttpServletResponse response) throws IOException
+	{
+		try
+		{
+			Community community = communitySelectService.selectCommunity(communityId);
+			return ResponseEntity.status(HttpStatus.OK).body(community);
+		} 
+		catch (NullCommunityException e)
+		{
+			
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+		}
 	}
 }

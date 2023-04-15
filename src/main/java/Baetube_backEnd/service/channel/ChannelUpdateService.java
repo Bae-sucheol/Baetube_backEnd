@@ -29,21 +29,25 @@ public class ChannelUpdateService
 			throw new NullChannelException();
 		}
 		
-		channelMapper.update(channel, request);
-		
 		HashMap<String, String> isChangedImages = new HashMap<>();
 		
 		if(!channel.getArts().equals(request.getArts()))
 		{
 			fileUploadService.deleteImage("image", "arts", channel.getArts());
-			isChangedImages.put("arts", UUIDUtil.createUUID());
+			String arts = UUIDUtil.createUUID();
+			isChangedImages.put("arts", arts);
+			request.setArts(arts);
 		}
 		
 		if(!channel.getProfile().equals(request.getProfile()))
 		{
 			fileUploadService.deleteImage("image", "profile", channel.getArts());
-			isChangedImages.put("profile", UUIDUtil.createUUID());
+			String profile = UUIDUtil.createUUID();
+			isChangedImages.put("profile", profile);
+			request.setProfile(profile);
 		}
+		
+		channelMapper.update(channel, request);
 		
 		return isChangedImages;
 	}

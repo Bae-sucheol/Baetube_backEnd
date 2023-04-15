@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import Baetube_backEnd.service.community.CommunityChannelVisitService;
 import Baetube_backEnd.service.community.CommunityDeleteService;
 import Baetube_backEnd.service.community.CommunityInsertService;
+import Baetube_backEnd.service.community.CommunitySelectService;
 import Baetube_backEnd.service.community.CommunityUpdateService;
 
 @Configuration
@@ -33,5 +34,11 @@ public class CommunityConfig
 	public CommunityUpdateService communityUpdateService()
 	{
 		return new CommunityUpdateService();
+	}
+	
+	@Bean
+	public CommunitySelectService communitySelectService()
+	{
+		return new CommunitySelectService();
 	}
 }	
