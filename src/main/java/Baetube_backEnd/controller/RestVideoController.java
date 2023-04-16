@@ -47,6 +47,7 @@ import Baetube_backEnd.service.video.PlaylistVideoRequestService;
 import Baetube_backEnd.service.video.RelatedVideoRequestService;
 import Baetube_backEnd.service.video.SubscribeVideoRequestService;
 import Baetube_backEnd.service.video.VideoInsertService;
+import Baetube_backEnd.service.video.VideoSelectService;
 import Baetube_backEnd.service.video.VideoUpdateService;
 import Baetube_backEnd.service.video.VideoViewService;
 
@@ -79,6 +80,8 @@ public class RestVideoController
 	private NotificationInsertService notificationInsertService;
 	@Autowired
 	private JwtTokenDataExtractService jwtTokenDataExtractService;
+	@Autowired
+	private VideoSelectService videoSelectService;
 	
 	@GetMapping("/api/video/channel_video/{channelId}")
 	public ResponseEntity<Object> getChannelVideo(@PathVariable Integer channelId, HttpServletResponse response) throws IOException
@@ -265,5 +268,21 @@ public class RestVideoController
 		}
 		
 	}
+	
+	@GetMapping("/api/video/data/{videoId}")
+	public ResponseEntity<Object> getVideoData(@PathVariable Integer videoId, HttpServletResponse response) throws IOException
+	{                                         
+		try
+		{
+			Video video = videoSelectService.selectByVideoId(videoId);
+			return ResponseEntity.status(HttpStatus.OK).body(video);
+		} 
+		catch (NullVideoException e)
+		{
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+		}
+		
+	}
+	
 	
 }

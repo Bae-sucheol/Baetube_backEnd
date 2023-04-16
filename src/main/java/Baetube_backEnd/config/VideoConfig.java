@@ -10,6 +10,7 @@ import Baetube_backEnd.service.video.PlaylistVideoRequestService;
 import Baetube_backEnd.service.video.RelatedVideoRequestService;
 import Baetube_backEnd.service.video.SubscribeVideoRequestService;
 import Baetube_backEnd.service.video.VideoInsertService;
+import Baetube_backEnd.service.video.VideoSelectService;
 import Baetube_backEnd.service.video.VideoUpdateService;
 import Baetube_backEnd.service.video.VideoViewService;
 
@@ -69,5 +70,11 @@ public class VideoConfig
 	public RelatedVideoRequestService relatedVideoRequestService()
 	{
 		return new RelatedVideoRequestService();
+	}
+	
+	@Bean
+	public VideoSelectService videoSelectService()
+	{
+		return new VideoSelectService();
 	}
 }

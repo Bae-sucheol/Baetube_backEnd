@@ -35,6 +35,7 @@ import Baetube_backEnd.service.playlist.PlaylistInsertItemMultiService;
 import Baetube_backEnd.service.playlist.PlaylistInsertItemService;
 import Baetube_backEnd.service.playlist.PlaylistInsertLikeVideoService;
 import Baetube_backEnd.service.playlist.PlaylistInsertService;
+import Baetube_backEnd.service.playlist.PlaylistSelectService;
 import Baetube_backEnd.service.playlist.PlaylistUpdateService;
 
 @RestController
@@ -60,6 +61,8 @@ public class RestPlaylistController
 	private PlaylistDeleteLikeVideoService playlistDeleteLikeVideoService;
 	@Autowired
 	private JwtTokenDataExtractService jwtTokenDataExtractService;
+	@Autowired
+	private PlaylistSelectService playlistSelectService;
 	
 	@GetMapping("/api/playlist/channel/{channelId}")
 	//@ExceptionHandler(MethodArgumentNotValidException.class)
@@ -298,6 +301,21 @@ public class RestPlaylistController
 		{
 			
 			return ResponseEntity.status(HttpStatus.CONFLICT).body("존재하지 않는 아이템");
+		}
+	}
+	
+	@GetMapping("/api/playlist/data/{playlistId}")
+	public ResponseEntity<Object> selectPlaylistData(@PathVariable Integer playlistId, HttpServletResponse response) throws IOException
+	{                                             
+		try
+		{
+			Playlist playlist = playlistSelectService.selectPlaylistData(playlistId);
+			return ResponseEntity.status(HttpStatus.OK).body(playlist);
+		} 
+		catch (NullPlaylistException e)
+		{
+			
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
 	}
 }

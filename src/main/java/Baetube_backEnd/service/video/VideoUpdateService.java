@@ -29,15 +29,18 @@ public class VideoUpdateService
 			throw new NullVideoException();
 		}
 		
-		videoMapper.update(video, request);
-		
 		HashMap<String, String> isChangedImage = new HashMap<>();
 		
 		if(!video.getThumbnail().equals(request.getThumbnail()))
 		{
 			fileUploadService.deleteImage("image", "thumbnail", video.getThumbnail());
-			isChangedImage.put("thumbnail", UUIDUtil.createUUID());
+			
+			String thumbnail = UUIDUtil.createUUID();
+			isChangedImage.put("thumbnail", thumbnail);
+			request.setThumbnail(thumbnail);
 		}
+		
+		videoMapper.update(video, request);
 		
 		return isChangedImage;
 	}
