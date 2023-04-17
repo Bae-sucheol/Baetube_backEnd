@@ -21,6 +21,14 @@ public class Rate
 		this.result = result;
 	}
 	
+	public Rate(Long contentsId, Integer value, Integer result)
+	{
+		super();
+		this.contentsId = contentsId;
+		this.value = value;
+		this.result = result;
+	}
+	
 	// getter
 	public Long getContentsId()
 	{

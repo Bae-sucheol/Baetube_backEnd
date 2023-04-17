@@ -171,10 +171,11 @@ public class RestCommunityController
 	}
 	
 	@GetMapping("/api/community/select/{communityId}")
-	public ResponseEntity<Object> selectCommunity(@PathVariable Integer communityId, Errors errors, HttpServletResponse response) throws IOException
+	public ResponseEntity<Object> selectCommunity(@PathVariable Integer communityId, HttpServletResponse response) throws IOException
 	{
 		try
 		{
+			System.out.println("communityId : " + communityId);
 			Community community = communitySelectService.selectCommunity(communityId);
 			return ResponseEntity.status(HttpStatus.OK).body(community);
 		} 

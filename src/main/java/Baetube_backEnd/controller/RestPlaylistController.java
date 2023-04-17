@@ -1,6 +1,7 @@
 package Baetube_backEnd.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -159,8 +160,8 @@ public class RestPlaylistController
 		                                                 
 		try
 		{
-			playlistUpdateService.update(request);
-			return ResponseEntity.status(HttpStatus.OK).build();
+			HashMap<String, String> isChangedImage = playlistUpdateService.update(request);
+			return ResponseEntity.status(HttpStatus.OK).body(isChangedImage);
 		} 
 		catch (NullPlaylistException e)
 		{

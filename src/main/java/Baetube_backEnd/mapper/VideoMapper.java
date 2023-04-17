@@ -19,4 +19,5 @@ public interface VideoMapper
 	public Video selectByVideoId(@Param("videoId") Integer videoId);
 	public void update(@Param("oldVideo") Video oldVideo, @Param("newVideo") Video newVideo);
 	public void updateViews(@Param("videoId") Integer videoId, @Param("value") Integer value);
+	public Video selectByThumbnail(@Param("thumbnail") String thumbnail);
 }

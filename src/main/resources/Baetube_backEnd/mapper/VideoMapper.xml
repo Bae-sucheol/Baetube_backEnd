@@ -104,6 +104,12 @@
 		
 		</select>
 		
+		<select id="selectByThumbnail" resultType="videoDto">
+		
+			SELECT * FROM video WHERE thumbnail = #{thumbnail}
+		
+		</select>
+		
 		<update id="update" parameterType="map">
 			UPDATE video 
 			
