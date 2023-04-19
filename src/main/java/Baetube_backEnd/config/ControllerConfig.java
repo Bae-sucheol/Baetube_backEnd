@@ -3,6 +3,7 @@ package Baetube_backEnd.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import Baetube_backEnd.controller.RestCategoryController;
 import Baetube_backEnd.controller.RestChannelController;
 import Baetube_backEnd.controller.RestCommunityController;
 import Baetube_backEnd.controller.RestContentsController;
@@ -133,5 +134,11 @@ public class ControllerConfig
 	public RestFcmController restFcmController()
 	{
 		return new RestFcmController();
+	}
+	
+	@Bean
+	public RestCategoryController restCategoryController() 
+	{
+		return new RestCategoryController();
 	}
 }

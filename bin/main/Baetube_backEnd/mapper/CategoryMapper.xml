@@ -18,5 +18,13 @@
 			DELETE FROM category WHERE category_id = #{category_id}
 		
 		</delete>
+		
+		<select id="selectOrderByViews" resultType="categoryDto">
+		
+			SELECT categoryId, `name` FROM (SELECT category.category_id AS categoryId, category.name, COUNT(category.category_id) AS `count` FROM `history` 
+			JOIN video USING(video_id) NATURAL JOIN category 
+			WHERE user_id = #{userId} GROUP BY category.category_id ORDER BY `count` DESC) AS result;
+		
+		</select>
 
 	</mapper>

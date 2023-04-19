@@ -16,5 +16,6 @@
     	<typeAlias type="Baetube_backEnd.dto.Contents" alias="contentsDto"/>
     	<typeAlias type="Baetube_backEnd.dto.History" alias="historyDto"/>
     	<typeAlias type="Baetube_backEnd.dto.Notification" alias="notificationDto"/>
+    	<typeAlias type="Baetube_backEnd.dto.Category" alias="categoryDto"/>
     </typeAliases>
 </configuration>
