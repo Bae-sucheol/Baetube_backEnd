@@ -1,5 +1,6 @@
 package Baetube_backEnd.service.playlist;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class PlaylistUpdateService
 	
 	
 	@Transactional
-	public HashMap<String, String> update(Playlist request)
+	public HashMap<String, String> update(Playlist request) throws IOException
 	{
 		Playlist playlist = playlistMapper.selectByPlaylistId(request.getPlaylistId());
 		

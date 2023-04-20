@@ -20,14 +20,42 @@ public class Community
 		private Integer count;	
 		private Integer selectedChannelId;
 		private String name;
+		private String profile;
 	    
 	    // constructor
 		public Community()
 		{
 			super();
 		}
+		
+		
 
 	    public Community(Integer communityId, Long contentsId, Integer channelId, Integer likeCount, Integer hateCount,
+				Integer replyCount, String imageUrl, String comment, Timestamp date, Integer voteId, String title,
+				Integer voteOptionId, String option, Integer count, Integer selectedChannelId, String name,
+				String profile)
+		{
+			super();
+			this.communityId = communityId;
+			this.contentsId = contentsId;
+			this.channelId = channelId;
+			this.likeCount = likeCount;
+			this.hateCount = hateCount;
+			this.replyCount = replyCount;
+			this.imageUrl = imageUrl;
+			this.comment = comment;
+			this.date = date;
+			this.voteId = voteId;
+			this.title = title;
+			this.voteOptionId = voteOptionId;
+			this.option = option;
+			this.count = count;
+			this.selectedChannelId = selectedChannelId;
+			this.name = name;
+			this.profile = profile;
+		}
+
+		public Community(Integer communityId, Long contentsId, Integer channelId, Integer likeCount, Integer hateCount,
 				Integer replyCount, String imageUrl, String comment, Timestamp date, Integer voteId, String title,
 				Integer voteOptionId, String option, Integer count, Integer selectedChannelId, String name)
 		{
@@ -192,6 +220,11 @@ public class Community
 			return selectedChannelId;
 		}
 
+		public String getProfile()
+		{
+			return profile;
+		}
+
 		// setter
 		public void setCommunityId(Integer communityId)
 		{
@@ -265,4 +298,8 @@ public class Community
 			this.name = name;
 		}
 	    
+		public void setProfile(String profile)
+		{
+			this.profile = profile;
+		}
 }

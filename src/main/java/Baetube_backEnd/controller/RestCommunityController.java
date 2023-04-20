@@ -185,4 +185,21 @@ public class RestCommunityController
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
 	}
+	
+	@GetMapping("/api/community/select/subscribe/{channelSequence}")
+	public ResponseEntity<Object> selectCommunity(@RequestHeader("Authorization") String bearerToken, @PathVariable Integer channelSequence, HttpServletResponse response) throws IOException
+	{
+		try
+		{
+			Channel channel = jwtTokenDataExtractService.getChannelData(bearerToken, channelSequence);
+			List<Community> communityList = communitySelectService.selectSubscribersCommunity(channel.getChannelId());
+			
+			return ResponseEntity.status(HttpStatus.OK).body(communityList);
+		} 
+		catch (NullCommunityException e)
+		{
+			
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+		}
+	}
 }

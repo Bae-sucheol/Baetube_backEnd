@@ -66,4 +66,25 @@
 		
 		</select>
 		
+		<select id="selectSubscribersCommunity" resultType="communityDto">
+		
+			SELECT a.community_id AS communityId, a.contents_id AS contentsId, a.channel_id AS channelId, `like` AS likeCount,
+			 `hate` AS hateCount, b.reply_count AS replyCount, image_url AS imageUrl, a.comment, a.date, c.vote_id AS voteId,
+			  `title`, d.vote_option_id AS voteOptionId, `option`, `count`, e.channel_id AS selectedChannelId, f.profile, f.name
+			   FROM community AS a
+				 LEFT JOIN contents AS b
+				 ON a.contents_id = b.contents_id
+				 LEFT JOIN vote AS c
+				 ON a.community_id = c.community_id
+				 LEFT JOIN vote_option AS d
+				 ON c.vote_id = d.vote_id
+				 LEFT JOIN selected_vote AS e
+				 ON d.vote_option_id = e.vote_option_id
+					AND e.channel_id = #{channelId}
+				 LEFT JOIN `channel` AS f
+				 ON a.channel_id = f.channel_id
+				 WHERE a.channel_id IN (SELECT channel_id FROM subscribers WHERE subscriber_id = #{channelId});
+		
+		</select>
+		
 	</mapper>

@@ -1,6 +1,7 @@
 package Baetube_backEnd.service.community;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,5 +26,18 @@ public class CommunitySelectService
 		}
 		
 		return community;
+	}
+	
+	@Transactional
+	public List<Community> selectSubscribersCommunity(Integer request)
+	{
+		List<Community> communityList = communityMapper.selectSubscribersCommunity(request);
+		
+		if(communityList == null || communityList.isEmpty())
+		{
+			throw new NullCommunityException();
+		}
+		
+		return communityList;
 	}
 }
