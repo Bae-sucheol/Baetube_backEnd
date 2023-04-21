@@ -62,7 +62,7 @@
 		
 		<select id="selectSubscribers" resultType="channelDto">
 		
-			SELECT channel_id as channelId, `name`, `profile` FROM CHANNEL NATURAL JOIN subscribers WHERE subscriber_id = #{channelId};
+			SELECT channel_id as channelId, `name`, `profile`, `date` AS regDate FROM CHANNEL NATURAL JOIN subscribers WHERE subscriber_id = #{channelId};
 		
 		</select>
 		

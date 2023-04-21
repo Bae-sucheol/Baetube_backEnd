@@ -1,9 +1,12 @@
 package Baetube_backEnd.dto;
 
+import java.sql.Timestamp;
+
 public class Subscribers
 {
 	private Integer channelId;
 	private Integer subscriberId;
+	private Timestamp date;
 	
 	public Subscribers()
 	{
@@ -17,6 +20,16 @@ public class Subscribers
 		this.subscriberId = subscriberId;
 	}
 	
+	
+	
+	public Subscribers(Integer channelId, Integer subscriberId, Timestamp date)
+	{
+		super();
+		this.channelId = channelId;
+		this.subscriberId = subscriberId;
+		this.date = date;
+	}
+
 	// getter
 	public Integer getChannelId()
 	{
@@ -28,6 +41,11 @@ public class Subscribers
 		return subscriberId;
 	}
 	
+	public Timestamp getDate()
+	{
+		return date;
+	}
+
 	// setter
 	public void setChannelId(Integer channelId)
 	{
@@ -38,6 +56,10 @@ public class Subscribers
 	{
 		this.subscriberId = subscriberId;
 	}
-	
+
+	public void setDate(Timestamp date)
+	{
+		this.date = date;
+	}
 	
 }
