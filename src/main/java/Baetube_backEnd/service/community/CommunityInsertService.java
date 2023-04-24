@@ -35,6 +35,8 @@ public class CommunityInsertService
 		
 		// 맵을 만들어서 반환한다.
 		HashMap<String, String> result = new HashMap<>();
+		
+		System.out.println("생성된 커뮤니티 아이디 : " + request.getCommunityId());
 				
 		result.put(FCMSendService.FCM_NOTIFICATION_COMMUNITY, request.getCommunityId().toString());
 		result.put("contentsId", request.getContentsId().toString());

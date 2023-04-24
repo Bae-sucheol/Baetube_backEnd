@@ -133,7 +133,6 @@ public class RestCommunityController
 						FCMSendService.FCM_NOTIFICATION_COMMUNITY, result.get(FCMSendService.FCM_NOTIFICATION_COMMUNITY));
 			}
 			
-			result.remove(FCMSendService.FCM_NOTIFICATION_COMMUNITY);
 			result.remove("contentsId");
 			return ResponseEntity.status(HttpStatus.OK).body(result);
 		} 

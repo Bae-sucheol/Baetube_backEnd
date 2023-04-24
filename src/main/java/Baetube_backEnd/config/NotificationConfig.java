@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 
 import Baetube_backEnd.service.notification.NotificationDeleteService;
 import Baetube_backEnd.service.notification.NotificationInsertService;
+import Baetube_backEnd.service.notification.NotificationSelectService;
 
 @Configuration
 public class NotificationConfig
@@ -19,5 +20,11 @@ public class NotificationConfig
 	public NotificationInsertService notificationInsertService()
 	{
 		return new NotificationInsertService();
+	}
+	
+	@Bean
+	public NotificationSelectService notificationSelectService()
+	{
+		return new NotificationSelectService();
 	}
 }

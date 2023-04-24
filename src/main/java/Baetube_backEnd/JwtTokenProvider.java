@@ -34,13 +34,14 @@ public class JwtTokenProvider
 	private static String secret = "VlwEyVBsYt9V7zq57TejMnVUyzblYcfPQye08f7MGVA9XkHa";
 	// 테스트용으로 짧게 
 	private static final int day = 60 * 1000; // 1분
-	private static final int accessTokenTime = 1; // 5분
+	private static final int accessTokenTime = 5; // 5분
 	private static final int refreshTokenTime = 60; // 10분 
 	/*
 	private static final int day = 24 * 60 * 60 * 1000; // 하루
 	private static final int accessTokenTime = 1; // 1일
 	private static final int refreshTokenTime = 60; // 60일 
 	*/
+	
 	public JwtTokenProvider()
 	{
 		byte keyBytes[] = Decoders.BASE64.decode(secret);
