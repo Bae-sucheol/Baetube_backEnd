@@ -95,6 +95,7 @@ public class RestNotificationController
 		} 
 		catch (NullNotificationException e)
 		{
+			System.out.println("조회안 알람이 없습니다.");
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
 		

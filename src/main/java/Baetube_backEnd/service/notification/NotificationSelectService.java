@@ -6,8 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import Baetube_backEnd.dto.Community;
-import Baetube_backEnd.dto.Video;
 import Baetube_backEnd.exception.NullNotificationException;
 import Baetube_backEnd.mapper.NotificationMapper;
 
@@ -36,6 +34,7 @@ public class NotificationSelectService
 		
 		if(notifications == null || notifications.isEmpty())
 		{
+			System.out.println("조회한 알람이 없습니다.");
 			throw new NullNotificationException();
 		}
 		

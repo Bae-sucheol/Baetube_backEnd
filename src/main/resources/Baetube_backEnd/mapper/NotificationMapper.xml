@@ -30,7 +30,8 @@
 		<select id="selectVideoNotifications" resultType="HashMap">
 		
 			SELECT a.contents_id AS contentsId, a.date, a.user_id AS userId, a.checked, b.type,
-			c.video_id AS videoId, c.channel_id AS channelId, c.thumbnail, c.title, c.url, d.profile, d.name
+			c.video_id AS videoId, c.channel_id AS channelId, c.thumbnail, c.title, c.url, c.date as videoDate,
+			 d.profile, d.name
 			FROM notification AS a
 			LEFT JOIN contents AS b
 			ON a.contents_id = b.contents_id
@@ -38,7 +39,7 @@
 			ON b.contents_id = c.contents_id
 			LEFT JOIN `channel` AS d
 			ON c.channel_id = d.channel_id
-			WHERE a.user_id = #{userId} AND b.`type` = 0;
+			WHERE a.user_id = #{userId} AND b.`type` = 0 ORDER BY a.date;
 		
 		</select>
 
@@ -54,7 +55,7 @@
 			on b.contents_id = c.contents_id
 			left join `channel` as d
 			on c.channel_id = d.channel_id
-			where a.user_id = #{userId} and b.`type` = 1;
+			where a.user_id = #{userId} and b.`type` = 1 ORDER BY a.date;
 		
 		</select>
 
