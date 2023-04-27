@@ -28,7 +28,7 @@
 		
 		<select id="selectAll" resultType="searchHistoryDto">
 		
-			SELECT user_id as userId, keywords FROM search_history WHERE user_id = #{userId}
+			SELECT user_id as userId, keywords FROM search_history WHERE user_id = #{userId} ORDER BY `date` DESC 
 		
 		</select>
 
