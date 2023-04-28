@@ -25,6 +25,7 @@ import Baetube_backEnd.exception.DuplicateUserException;
 import Baetube_backEnd.exception.NullChannelException;
 import Baetube_backEnd.service.channel.ChannelDeleteService;
 import Baetube_backEnd.service.channel.ChannelInsertService;
+import Baetube_backEnd.service.channel.ChannelSelectService;
 import Baetube_backEnd.service.channel.ChannelSubscribersService;
 import Baetube_backEnd.service.channel.ChannelUpdateService;
 import Baetube_backEnd.service.channel.ChannelVisitService;
@@ -45,6 +46,8 @@ public class RestChannelController
 	private ChannelSubscribersService channelSubscribersService;
 	@Autowired
 	private JwtTokenDataExtractService jwtTokenDataExtractService;
+	@Autowired
+	private ChannelSelectService channelSelectService;
 	
 	@PostMapping("/api/channel/delete")
 	//@ExceptionHandler(MethodArgumentNotValidException.class)
@@ -169,6 +172,23 @@ public class RestChannelController
 		{
 			Channel channel = jwtTokenDataExtractService.getChannelData(bearerToken, channelSequence);
 			return ResponseEntity.status(HttpStatus.OK).body(channel);
+		} 
+		catch (NullChannelException e)
+		{
+			
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+		}
+		
+	}
+	
+	@GetMapping("/api/channel/search/{keywords}")
+	public ResponseEntity<Object> selectChannelData(@PathVariable String keywords, HttpServletResponse response) throws IOException
+	{
+                                          
+		try
+		{
+			List<Channel> channelList = channelSelectService.selectByKeywords(keywords);
+			return ResponseEntity.status(HttpStatus.OK).body(channelList);
 		} 
 		catch (NullChannelException e)
 		{

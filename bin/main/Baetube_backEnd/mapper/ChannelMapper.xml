@@ -74,4 +74,12 @@
 		
 		</select>
 		
+		<select id="selectByKeywords" resultType="channelDto">
+		
+			SELECT channel_id as channelId, user_id as userId, name, description, reg_date as regDate,
+			subs, video_count as videoCount, arts, profile FROM `channel` 
+			WHERE MATCH(`name`) AGAINST (#{keywords} WITH QUERY EXPANSION)
+		
+		</select>
+		
 	</mapper>

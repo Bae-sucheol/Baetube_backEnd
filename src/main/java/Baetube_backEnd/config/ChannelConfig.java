@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 
 import Baetube_backEnd.service.channel.ChannelDeleteService;
 import Baetube_backEnd.service.channel.ChannelInsertService;
+import Baetube_backEnd.service.channel.ChannelSelectService;
 import Baetube_backEnd.service.channel.ChannelSubscribersService;
 import Baetube_backEnd.service.channel.ChannelUpdateService;
 import Baetube_backEnd.service.channel.ChannelVisitService;
@@ -40,5 +41,11 @@ public class ChannelConfig
 	public ChannelVisitService channelVisitService()
 	{
 		return new ChannelVisitService();
+	}
+	
+	@Bean
+	public ChannelSelectService channelSelectService() 
+	{
+		return new ChannelSelectService();
 	}
 }

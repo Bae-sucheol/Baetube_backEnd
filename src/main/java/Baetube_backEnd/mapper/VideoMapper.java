@@ -20,4 +20,6 @@ public interface VideoMapper
 	public void update(@Param("oldVideo") Video oldVideo, @Param("newVideo") Video newVideo);
 	public void updateViews(@Param("videoId") Integer videoId, @Param("value") Integer value);
 	public Video selectByThumbnail(@Param("thumbnail") String thumbnail);
+	public List<Video> selectByKeywords(@Param("keywords") String keywords);
+	public List<Video> selectHistoryVideoKeywords(@Param("userId") Integer userId, @Param("keywords") String keywords);
 }

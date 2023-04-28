@@ -71,6 +71,16 @@
 			
 		</select>
 		
+		<select id="selectHistoryVideoKeywords" resultType="videoDto">
+		
+			SELECT video.video_id AS videoId, contents_id AS contentsId, channel_id AS channelId, url, public, thumbnail, title,
+			info, location, age, views, `like`, hate, reply_count AS replyCount, video.date AS `date`, category_id AS categoryId,
+			`profile`, `name`,  history.date AS historyDate
+			FROM video AS video NATURAL JOIN contents NATURAL JOIN CHANNEL JOIN HISTORY WHERE video.video_id = history.video_id 
+			AND history.user_id = #{userId} AND MATCH(`title`) AGAINST (#{keywords} WITH QUERY EXPANSION) ORDER BY historyDate DESC;
+		
+		</select>
+		
 		<select id="selectPlaylistVideo" resultType="videoDto">
 		
 			SELECT video_id as videoId, contents_id as contentsId, channel_id as channelId, url, public, thumbnail, title,
@@ -107,6 +117,15 @@
 		<select id="selectByThumbnail" resultType="videoDto">
 		
 			SELECT * FROM video WHERE thumbnail = #{thumbnail}
+		
+		</select>
+		
+		<select id="selectByKeywords" resultType="videoDto">
+		
+			SELECT video_id AS videoId, contents_id AS contentsId, channel_id AS channelId, url, public, thumbnail, title,
+			info, location, age, views, `like`, hate, reply_count AS replyCount, `date`, category_id AS categoryId,
+			`profile`, `name`, subs FROM video NATURAL JOIN contents NATURAL JOIN `channel`
+			WHERE MATCH(title) AGAINST (#{keywords} WITH QUERY EXPANSION)
 		
 		</select>
 		

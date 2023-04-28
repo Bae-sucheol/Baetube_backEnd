@@ -12,14 +12,13 @@ import Baetube_backEnd.exception.NullVideoException;
 import Baetube_backEnd.mapper.PlaylistMapper;
 import Baetube_backEnd.mapper.VideoMapper;
 
-public class PlaylistVideoRequestService implements VideoRequestService
+public class PlaylistVideoRequestService
 {
 	@Autowired
 	private VideoMapper videoMapper;
 	@Autowired
 	private PlaylistMapper playlistMapper;
 	
-	@Override
 	@Transactional
 	public List<Video> requestVideo(Integer playlistId)
 	{

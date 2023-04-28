@@ -1,5 +1,7 @@
 package Baetube_backEnd.service.video;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.method.P;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,5 +26,18 @@ public class VideoSelectService
 		}
 		
 		return video;
+	}
+	
+	@Transactional
+	public List<Video> selectByKeywords(String request) throws NullVideoException
+	{
+		List<Video> videoList = videoMapper.selectByKeywords(request);
+		
+		if(videoList == null || videoList.isEmpty())
+		{
+			throw new NullVideoException();
+		}
+		
+		return videoList;
 	}
 }

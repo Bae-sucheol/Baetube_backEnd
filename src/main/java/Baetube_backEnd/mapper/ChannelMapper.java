@@ -17,4 +17,5 @@ public interface ChannelMapper
 	public Channel select(@Param("channelId") Integer channelId);	
 	public List<Channel> selectSubscribers(@Param("channelId") Integer channelId);
 	public List<Channel> selectChannelByUserEmail(@Param("email") String email);
+	public List<Channel> selectByKeywords(@Param("keywords") String keywords);
 }

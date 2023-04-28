@@ -83,7 +83,7 @@ public class RestVideoController
 	@Autowired
 	private VideoSelectService videoSelectService;
 	
-	@GetMapping("/api/video/channel_video/{channelId}")
+	@GetMapping("/api/video/channel_video/{channelSequence}")
 	public ResponseEntity<Object> getChannelVideo(@PathVariable Integer channelId, HttpServletResponse response) throws IOException
 	{                                
 		try
@@ -99,13 +99,30 @@ public class RestVideoController
 		
 	}
 	
-	@GetMapping("/api/video/history_video")
+	@GetMapping("/api/video/history")
 	public ResponseEntity<Object> getHistoryVideo(@RequestHeader("Authorization") String bearerToken, HttpServletResponse response) throws IOException
 	{                                           
 		try
 		{
 			User user = jwtTokenDataExtractService.getUserData(bearerToken);
 			List<Video> videoList = historyVideoRequestService.requestVideo(user.getUserId());
+			return ResponseEntity.status(HttpStatus.OK).body(videoList);
+		} 
+		catch (NullVideoException e)
+		{
+			
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+		}
+		
+	}
+	
+	@GetMapping("/api/video/history/{keywords}")
+	public ResponseEntity<Object> getHistoryVideo(@RequestHeader("Authorization") String bearerToken, @PathVariable String keywords, HttpServletResponse response) throws IOException
+	{                                           
+		try
+		{
+			User user = jwtTokenDataExtractService.getUserData(bearerToken);
+			List<Video> videoList = historyVideoRequestService.requestVideoKeywords(user.getUserId(), keywords);
 			return ResponseEntity.status(HttpStatus.OK).body(videoList);
 		} 
 		catch (NullVideoException e)
@@ -284,5 +301,18 @@ public class RestVideoController
 		
 	}
 	
-	
+	@GetMapping("/api/video/search/{keywords}")
+	public ResponseEntity<Object> getVideoData(@PathVariable String keywords, HttpServletResponse response) throws IOException
+	{                                         
+		try
+		{
+			List<Video> videoList = videoSelectService.selectByKeywords(keywords);
+			return ResponseEntity.status(HttpStatus.OK).body(videoList);
+		} 
+		catch (NullVideoException e)
+		{
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+		}
+		
+	}
 }
