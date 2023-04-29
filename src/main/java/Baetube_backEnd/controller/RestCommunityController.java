@@ -71,7 +71,6 @@ public class RestCommunityController
 		} 
 		catch (NullCommunityException e)
 		{
-			
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
 		

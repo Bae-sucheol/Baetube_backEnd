@@ -88,6 +88,20 @@ public class JwtTokenDataExtractService
 	@Transactional
 	public Channel getChannelData(String bearerToken, Integer channelSequence) throws NullChannelException
 	{
+
+		List<Channel> channelList = getChannelDataAll(bearerToken);
+		
+		if(channelList == null || channelList.isEmpty())
+		{
+			throw new NullChannelException(); 
+		}
+		
+		return channelList.get(channelSequence);
+	}
+	
+	@Transactional
+	public List<Channel> getChannelDataAll(String bearerToken) throws NullChannelException
+	{
 		// 엑세스 토큰 추출
 		String accessToken = getAccessToken(bearerToken);
 
@@ -101,6 +115,6 @@ public class JwtTokenDataExtractService
 			throw new NullChannelException(); 
 		}
 		
-		return channelList.get(channelSequence);
+		return channelList;
 	}
 }

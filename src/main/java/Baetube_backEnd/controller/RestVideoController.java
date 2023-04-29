@@ -83,7 +83,7 @@ public class RestVideoController
 	@Autowired
 	private VideoSelectService videoSelectService;
 	
-	@GetMapping("/api/video/channel_video/{channelSequence}")
+	@GetMapping("/api/video/channel_video/{channelId}")
 	public ResponseEntity<Object> getChannelVideo(@PathVariable Integer channelId, HttpServletResponse response) throws IOException
 	{                                
 		try

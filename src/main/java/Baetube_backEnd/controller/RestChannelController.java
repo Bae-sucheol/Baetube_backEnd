@@ -198,4 +198,20 @@ public class RestChannelController
 		
 	}
 	
+	@GetMapping("/api/channel/data/all")
+	public ResponseEntity<Object> selectChannelDataAll(@RequestHeader("Authorization") String bearerToken, HttpServletResponse response) throws IOException
+	{
+                                          
+		try
+		{
+			List<Channel> channelList = jwtTokenDataExtractService.getChannelDataAll(bearerToken);
+			return ResponseEntity.status(HttpStatus.OK).body(channelList);
+		} 
+		catch (NullChannelException e)
+		{
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+		}
+		
+	}
+	
 }
