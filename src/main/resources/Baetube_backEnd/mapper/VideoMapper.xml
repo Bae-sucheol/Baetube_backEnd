@@ -26,7 +26,7 @@
 		
 			SELECT video_id as videoId, contents_id as contentsId, channel_id as channelId, url, public, thumbnail, title,
 			info, location, age, views, `like`, hate, reply_count as replyCount, `date`, category_id as categoryId,`profile`, `name`
-			FROM video NATURAL JOIN contents NATURAL JOIN CHANNEL WHERE channel_id = #{channelId}
+			FROM video NATURAL JOIN contents NATURAL JOIN CHANNEL WHERE channel_id = #{channelId} AND public = 1
 			ORDER BY `date` DESC LIMIT 100;
 			
 		</select>
@@ -36,7 +36,7 @@
 			SELECT video_id as videoId, contents_id as contentsId, channel_id as channelId, url, public, thumbnail, title,
 			info, location, age, views, `like`, hate, reply_count as replyCount, `date`, category_id as categoryId, `profile`, `name`
 		 	FROM video NATURAL JOIN contents NATURAL JOIN CHANNEL WHERE channel_id IN 
-			(SELECT channel_id FROM subscribers WHERE subscriber_id = #{channelId})
+			(SELECT channel_id FROM subscribers WHERE subscriber_id = #{channelId} AND public = 1)
 			ORDER BY `date` DESC LIMIT 100;
 			 
 		</select>
@@ -57,7 +57,7 @@
 			
 			UNION
 			
-			SELECT * FROM video NATURAL JOIN contents ORDER BY views DESC LIMIT 20) AS main_video_list ORDER BY RAND();
+			SELECT * FROM video NATURAL JOIN contents ORDER BY views DESC LIMIT 20) AS main_video_list WHERE public = 1 ORDER BY RAND();
 			
 		</select>
 		
@@ -67,7 +67,7 @@
 			info, location, age, views, `like`, hate, reply_count as replyCount, video.date AS `date`, category_id as categoryId,
 			`profile`, `name`,  history.date AS historyDate
 			FROM video NATURAL JOIN contents NATURAL JOIN CHANNEL JOIN HISTORY WHERE video.video_id = history.video_id 
-			AND history.user_id = #{userId} ORDER BY historyDate DESC;
+			AND history.user_id = #{userId} AND public = 1 ORDER BY historyDate DESC;
 			
 		</select>
 		
@@ -77,7 +77,7 @@
 			info, location, age, views, `like`, hate, reply_count AS replyCount, video.date AS `date`, category_id AS categoryId,
 			`profile`, `name`,  history.date AS historyDate
 			FROM video AS video NATURAL JOIN contents NATURAL JOIN CHANNEL JOIN HISTORY WHERE video.video_id = history.video_id 
-			AND history.user_id = #{userId} AND MATCH(`title`) AGAINST (#{keywords} WITH QUERY EXPANSION) ORDER BY historyDate DESC;
+			AND history.user_id = #{userId} AND MATCH(`title`) AGAINST (#{keywords} WITH QUERY EXPANSION) AND public = 1 ORDER BY historyDate DESC;
 		
 		</select>
 		
@@ -86,7 +86,7 @@
 			SELECT video_id as videoId, contents_id as contentsId, channel_id as channelId, url, public, thumbnail, title,
 			info, location, age, views, `like`, hate, reply_count as replyCount, `date`,category_id as categoryId, `profile`, `name`,
 			playlist_id as playlistId
- 			FROM video NATURAL JOIN contents NATURAL JOIN CHANNEL NATURAL JOIN playlist_item WHERE playlist_id = #{playlistId};
+ 			FROM video NATURAL JOIN contents NATURAL JOIN CHANNEL NATURAL JOIN playlist_item WHERE playlist_id = #{playlistId} AND public = 1;
 		
 		</select>
 		
@@ -103,14 +103,14 @@
 			(SELECT video_id as videoId, contents_id as contentsId, channel_id as channelId, url, public, thumbnail, title, info, 
 			location, age, views, `like`, hate, reply_count as replyCount, `date`, category_id as categoryId, `profile`, `name`, subs 
 			FROM video NATURAL JOIN `channel` NATURAL JOIN contents 
-			WHERE category_id = (SELECT category_id FROM video WHERE video_id = #{videoId}) ORDER BY views DESC LIMIT 25)
+			WHERE category_id = (SELECT category_id FROM video WHERE video_id = #{videoId}) AND public = 1 ORDER BY views DESC LIMIT 25)
 
 			UNION
 
 			(SELECT video_id as videoId, contents_id as contentsId, channel_id as channelId, url, public, thumbnail, title, info, 
 			location, age, views, `like`, hate, reply_count as replyCount, `date`, category_id as categoryId, `profile`, `name`, subs 
 			FROM video NATURAL JOIN `channel` NATURAL JOIN contents 
-			WHERE channel_id = (SELECT channel_id FROM video WHERE video_id = #{videoId}) LIMIT 25);
+			WHERE channel_id = (SELECT channel_id FROM video WHERE video_id = #{videoId}) AND public = 1 LIMIT 25);
 		
 		</select>
 		
@@ -125,7 +125,7 @@
 			SELECT video_id AS videoId, contents_id AS contentsId, channel_id AS channelId, url, public, thumbnail, title,
 			info, location, age, views, `like`, hate, reply_count AS replyCount, `date`, category_id AS categoryId,
 			`profile`, `name`, subs FROM video NATURAL JOIN contents NATURAL JOIN `channel`
-			WHERE MATCH(title) AGAINST (#{keywords} WITH QUERY EXPANSION)
+			WHERE MATCH(title) AGAINST (#{keywords} WITH QUERY EXPANSION) AND public = 1
 		
 		</select>
 		
