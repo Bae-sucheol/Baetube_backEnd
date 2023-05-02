@@ -1,7 +1,10 @@
 package Baetube_backEnd.service.user;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
@@ -39,32 +42,39 @@ public class UserRegisterServiceTest
 	@Mock
 	private UserMapper userMapper;
 	
+	private String newEmail;
+	private String dupleEmail;
+	private User newUser;
+	private User dupleUser;
+	
 	@Before
 	public void setUp()
 	{
 		MockitoAnnotations.initMocks(this);
+		
+		newEmail = "new@naver.com";
+		dupleEmail = "duple@naver.com";
+		newUser = new User(0, newEmail, "1234", "1234", 1, new Timestamp(System.currentTimeMillis()), "1234",
+				"1234", "1234", new Timestamp(System.currentTimeMillis()));
+		dupleUser = new User(1, dupleEmail, "1234", "1234", 1, new Timestamp(System.currentTimeMillis()), "1234",
+				"1234", "1234", new Timestamp(System.currentTimeMillis()));
+	}
+	
+	@Test
+	public void correctTest()
+	{
+		when(userMapper.selectByEmail(newEmail)).thenReturn(null);
+		
+		userRegisterService.regist(newUser);
+		verify(userMapper, atLeastOnce()).insert(any());
 	}
 	
 	@Test(expected=DuplicateUserException.class)
-	public void registTest()
+	public void wrongTest()
 	{
-		String newEmail = "new@naver.com";
-		String dupleEmail = "duple@naver.com";
-		
-		User newUser = new User(0, newEmail, "1234", "1234", 1, new Timestamp(System.currentTimeMillis()), "1234",
-				"1234", "1234", new Timestamp(System.currentTimeMillis()));
-		
-		User dupleUser = new User(1, dupleEmail, "1234", "1234", 1, new Timestamp(System.currentTimeMillis()), "1234",
-				"1234", "1234", new Timestamp(System.currentTimeMillis()));
-		
-		when(userMapper.selectByEmail(newEmail)).thenReturn(null);
 		when(userMapper.selectByEmail(dupleEmail)).thenReturn(dupleUser);
 
-		
-		assertEquals((Integer)0, userRegisterService.regist(newUser));
-		assertEquals((Integer)0, userRegisterService.regist(dupleUser));
+		assertEquals(dupleUser, userRegisterService.regist(dupleUser));
 	}
-	
-	
 	
 }

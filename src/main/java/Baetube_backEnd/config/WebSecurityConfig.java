@@ -45,6 +45,7 @@ public class WebSecurityConfig
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception
 	{
+		/*
 		final String WHITELIST[] = new String[] {
 			"api/channel/**",
 			"api/commmunity/**",
@@ -63,6 +64,7 @@ public class WebSecurityConfig
 			"api/vote/**",
 			"api/**"
 		};
+		*/
 		
 		http
 			.httpBasic().disable()

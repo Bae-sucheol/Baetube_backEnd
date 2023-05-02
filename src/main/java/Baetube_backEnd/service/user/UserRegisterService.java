@@ -18,7 +18,7 @@ public class UserRegisterService
 	private UserMapper userMapper;
 	
 	@Transactional
-	public User regist(User request)
+	public User regist(User request) throws DuplicateUserException
 	{
 		User user = userMapper.selectByEmail(request.getEmail());
 		
@@ -26,12 +26,9 @@ public class UserRegisterService
 		{
 			throw new DuplicateUserException("이미 존재하는 계정입니다. " + request.getEmail());
 		}
-
-		// 이 부분에 fcm 토큰을 생성해야 한다.
-		String fcmToken = "token";
 		
 		User newUser = new User(request.getEmail(), request.getPassword(), request.getName(),
-				request.getGender(), request.getBirth(), fcmToken, request.getPhone(), request.getAddress());
+				request.getGender(), request.getBirth(), null, request.getPhone(), request.getAddress());
 		
 		userMapper.insert(newUser);
 		

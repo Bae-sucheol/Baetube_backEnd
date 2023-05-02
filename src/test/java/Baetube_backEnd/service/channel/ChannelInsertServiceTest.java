@@ -35,7 +35,7 @@ public class ChannelInsertServiceTest
 	{
 		Channel channel = new Channel(1, 1, 0, 0, "test", "test", "test", null);
 		
-		assertEquals(true, channelInsertService.insertChannel(channel));
+		assertEquals(channel.getChannelId(), channelInsertService.insertChannel(channel));
 		verify(channelMapper, atLeastOnce()).insert(channel);
 	}
 

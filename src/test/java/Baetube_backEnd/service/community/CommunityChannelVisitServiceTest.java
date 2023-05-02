@@ -36,18 +36,18 @@ public class CommunityChannelVisitServiceTest
 	public void correctTest()
 	{
 		ArrayList<Community> communityList = new ArrayList<>();
-		communityList.add(any());
+		communityList.add(new Community());
 		
-		when(communityMapper.selectByChannel(1)).thenReturn(communityList);
+		when(communityMapper.selectByChannel(1, 2)).thenReturn(communityList);
 		
-		assertEquals(communityList, communityChannelVisitService.selectCommunity(1));
+		assertEquals(communityList, communityChannelVisitService.selectCommunity(1, 2));
 	}
 	
 	@Test(expected = NullCommunityException.class)
 	public void wrongTest()
 	{
-		when(communityMapper.selectByChannel(1)).thenReturn(null);
+		when(communityMapper.selectByChannel(1, 2)).thenReturn(null);
 		
-		assertEquals(null, communityChannelVisitService.selectCommunity(1));
+		assertEquals(null, communityChannelVisitService.selectCommunity(1, 2));
 	}
 }

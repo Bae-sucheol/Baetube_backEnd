@@ -13,7 +13,7 @@ public class SearchHistorySelectService
 	@Autowired
 	private SearchHistoryMapper searchHistoryMapper;
 	
-	public List<SearchHistory> select(Integer request)
+	public List<SearchHistory> select(Integer request) throws NullSearchHistoryException
 	{
 		List<SearchHistory> searchHistoryList = searchHistoryMapper.selectAll(request);
 		

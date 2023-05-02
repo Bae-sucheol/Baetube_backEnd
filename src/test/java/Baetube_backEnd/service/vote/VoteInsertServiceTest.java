@@ -4,8 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 
-import java.lang.invoke.InjectedProfile;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -36,7 +34,7 @@ public class VoteInsertServiceTest
 	{
 		Vote requestVote = new Vote(1, 1, "test", 0);
 		
-		assertEquals(true, voteInsertService.insert(requestVote));
+		assertEquals(false, voteInsertService.insert(requestVote).isEmpty());
 		verify(voteMapper, atLeastOnce()).insertVote(requestVote);
 	}
 }

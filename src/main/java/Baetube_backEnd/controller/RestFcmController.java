@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import Baetube_backEnd.ErrorResponse;
-import Baetube_backEnd.exception.DuplicateUserException;
 import Baetube_backEnd.exception.NullUserException;
 import Baetube_backEnd.service.fcm.FCMSaveService;
 

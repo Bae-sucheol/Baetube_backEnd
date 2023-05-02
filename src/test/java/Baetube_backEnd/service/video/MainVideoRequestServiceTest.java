@@ -13,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import Baetube_backEnd.dto.Video;
+import Baetube_backEnd.exception.NullVideoException;
 import Baetube_backEnd.mapper.PlaylistMapper;
 import Baetube_backEnd.mapper.VideoMapper;
 
@@ -39,10 +40,19 @@ public class MainVideoRequestServiceTest
 		videoList.add(any());
 		
 		when(videoMapper.selectMainVideo(1)).thenReturn(videoList);
-		when(videoMapper.selectMainVideo(0)).thenReturn(null);
 		
 		assertEquals(videoList, mainVideoRequestService.requestVideo(1));
-		assertEquals(null, mainVideoRequestService.requestVideo(0));
+	}
+	
+	@Test(expected = NullVideoException.class)
+	public void wrongTest()
+	{
+		ArrayList<Video> videoList = new ArrayList<>();
+		videoList.add(any());
+		
+		when(videoMapper.selectMainVideo(1)).thenReturn(null);
+		
+		assertEquals(videoList, mainVideoRequestService.requestVideo(1));
 	}
 
 }

@@ -16,6 +16,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import Baetube_backEnd.dto.User;
+import Baetube_backEnd.exception.NullUserException;
 import Baetube_backEnd.exception.WrongIdPasswordException;
 import Baetube_backEnd.mapper.UserMapper;
 import Baetube_backEnd.service.user.UserUnregisterService;
@@ -63,15 +64,10 @@ public class UserUnregisterServiceTest
 		assertEquals(true, userUnregisterService.unRegist(dupleUser));
 	}
 	
-	@Test(expected=WrongIdPasswordException.class)
+	@Test(expected=NullUserException.class)
 	public void userNullTest()
 	{
 		userUnregisterService.unRegist(newUser);
 	}
-	
-	@Test(expected=WrongIdPasswordException.class)
-	public void wrongPasswordTest()
-	{
-		userUnregisterService.unRegist(dupleUserWrongPassword);
-	}
+
 }

@@ -13,6 +13,7 @@ import org.mockito.MockitoAnnotations;
 
 import Baetube_backEnd.dto.ChangePasswordRequest;
 import Baetube_backEnd.dto.User;
+import Baetube_backEnd.exception.NullUserException;
 import Baetube_backEnd.exception.WrongIdPasswordException;
 import Baetube_backEnd.mapper.UserMapper;
 
@@ -51,11 +52,11 @@ public class ChangePasswordServiceTest
 	public void correctTest()
 	{
 		ChangePasswordRequest correctRequest = new ChangePasswordRequest(dupleEmail, duplePassword, "12345678");
-
+		
 		assertEquals(true, changePasswordService.changePassword(correctRequest));
 	}
 	
-	@Test(expected=WrongIdPasswordException.class)
+	@Test(expected=NullUserException.class)
 	public void userNullTest()
 	{
 		ChangePasswordRequest userNullRequest = new ChangePasswordRequest(newEmail, "1234", "12345678");

@@ -1,6 +1,7 @@
 package Baetube_backEnd.service.vote;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -14,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import Baetube_backEnd.dto.Vote;
+import Baetube_backEnd.exception.NullVoteException;
 import Baetube_backEnd.mapper.VoteMapper;
 
 public class VoteSelectOptionServiceTest
@@ -24,32 +26,33 @@ public class VoteSelectOptionServiceTest
 	@Mock
 	private VoteMapper voteMapper;
 	
-	private Vote requestVoteA;
-	private Vote requestVoteB;
-	
 	@Before
 	public void setUp()
 	{
 		MockitoAnnotations.initMocks(this);
-		
-		requestVoteA = new Vote(1, 1, "testa", 0);
-		requestVoteB = new Vote(1, 2, "testb", 0);
 	}
 	
 	@Test
 	public void correctTest()
 	{
 		ArrayList<Vote> requestList = new ArrayList<>();
-		requestList.add(requestVoteA);
-		requestList.add(requestVoteB);
+		requestList.add(any());
 		
-		when(voteMapper.selectVoteOptions(0)).thenReturn(null);
 		when(voteMapper.selectVoteOptions(1)).thenReturn(requestList);
 		
 		assertEquals(requestList, voteSelectOptionService.select(1));
 		verify(voteMapper, atLeastOnce()).selectVoteOptions(1);
+	}
+	
+	@Test(expected = NullVoteException.class)
+	public void wrongTest()
+	{
+		ArrayList<Vote> requestList = new ArrayList<>();
+		requestList.add(any());
 		
-		assertEquals(null, voteSelectOptionService.select(0));
-		verify(voteMapper, atLeastOnce()).selectVoteOptions(0);
+		when(voteMapper.selectVoteOptions(1)).thenReturn(null);
+		
+		assertEquals(requestList, voteSelectOptionService.select(1));
+		verify(voteMapper, atLeastOnce()).selectVoteOptions(1);
 	}
 }

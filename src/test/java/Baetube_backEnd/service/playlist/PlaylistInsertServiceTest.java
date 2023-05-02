@@ -1,6 +1,7 @@
 package Baetube_backEnd.service.playlist;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 
@@ -32,7 +33,7 @@ public class PlaylistInsertServiceTest
 	{
 		Playlist playlist = new Playlist(1, 1, "test", 1, 0, null);
 		
-		assertEquals(true, playlistInsertService.insert(playlist));
+		assertTrue(playlistInsertService.insert(playlist) == 1);
 		verify(playlistMapper, atLeastOnce()).insert(playlist);
 	}
 }

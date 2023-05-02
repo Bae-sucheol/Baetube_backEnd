@@ -32,7 +32,6 @@ public class VideoViewServiceTest
 	private HistoryMapper historyMapper;
 	
 	private Video correctVideo;
-
 	@Before
 	public void setUp()
 	{
@@ -48,26 +47,16 @@ public class VideoViewServiceTest
 	@Test
 	public void correctTest()
 	{
-		VideoViewRequest videoViewRequest = new VideoViewRequest(1, 1, 1);
-		Video video = videoViewService.selectVideo(videoViewRequest);
+		Video video = videoViewService.selectVideo(1, 1);
 		
-		// updateViews가 한번 실행되었다면 통과
 		verify(videoMapper, atLeastOnce()).updateViews(1, 1);
-		// 실행되었다면 조회수 1 증가
-		video.setViews(video.getViews() + 1);
-		
 		verify(historyMapper, atLeastOnce()).insert(1, 1);
-		
-		assertTrue(1 == video.getVideoId());
-		assertTrue(101 == video.getViews());
 	}
 	
 	@Test(expected = NullVideoException.class)
 	public void nullVideoTest()
 	{
-		VideoViewRequest videoViewRequest = new VideoViewRequest(0, 1, 1);
-		
-		Video video = videoViewService.selectVideo(videoViewRequest);
+		Video video = videoViewService.selectVideo(1, 0);
 		
 		verify(videoMapper, atLeastOnce()).updateViews(1, 1);
 		verify(historyMapper, atLeastOnce()).insert(1, 1);

@@ -1,9 +1,13 @@
 package Baetube_backEnd.service.playlist;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +17,6 @@ import org.mockito.MockitoAnnotations;
 
 import Baetube_backEnd.dto.PlaylistItem;
 import Baetube_backEnd.exception.DuplicatePlaylistItemException;
-import Baetube_backEnd.exception.NullPlaylistItemException;
 import Baetube_backEnd.mapper.PlaylistMapper;
 
 public class PlaylistInsertItemServiceTest
@@ -24,31 +27,36 @@ public class PlaylistInsertItemServiceTest
 	@Mock
 	private PlaylistMapper playlistMapper;
 	
-	private PlaylistItem playlistItem;
+	private List<PlaylistItem> playlistItem;
 	
 	@Before
 	public void setUP()
 	{
 		MockitoAnnotations.initMocks(this);
 		
-		playlistItem = new PlaylistItem(1, 1);
+		playlistItem = new ArrayList<PlaylistItem>();
+		playlistItem.add(new PlaylistItem(1, 1));
 	}
 	
 	@Test
 	public void correctTest()
 	{
-		when(playlistMapper.selectPlaylistItem(1, 1)).thenReturn(null);
+		when(playlistMapper.selectPlaylistItemCount(playlistItem)).thenReturn(0);
 		
 		assertEquals(true, playlistInsertItemService.insertItem(playlistItem));
-		verify(playlistMapper, atLeastOnce()).selectPlaylistItem(1, 1);
+		
+		verify(playlistMapper, atLeastOnce()).insertItem(any());
+		verify(playlistMapper, atLeastOnce()).updateVideoCount(any(), any());
 	}
 	
 	@Test(expected = DuplicatePlaylistItemException.class)
 	public void wrongTest()
 	{
-		when(playlistMapper.selectPlaylistItem(1, 1)).thenReturn(playlistItem);
+		when(playlistMapper.selectPlaylistItemCount(playlistItem)).thenReturn(9999);
 		
 		assertEquals(true, playlistInsertItemService.insertItem(playlistItem));
-		verify(playlistMapper, atLeastOnce()).selectPlaylistItem(1, 1);
+		
+		verify(playlistMapper, atLeastOnce()).insertItem(any());
+		verify(playlistMapper, atLeastOnce()).updateVideoCount(any(), any());
 	}
 }

@@ -24,7 +24,7 @@ public class NestedReplyInsertService
 	{
 		nestedReplyMapper.insert(request);
 		
-		Reply reply = replyMapper.selectByReplyId(request.getNestedReplyId());
+		Reply reply = replyMapper.selectByReplyId(request.getReplyId());
 		
 		String fcmToken = new String();
 		Integer type = 0;

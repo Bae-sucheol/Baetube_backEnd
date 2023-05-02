@@ -31,7 +31,7 @@ public class CommunityUpdateService
 		
 		HashMap<String, String> isChangedImage = new HashMap<>();
 		
-		if(community.equals(request.getImageUrl()))
+		if(!community.getImageUrl().equals(request.getImageUrl()))
 		{
 			fileUploadService.deleteImage("image", "community", community.getImageUrl());
 			String imageUrl = UUIDUtil.createUUID();

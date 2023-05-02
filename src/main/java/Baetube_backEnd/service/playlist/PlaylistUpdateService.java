@@ -36,11 +36,14 @@ public class PlaylistUpdateService
 		
 		HashMap<String, String> isChangedImage = new HashMap<>();
 		
+		// 현재 썸네일과 업데이트할 썸네일이 다르다면.
 		if(!playlist.getThumbnail().equals(request.getThumbnail()))
 		{
+			// 현재 썸네일을 통해 동영상을 조회한다.
 			Video video = videoMapper.selectByThumbnail(playlist.getThumbnail());
 			
-			if(video != null)
+			// 같은 썸네일을 사용중인 동영상이 존재하지 않는다면 삭제해도 무방할 것.
+			if(video == null)
 			{
 				fileUploadService.deleteImage("image", "thumbnail", playlist.getThumbnail());
 			}

@@ -13,6 +13,7 @@ import org.mockito.MockitoAnnotations;
 
 import Baetube_backEnd.dto.ChangePasswordRequest;
 import Baetube_backEnd.dto.User;
+import Baetube_backEnd.exception.NullUserException;
 import Baetube_backEnd.exception.WrongIdPasswordException;
 import Baetube_backEnd.mapper.UserMapper;
 
@@ -59,7 +60,7 @@ public class UserUpdateServiceTest
 		assertEquals(true, userUpdateService.update(dupleUser));
 	}
 	
-	@Test(expected=WrongIdPasswordException.class)
+	@Test(expected=NullUserException.class)
 	public void userNullTest()
 	{
 		userUpdateService.update(newUser);

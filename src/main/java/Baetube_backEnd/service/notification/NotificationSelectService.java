@@ -34,7 +34,6 @@ public class NotificationSelectService
 		
 		if(notifications == null || notifications.isEmpty())
 		{
-			System.out.println("조회한 알람이 없습니다.");
 			throw new NullNotificationException();
 		}
 		

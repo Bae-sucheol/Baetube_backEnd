@@ -9,8 +9,10 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import Baetube_backEnd.dto.Reply;
+import Baetube_backEnd.mapper.ContentsMapper;
 import Baetube_backEnd.mapper.ReplyMapper;
 
 public class ReplyInsertServiceTest
@@ -20,6 +22,9 @@ public class ReplyInsertServiceTest
 	
 	@Mock
 	private ReplyMapper replyMapper;
+	
+	@Mock
+	private ContentsMapper contentsMapper;
 	
 	@Before
 	public void setUp()
@@ -32,7 +37,7 @@ public class ReplyInsertServiceTest
 	{
 		Reply reply = new Reply(1, 2L, 1L, 1, "test", 0, 0, null, 0, "test", null);
 		
-		assertEquals(true, replyInsertService.insertReply(reply));
+		assertEquals(false, replyInsertService.insertReply(reply).isEmpty());
 		verify(replyMapper, atLeastOnce()).insert(reply);
 	}
 }
