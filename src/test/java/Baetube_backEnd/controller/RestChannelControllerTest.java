@@ -35,6 +35,7 @@ import Baetube_backEnd.dto.Channel;
 import Baetube_backEnd.mapper.ChannelMapper;
 import Baetube_backEnd.service.channel.ChannelDeleteService;
 import Baetube_backEnd.service.channel.ChannelInsertService;
+import Baetube_backEnd.service.channel.ChannelSelectService;
 import Baetube_backEnd.service.channel.ChannelSubscribersService;
 import Baetube_backEnd.service.channel.ChannelUpdateService;
 import Baetube_backEnd.service.channel.ChannelVisitService;
@@ -60,6 +61,9 @@ public class RestChannelControllerTest
 	@Spy
 	@InjectMocks
 	private ChannelSubscribersService channelSubscribersService;
+	@Spy
+	@InjectMocks
+	private ChannelSelectService channelSelectService;
 	
 	@Mock
 	private ChannelMapper channelMapper;
@@ -84,6 +88,7 @@ public class RestChannelControllerTest
 		channelUpdateService = spy(new ChannelUpdateService());
 		channelVisitService = spy(new ChannelVisitService());
 		channelSubscribersService = spy(new ChannelSubscribersService());
+		channelSelectService = spy(new ChannelSelectService());
 		
 		MockitoAnnotations.initMocks(this);
 		objectMapper = new ObjectMapper();
@@ -104,7 +109,7 @@ public class RestChannelControllerTest
 		when(channelMapper.select(2)).thenReturn(null);
 		
 		mockMvc.perform(post("/api/channel/delete")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(correctContent))
 		.andExpect(status().isOk())
 		.andDo(print());
@@ -113,7 +118,7 @@ public class RestChannelControllerTest
 		verify(channelMapper, atLeastOnce()).delete(1);
 		
 		mockMvc.perform(post("/api/channel/delete")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(wrongContent))
 		.andExpect(status().isConflict())
 		.andDo(print());
@@ -127,7 +132,7 @@ public class RestChannelControllerTest
 		String correctContent = objectMapper.writeValueAsString(correctChannel);
 		
 		mockMvc.perform(post("/api/channel/insert")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(correctContent))
 		.andExpect(status().isOk())
 		.andDo(print());
@@ -142,7 +147,7 @@ public class RestChannelControllerTest
 		when(channelMapper.select(2)).thenReturn(null);
 		
 		mockMvc.perform(post("/api/channel/update")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(correctContent))
 		.andExpect(status().isOk())
 		.andDo(print());
@@ -151,7 +156,7 @@ public class RestChannelControllerTest
 		verify(channelMapper, atLeastOnce()).update(any(), any());
 		
 		mockMvc.perform(post("/api/channel/update")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(wrongContent))
 		.andExpect(status().isConflict())
 		.andDo(print());
@@ -168,17 +173,13 @@ public class RestChannelControllerTest
 		when(channelMapper.select(1)).thenReturn(correctChannel);
 		when(channelMapper.select(2)).thenReturn(null);
 
-		mockMvc.perform(get("/api/channel/visit")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
-				.content(correctContent))
+		mockMvc.perform(get("/api/channel/visit/1"))
 		.andExpect(status().isOk())
 		.andDo(print());
 		
 		verify(channelMapper, atLeastOnce()).select(1);
 
-		mockMvc.perform(get("/api/channel/visit")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
-				.content(wrongContent))
+		mockMvc.perform(get("/api/channel/visit/2"))
 		.andExpect(status().isConflict())
 		.andDo(print());
 		
@@ -197,17 +198,13 @@ public class RestChannelControllerTest
 		when(channelMapper.selectSubscribers(1)).thenReturn(correctChannelList);
 		when(channelMapper.selectSubscribers(2)).thenReturn(null);
 
-		mockMvc.perform(get("/api/channel/subscribers")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
-				.content(correctContent))
+		mockMvc.perform(get("/api/channel/subscribers/0"))
 		.andExpect(status().isOk())
 		.andDo(print());
 		
 		verify(channelMapper, atLeastOnce()).selectSubscribers(1);
 
-		mockMvc.perform(get("/api/channel/subscribers")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
-				.content(wrongContent))
+		mockMvc.perform(get("/api/channel/subscribers/1"))
 		.andExpect(status().isConflict())
 		.andDo(print());
 		
