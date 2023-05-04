@@ -16,6 +16,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import Baetube_backEnd.dto.Notification;
 import Baetube_backEnd.exception.NullNotificationException;
 import Baetube_backEnd.mapper.NotificationMapper;
 
@@ -55,6 +56,17 @@ public class NotificationSelectServiceTest
 		assertEquals(notifications, notificationSelectService.selectCommunityNotifications(1));
 	}
 	
+	@Test
+	public void correctSelectNewUserNotificationsTest()
+	{
+		List<Notification> notifications = new ArrayList<>();
+		notifications.add(any());
+		
+		when(notificationMapper.selectNewUserNotifications(1)).thenReturn(notifications);
+		
+		assertEquals(notifications, notificationSelectService.selectNewUserNotification(1));
+	}
+	
 	@Test(expected = NullNotificationException.class)
 	public void wrongSelectVideoNotificationsTest()
 	{
@@ -73,5 +85,16 @@ public class NotificationSelectServiceTest
 		when(notificationMapper.selectCommunityNotifications(1)).thenReturn(notifications);
 		
 		assertEquals(notifications, notificationSelectService.selectCommunityNotifications(1));
+	}
+	
+	@Test(expected = NullNotificationException.class)
+	public void wrongSelectNewUserNotificationsTest()
+	{
+		List<Notification> notifications = new ArrayList<>();
+		notifications.add(any());
+		
+		when(notificationMapper.selectNewUserNotifications(1)).thenReturn(null);
+		
+		assertEquals(notifications, notificationSelectService.selectNewUserNotification(1));
 	}
 }

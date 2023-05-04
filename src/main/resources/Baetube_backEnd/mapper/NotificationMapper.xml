@@ -58,5 +58,18 @@
 			where a.user_id = #{userId} and b.`type` = 1 ORDER BY a.date;
 		
 		</select>
+		
+		<select id="selectNewUserNotifications" resultType="notificationDto">
+		
+			SELECT user_id as userId, contents_id as contentsId, `date`, checked from notification
+			WHERE user_id = #{userId} AND checked = 0
+		
+		</select>
+		
+		<update id="checkNotifications">
+		
+			UPDATE notification SET checked = 1 WHERE user_id = #{userId}
+		
+		</update>
 
 	</mapper>

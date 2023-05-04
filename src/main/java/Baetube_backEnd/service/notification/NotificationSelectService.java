@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import Baetube_backEnd.dto.Notification;
 import Baetube_backEnd.exception.NullNotificationException;
 import Baetube_backEnd.mapper.NotificationMapper;
 
@@ -39,4 +40,19 @@ public class NotificationSelectService
 		
 		return notifications;
 	}
+	
+	
+	@Transactional
+	public List<Notification> selectNewUserNotification(Integer request) throws NullNotificationException
+	{
+		List<Notification> notifications = notificationMapper.selectNewUserNotifications(request);
+		
+		if(notifications == null || notifications.isEmpty())
+		{
+			throw new NullNotificationException();
+		}
+		
+		return notifications;
+	}
+	
 }

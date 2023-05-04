@@ -308,30 +308,5 @@ public class RestVideoController
 		}
 	}
 	
-	@GetMapping("/api/tttt")
-	public ResponseEntity<Object> getttt(HttpServletResponse response) throws IOException
-	{                                         
-		try
-		{
-			List<String> registrationTokens = new ArrayList<>();
-			String token = "d2Ou-7YlgxIuDBkz2nU8XC:APA91bHgwJ1UBNyckI5zUCVy_eHfmVE2TaFbKn_WUeDkafqY1kdCE9Hs3Qlhh1uTH0ReHdRZJ1ZvNGhf9aoNWxq87mJsSLBaIeaT8DVdcTuktdPj2KEibcHHjpWsqIqY5_Dh4SPg3pao";
-			String bodyMessage = "testMessage";
-			
-			registrationTokens.add(token);
-			
-			try
-			{
-				fcmSendService.sendMultiMessage(registrationTokens, bodyMessage, FCMSendService.FCM_NOTIFICATION_VIDEO, "67");
-			} catch (FirebaseMessagingException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return ResponseEntity.status(HttpStatus.OK).build();
-		} 
-		catch (NullVideoException e)
-		{
-			return ResponseEntity.status(HttpStatus.CONFLICT).build();
-		}
-	}
+
 }

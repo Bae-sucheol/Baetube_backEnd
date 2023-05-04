@@ -16,4 +16,6 @@ public interface NotificationMapper
 	public void insert(@Param("subscribersUserId") List<Integer> subscribersUserId, @Param("contentsId") Long contentsId);
 	public List<HashMap<String, String>> selectVideoNotifications(@Param("userId") Integer userId);
 	public List<HashMap<String, String>> selectCommunityNotifications(@Param("userId") Integer userId);
+	public List<Notification> selectNewUserNotifications(@Param("userId") Integer userId);
+	public void checkNotifications(@Param("userId") Integer userId);
 }

@@ -23,6 +23,7 @@ import Baetube_backEnd.dto.Notification;
 import Baetube_backEnd.dto.User;
 import Baetube_backEnd.exception.NullNotificationException;
 import Baetube_backEnd.service.jwt.JwtTokenDataExtractService;
+import Baetube_backEnd.service.notification.NotificationCheckService;
 import Baetube_backEnd.service.notification.NotificationDeleteService;
 import Baetube_backEnd.service.notification.NotificationSelectService;
 
@@ -35,10 +36,12 @@ public class RestNotificationController
 	private JwtTokenDataExtractService jwtTokenDataExtractService;
 	@Autowired
 	private NotificationSelectService notificationSelectService;
+	@Autowired
+	private NotificationCheckService notificationCheckService;
 	
 	@PostMapping("/api/notification/delete")
 	//@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<Object> insertNestedReply(@RequestHeader("Authorization") String bearerToken, @RequestBody @Valid Long contentsId, Errors errors, HttpServletResponse response) throws IOException
+	public ResponseEntity<Object> deleteNotification(@RequestHeader("Authorization") String bearerToken, @RequestBody @Valid Long contentsId, Errors errors, HttpServletResponse response) throws IOException
 	{
 		if(errors.hasErrors())
 		{
@@ -79,7 +82,7 @@ public class RestNotificationController
 	}
 	
 	@GetMapping("/api/notification/select/community")
-	public ResponseEntity<Object> getCOmmunityNotification(@RequestHeader("Authorization") String bearerToken, HttpServletResponse response) throws IOException
+	public ResponseEntity<Object> getCommunityNotification(@RequestHeader("Authorization") String bearerToken, HttpServletResponse response) throws IOException
 	{
 		try
 		{
@@ -90,10 +93,42 @@ public class RestNotificationController
 		} 
 		catch (NullNotificationException e)
 		{
-			System.out.println("조회안 알람이 없습니다.");
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
 		
+	}
+	
+	@GetMapping("/api/notification/select/new")
+	public ResponseEntity<Object> getNewUserNotification(@RequestHeader("Authorization") String bearerToken, HttpServletResponse response) throws IOException
+	{
+		try
+		{
+			User user = jwtTokenDataExtractService.getUserData(bearerToken);
+			List<Notification> communityNotifications = notificationSelectService.selectNewUserNotification(user.getUserId());
+			
+			return ResponseEntity.status(HttpStatus.OK).body(communityNotifications);
+		} 
+		catch (NullNotificationException e)
+		{
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+		}
+		
+	}
+	
+	@GetMapping("/api/notification/check")
+	public ResponseEntity<Object> checkNotifications(@RequestHeader("Authorization") String bearerToken, HttpServletResponse response) throws IOException
+	{                                              
+		try
+		{
+			User user = jwtTokenDataExtractService.getUserData(bearerToken);
+			notificationCheckService.checkNotifications(user.getUserId());
+			return ResponseEntity.status(HttpStatus.OK).build();
+		} 
+		catch (NullNotificationException e)
+		{
+			
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+		}
 	}
 	
 }
