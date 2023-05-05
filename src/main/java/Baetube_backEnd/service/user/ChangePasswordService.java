@@ -1,6 +1,7 @@
 package Baetube_backEnd.service.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 import Baetube_backEnd.dto.ChangePasswordRequest;
@@ -13,6 +14,8 @@ public class ChangePasswordService
 {
 	@Autowired
 	private UserMapper userMapper;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	@Transactional
 	public boolean changePassword(ChangePasswordRequest request)
@@ -24,12 +27,12 @@ public class ChangePasswordService
 			throw new NullUserException();
 		}
 		
-		if(!user.getPassword().equals(request.getPassword()))
+		if(!passwordEncoder.matches(request.getPassword(), user.getPassword()))
 		{
 			throw new WrongIdPasswordException();
 		}
 		
-		userMapper.changePassword(request.getEmail(), request.getNewPassword());
+		userMapper.changePassword(request.getEmail(), passwordEncoder.encode(request.getNewPassword()));
 		
 		return true;
 	}

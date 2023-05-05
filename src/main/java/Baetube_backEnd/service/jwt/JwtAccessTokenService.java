@@ -8,6 +8,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 import Baetube_backEnd.JwtTokenProvider;
@@ -27,6 +28,8 @@ public class JwtAccessTokenService
 	private UserMapper userMapper;
 	@Autowired
 	private AuthenticationManagerBuilder authenticationManagerBuilder;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Transactional
 	public TokenInfo generateToken(TokenInfo request) throws ExpiredRefreshTokenException

@@ -13,8 +13,6 @@ public class CustomUserDetailsService implements UserDetailsService
 {
 	@Autowired
 	private UserMapper userMapper;
-	@Autowired
-	private PasswordEncoder passwordEncoder;
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
@@ -28,7 +26,7 @@ public class CustomUserDetailsService implements UserDetailsService
 		
 		return org.springframework.security.core.userdetails.User.builder()
 				.username(user.getUsername())
-				.password(passwordEncoder.encode(user.getPassword()))
+				.password(user.getPassword())
 				//.roles(user.getRoles())
 				.roles("USER")
 				.build();
