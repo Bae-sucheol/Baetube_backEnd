@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import Baetube_backEnd.service.user.ChangePasswordService;
 import Baetube_backEnd.service.user.UserLoginService;
 import Baetube_backEnd.service.user.UserRegisterService;
+import Baetube_backEnd.service.user.UserSelectService;
 import Baetube_backEnd.service.user.UserUnregisterService;
 import Baetube_backEnd.service.user.UserUpdateService;
 
@@ -41,6 +42,12 @@ public class UserConfig
 	public UserUpdateService userUpdateService()
 	{
 		return new UserUpdateService();
+	}
+	
+	@Bean
+	public UserSelectService userSelectService()
+	{
+		return new UserSelectService();
 	}
 	
 }

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,6 +31,7 @@ import Baetube_backEnd.service.playlist.PlaylistInsertService;
 import Baetube_backEnd.service.user.ChangePasswordService;
 import Baetube_backEnd.service.user.UserLoginService;
 import Baetube_backEnd.service.user.UserRegisterService;
+import Baetube_backEnd.service.user.UserSelectService;
 import Baetube_backEnd.service.user.UserUnregisterService;
 import Baetube_backEnd.service.user.UserUpdateService;
 import Baetube_backEnd.ErrorResponse;
@@ -56,6 +58,9 @@ public class RestUserController
 	private ChannelInsertService channelInsertService;
 	@Autowired
 	private JwtTokenDataExtractService jwtTokenDataExtractService;
+	@Autowired
+	private UserSelectService userSelectService;
+	
 
 	@PostMapping("/api/user/regist")
 	public ResponseEntity<Object> newUser(@RequestBody User request, Errors errors, HttpServletResponse response) throws IOException
@@ -114,6 +119,12 @@ public class RestUserController
 		}
 		catch (WrongIdPasswordException e)
 		{
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+		}
+		catch (BadCredentialsException e)
+		{
+			System.out.println("BadCredentialsException");
+			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
 	}
@@ -215,6 +226,9 @@ public class RestUserController
 		try
 		{
 			User user = jwtTokenDataExtractService.getUserData(bearerToken);
+			
+			user = userSelectService.selectUserByEmail(user.getEmail());
+			
 			return ResponseEntity.status(HttpStatus.OK).body(user);
 		} 
 		catch (NullUserException e)

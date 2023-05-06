@@ -16,7 +16,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import Baetube_backEnd.CustomAuthenticationProvider;
 import Baetube_backEnd.JwtAuthenticationFilter;
 import Baetube_backEnd.JwtTokenProvider;
 
@@ -94,25 +93,5 @@ public class WebSecurityConfig
 	{
 		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
 	}
-	
-	/*
-	@Bean
-	public PasswordEncoder passwordEncoder()
-	{
-		return new BCryptPasswordEncoder();
-	}
-	*/
-	
-	@Bean
-    public AuthenticationProvider authenticationProvider() 
-	{
-        return new CustomAuthenticationProvider();
-    }
-	
-	@Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
-            throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
-    }
 	
 }

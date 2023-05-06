@@ -8,6 +8,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,12 +42,8 @@ public class JwtAccessTokenService
 		long now = (new Date()).getTime();
 		
 		// Authentication 객체 생성
-		// 인증 여부(authenticated 값)는 false
-		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword());
-						
-		// 실제 검증
-		// authenticate 매서드가 실행될 때 CustomUserDetailsService 에서 만든 loadUserByUsername 메서드가 실행
-		Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+		Authentication authentication = new UsernamePasswordAuthenticationToken(user, null,
+			    AuthorityUtils.createAuthorityList("USER"));
 						
 		String authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority)
 				.collect(Collectors.joining(","));
