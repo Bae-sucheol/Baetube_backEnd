@@ -85,7 +85,7 @@ public class RestSearchHistoryControllerTest
 		when(searchHistoryMapper.select(any())).thenReturn(correctSearchHistory);
 		
 		mockMvc.perform(post("/api/search_history/delete")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(correctContent))
 		.andExpect(status().isOk())
 		.andDo(print());
@@ -94,7 +94,7 @@ public class RestSearchHistoryControllerTest
 		when(searchHistoryMapper.select(any())).thenReturn(null);
 		
 		mockMvc.perform(post("/api/search_history/delete")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(correctContent))
 		.andExpect(status().isConflict())
 		.andDo(print());
@@ -104,7 +104,7 @@ public class RestSearchHistoryControllerTest
 	public void searchHistoryInsertTest() throws Exception
 	{	
 		mockMvc.perform(post("/api/search_history/insert")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(correctContent))
 		.andExpect(status().isOk())
 		.andDo(print());
@@ -122,7 +122,7 @@ public class RestSearchHistoryControllerTest
 		when(searchHistoryMapper.selectAll(1)).thenReturn(searchHistoryList);
 		
 		mockMvc.perform(get("/api/search_history/select")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(correctContent))
 		.andExpect(status().isOk())
 		.andDo(print());
@@ -130,7 +130,7 @@ public class RestSearchHistoryControllerTest
 		when(searchHistoryMapper.selectAll(2)).thenReturn(null);
 		
 		mockMvc.perform(get("/api/search_history/select")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(wrongContent))
 		.andExpect(status().isConflict())
 		.andDo(print());

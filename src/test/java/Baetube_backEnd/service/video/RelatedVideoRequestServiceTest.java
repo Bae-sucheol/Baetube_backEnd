@@ -15,7 +15,6 @@ import org.mockito.MockitoAnnotations;
 
 import Baetube_backEnd.dto.Video;
 import Baetube_backEnd.exception.NullVideoException;
-import Baetube_backEnd.mapper.PlaylistMapper;
 import Baetube_backEnd.mapper.VideoMapper;
 
 public class RelatedVideoRequestServiceTest

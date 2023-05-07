@@ -112,13 +112,13 @@ public class RestPlaylistControllerTest
 		when(playlistMapper.selectByChannelId(2)).thenReturn(null);
 		
 		mockMvc.perform(get("/api/playlist/channel")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(correctContent))
 		.andExpect(status().isOk())
 		.andDo(print());
 		
 		mockMvc.perform(get("/api/playlist/channel")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(wrongContent))
 		.andExpect(status().isConflict())
 		.andDo(print());
@@ -128,7 +128,7 @@ public class RestPlaylistControllerTest
 	public void playlistInsertTest() throws Exception
 	{
 		mockMvc.perform(post("/api/playlist/insert")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(correctContent))
 		.andExpect(status().isOk())
 		.andDo(print());
@@ -143,7 +143,7 @@ public class RestPlaylistControllerTest
 		when(playlistMapper.selectByPlaylistId(2)).thenReturn(null);
 		
 		mockMvc.perform(post("/api/playlist/delete")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(correctContent))
 		.andExpect(status().isOk())
 		.andDo(print());
@@ -151,7 +151,7 @@ public class RestPlaylistControllerTest
 		verify(playlistMapper, atLeastOnce()).delete(any());
 		
 		mockMvc.perform(post("/api/playlist/delete")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(wrongContent))
 		.andExpect(status().isConflict())
 		.andDo(print());
@@ -164,7 +164,7 @@ public class RestPlaylistControllerTest
 		when(playlistMapper.selectByPlaylistId(2)).thenReturn(null);
 		
 		mockMvc.perform(post("/api/playlist/update")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(correctContent))
 		.andExpect(status().isOk())
 		.andDo(print());
@@ -172,7 +172,7 @@ public class RestPlaylistControllerTest
 		verify(playlistMapper, atLeastOnce()).update(any(), any());
 		
 		mockMvc.perform(post("/api/playlist/update")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(wrongContent))
 		.andExpect(status().isConflict())
 		.andDo(print());
@@ -191,7 +191,7 @@ public class RestPlaylistControllerTest
 		when(playlistMapper.selectPlaylistItem(2, 2)).thenReturn(wrongPlaylistItem);
 		
 		mockMvc.perform(post("/api/playlist/insert_item")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(correctContent))
 		.andExpect(status().isOk())
 		.andDo(print());
@@ -199,7 +199,7 @@ public class RestPlaylistControllerTest
 		verify(playlistMapper, atLeastOnce()).insertItem(any());
 		
 		mockMvc.perform(post("/api/playlist/insert_item")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(wrongContent))
 		.andExpect(status().isConflict())
 		.andDo(print());
@@ -218,7 +218,7 @@ public class RestPlaylistControllerTest
 		when(playlistMapper.selectPlaylistItem(2, 2)).thenReturn(null);
 		
 		mockMvc.perform(post("/api/playlist/delete_item")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(correctContent))
 		.andExpect(status().isOk())
 		.andDo(print());
@@ -226,7 +226,7 @@ public class RestPlaylistControllerTest
 		verify(playlistMapper, atLeastOnce()).deleteItem(any());
 		
 		mockMvc.perform(post("/api/playlist/delete_item")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(wrongContent))
 		.andExpect(status().isConflict())
 		.andDo(print());

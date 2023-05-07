@@ -5,7 +5,6 @@ import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import Baetube_backEnd.dto.Reply;
-import Baetube_backEnd.mapper.ChannelMapper;
 import Baetube_backEnd.mapper.ContentsMapper;
 import Baetube_backEnd.mapper.ReplyMapper;
 import Baetube_backEnd.service.fcm.FCMSendService;

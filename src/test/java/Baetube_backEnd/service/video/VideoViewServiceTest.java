@@ -1,11 +1,7 @@
 package Baetube_backEnd.service.video;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.atLeastOnce;
-import static org.mockito.Mockito.atMost;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -16,7 +12,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import Baetube_backEnd.dto.Video;
-import Baetube_backEnd.dto.VideoViewRequest;
 import Baetube_backEnd.exception.NullVideoException;
 import Baetube_backEnd.mapper.HistoryMapper;
 import Baetube_backEnd.mapper.VideoMapper;
@@ -47,7 +42,7 @@ public class VideoViewServiceTest
 	@Test
 	public void correctTest()
 	{
-		Video video = videoViewService.selectVideo(1, 1);
+		assertEquals(correctVideo, videoViewService.selectVideo(1, 1));
 		
 		verify(videoMapper, atLeastOnce()).updateViews(1, 1);
 		verify(historyMapper, atLeastOnce()).insert(1, 1);
@@ -56,7 +51,7 @@ public class VideoViewServiceTest
 	@Test(expected = NullVideoException.class)
 	public void nullVideoTest()
 	{
-		Video video = videoViewService.selectVideo(1, 0);
+		assertEquals(correctVideo, videoViewService.selectVideo(1, 0));
 		
 		verify(videoMapper, atLeastOnce()).updateViews(1, 1);
 		verify(historyMapper, atLeastOnce()).insert(1, 1);

@@ -3,9 +3,7 @@ package Baetube_backEnd.service.video;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.anything;
 
-import java.awt.List;
 import java.util.ArrayList;
 
 import org.junit.Before;
@@ -17,7 +15,6 @@ import org.mockito.MockitoAnnotations;
 import Baetube_backEnd.dto.Playlist;
 import Baetube_backEnd.dto.Video;
 import Baetube_backEnd.exception.NullPlaylistException;
-import Baetube_backEnd.exception.NullVideoException;
 import Baetube_backEnd.mapper.PlaylistMapper;
 import Baetube_backEnd.mapper.VideoMapper;
 

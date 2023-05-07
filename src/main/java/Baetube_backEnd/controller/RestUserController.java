@@ -123,7 +123,6 @@ public class RestUserController
 		}
 		catch (BadCredentialsException e)
 		{
-			System.out.println("BadCredentialsException");
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}

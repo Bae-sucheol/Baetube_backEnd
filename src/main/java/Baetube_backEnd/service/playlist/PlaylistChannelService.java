@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import Baetube_backEnd.dto.Channel;
 import Baetube_backEnd.dto.Playlist;
 import Baetube_backEnd.exception.NullPlaylistException;
 import Baetube_backEnd.mapper.PlaylistMapper;

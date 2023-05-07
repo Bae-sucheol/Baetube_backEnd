@@ -1,12 +1,9 @@
 package Baetube_backEnd.controller;
 
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.matches;
 import static org.mockito.Mockito.atLeastOnce;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -67,7 +64,7 @@ public class RestRateControllerTest
 		String wrongContent = objectMapper.writeValueAsString(wrongRate);
 		
 		mockMvc.perform(post("/api/rate/rate_contents")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(correctContent))
 		.andExpect(status().isOk())
 		.andDo(print());
@@ -75,7 +72,7 @@ public class RestRateControllerTest
 		verify(rateMapper, atLeastOnce()).insert(any());
 		
 		mockMvc.perform(post("/api/rate/rate_contents")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(wrongContent))
 		.andExpect(status().isConflict())
 		.andDo(print());

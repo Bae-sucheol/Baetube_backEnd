@@ -125,8 +125,6 @@ public class RestVoteController
 		                                                 
 		try
 		{
-			System.out.println("요청이 들어왔습니다.");
-			System.out.println("size : " + request.size());
 			voteInsertOptionMultiService.insertOptionMulti(request);
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 

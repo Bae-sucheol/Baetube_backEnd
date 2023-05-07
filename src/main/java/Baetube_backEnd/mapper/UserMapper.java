@@ -1,8 +1,6 @@
 package Baetube_backEnd.mapper;
 
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.mybatis.spring.annotation.MapperScan;
 
 import Baetube_backEnd.dto.User;
 

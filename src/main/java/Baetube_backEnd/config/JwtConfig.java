@@ -4,7 +4,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import Baetube_backEnd.JwtTokenProvider;
-import Baetube_backEnd.service.jwt.CustomUserDetailsService;
 import Baetube_backEnd.service.jwt.JwtAccessTokenService;
 import Baetube_backEnd.service.jwt.JwtTokenDataExtractService;
 

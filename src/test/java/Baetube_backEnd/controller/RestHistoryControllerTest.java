@@ -8,8 +8,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.sql.Timestamp;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -69,7 +67,7 @@ public class RestHistoryControllerTest
 		
 		
 		mockMvc.perform(post("/api/history/delete")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(correctContent))
 		.andExpect(status().isOk())
 		.andDo(print());
@@ -77,7 +75,7 @@ public class RestHistoryControllerTest
 		verify(historyMapper, atLeastOnce()).delete(1, 1);
 		
 		mockMvc.perform(post("/api/history/delete")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(wrongContent))
 		.andExpect(status().isConflict())
 		.andDo(print());

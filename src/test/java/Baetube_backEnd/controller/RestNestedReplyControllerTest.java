@@ -2,7 +2,6 @@ package Baetube_backEnd.controller;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.atLeastOnce;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -85,7 +84,7 @@ public class RestNestedReplyControllerTest
 	public void nestedReplyInsertTest() throws Exception
 	{
 		mockMvc.perform(post("/api/nestedreply/insert")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(correctContent))
 		.andExpect(status().isOk())
 		.andDo(print());
@@ -103,13 +102,13 @@ public class RestNestedReplyControllerTest
 		when(nestedReplyMapper.selectByReplyId(2)).thenReturn(null);
 		
 		mockMvc.perform(get("/api/nestedreply/select")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(correctContent))
 		.andExpect(status().isOk())
 		.andDo(print());
 		
 		mockMvc.perform(get("/api/nestedreply/select")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(wrongContent))
 		.andExpect(status().isConflict())
 		.andDo(print());
@@ -122,7 +121,7 @@ public class RestNestedReplyControllerTest
 		when(nestedReplyMapper.selectByNestedReplyId(2)).thenReturn(null);
 		
 		mockMvc.perform(get("/api/nestedreply/update")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(correctContent))
 		.andExpect(status().isOk())
 		.andDo(print());
@@ -130,7 +129,7 @@ public class RestNestedReplyControllerTest
 		verify(nestedReplyMapper, atLeastOnce()).updateComment(1, "test");
 		
 		mockMvc.perform(get("/api/nestedreply/update")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(wrongContent))
 		.andExpect(status().isConflict())
 		.andDo(print());

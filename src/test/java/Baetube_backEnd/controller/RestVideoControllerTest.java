@@ -118,13 +118,13 @@ public class RestVideoControllerTest
 		when(videoMapper.selectChannelVideo(2)).thenReturn(null);
 		
 		mockMvc.perform(get("/api/video/channel_video")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(correctContent))
 		.andExpect(status().isOk())
 		.andDo(print());
 		
 		mockMvc.perform(get("/api/video/channel_video")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(wrongContent))
 		.andExpect(status().isConflict())
 		.andDo(print());
@@ -146,13 +146,13 @@ public class RestVideoControllerTest
 		when(videoMapper.selectHistoryVideo(2)).thenReturn(null);
 		
 		mockMvc.perform(get("/api/video/history_video")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(correctContent))
 		.andExpect(status().isOk())
 		.andDo(print());
 		
 		mockMvc.perform(get("/api/video/history_video")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(wrongContent))
 		.andExpect(status().isConflict())
 		.andDo(print());
@@ -174,13 +174,13 @@ public class RestVideoControllerTest
 		when(videoMapper.selectMainVideo(2)).thenReturn(null);
 		
 		mockMvc.perform(get("/api/video/main_video")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(correctContent))
 		.andExpect(status().isOk())
 		.andDo(print());
 		
 		mockMvc.perform(get("/api/video/main_video")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(wrongContent))
 		.andExpect(status().isConflict())
 		.andDo(print());
@@ -204,13 +204,13 @@ public class RestVideoControllerTest
 		when(videoMapper.selectPlaylistVideo(2)).thenReturn(null);
 		
 		mockMvc.perform(get("/api/video/playlist_video")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(correctContent))
 		.andExpect(status().isOk())
 		.andDo(print());
 		
 		mockMvc.perform(get("/api/video/playlist_video")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(wrongContent))
 		.andExpect(status().isConflict())
 		.andDo(print());
@@ -232,13 +232,13 @@ public class RestVideoControllerTest
 		when(videoMapper.selectSubscribeVideo(2)).thenReturn(null);
 		
 		mockMvc.perform(get("/api/video/subscribe_video")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(correctContent))
 		.andExpect(status().isOk())
 		.andDo(print());
 		
 		mockMvc.perform(get("/api/video/subscribe_video")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(wrongContent))
 		.andExpect(status().isConflict())
 		.andDo(print());
@@ -251,7 +251,7 @@ public class RestVideoControllerTest
 		String content = objectMapper.writeValueAsString(video);
 
 		mockMvc.perform(post("/api/video/insert")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(content))
 		.andExpect(status().isOk())
 		.andDo(print());
@@ -274,7 +274,7 @@ public class RestVideoControllerTest
 		when(videoMapper.selectByVideoId(2)).thenReturn(null);
 		
 		mockMvc.perform(post("/api/video/update")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(correctContent))
 		.andExpect(status().isOk())
 		.andDo(print());
@@ -282,7 +282,7 @@ public class RestVideoControllerTest
 		verify(videoMapper, atLeastOnce()).update(any(), any());
 		
 		mockMvc.perform(post("/api/video/update")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(wrongContent))
 		.andExpect(status().isConflict())
 		.andDo(print());
@@ -301,7 +301,7 @@ public class RestVideoControllerTest
 		when(videoMapper.selectByVideoId(2)).thenReturn(null);
 		
 		mockMvc.perform(get("/api/video/view_video")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(correctContent))
 		.andExpect(status().isOk())
 		.andDo(print());
@@ -310,7 +310,7 @@ public class RestVideoControllerTest
 		verify(historyMapper, atLeastOnce()).insert(any(), any());
 		
 		mockMvc.perform(get("/api/video/view_video")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(wrongContent))
 		.andExpect(status().isConflict())
 		.andDo(print());

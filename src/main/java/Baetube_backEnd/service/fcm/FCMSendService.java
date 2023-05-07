@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.google.firebase.messaging.AndroidConfig;
 import com.google.firebase.messaging.AndroidNotification;
-import com.google.firebase.messaging.BatchResponse;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingException;
 import com.google.firebase.messaging.Message;
@@ -35,7 +34,7 @@ public class FCMSendService
 				.addAllTokens(registrationTokens)
 				.build();
 		
-		BatchResponse batchResponse = FirebaseMessaging.getInstance().sendMulticast(message);
+		FirebaseMessaging.getInstance().sendMulticast(message);
 	}
 	
 	// 여기서 말하는 contentsId 는 video_id 또는 community_id를 의미한다.
@@ -59,7 +58,7 @@ public class FCMSendService
 				.setToken(registrationTokens)
 				.build();
 		
-		String response = FirebaseMessaging.getInstance().send(message);
+		FirebaseMessaging.getInstance().send(message);
 	}
 	
 }

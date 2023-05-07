@@ -5,9 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import Baetube_backEnd.dto.Community;
 import Baetube_backEnd.dto.Notification;
-import Baetube_backEnd.dto.Video;
 
 public interface NotificationMapper
 {

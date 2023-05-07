@@ -1,12 +1,7 @@
 package Baetube_backEnd.controller;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyList;
-import static org.mockito.Matchers.anyListOf;
-import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.atLeastOnce;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -168,7 +163,6 @@ public class RestChannelControllerTest
 	public void ChannelVisitTest() throws Exception
 	{
 		Channel correctChannel = new Channel(1, 1, 0, 0, "test", "test", "test", null, "test");
-		Channel wrongChannel = new Channel(2, 2, 0, 0, "test", "test", "test", null, "test");
 		
 		when(channelMapper.select(1)).thenReturn(correctChannel);
 		when(channelMapper.select(2)).thenReturn(null);
@@ -190,7 +184,6 @@ public class RestChannelControllerTest
 	public void ChannelSubscribersTest() throws Exception
 	{
 		Channel correctChannel = new Channel(1, 1, 0, 0, "test", "test", "test", null, "test");
-		Channel wrongChannel = new Channel(2, 2, 0, 0, "test", "test", "test", null, "test");
 		
 		ArrayList<Channel> correctChannelList = new ArrayList<>();
 		correctChannelList.add(correctChannel);

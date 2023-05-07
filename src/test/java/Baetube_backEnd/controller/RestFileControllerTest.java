@@ -1,13 +1,10 @@
 package Baetube_backEnd.controller;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.spy;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.nio.file.Paths;
 
@@ -18,12 +15,9 @@ import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import Baetube_backEnd.service.file.FileUploadService;
 
@@ -39,8 +33,6 @@ public class RestFileControllerTest
 	@Autowired
 	private MockMvc mockMvc;
 	
-	private ObjectMapper objectMapper;
-	
 	@Before
 	public void setUp()
 	{
@@ -49,7 +41,6 @@ public class RestFileControllerTest
 		
 		MockitoAnnotations.initMocks(this);
 		mockMvc = MockMvcBuilders.standaloneSetup(restFileController).build();
-		objectMapper = new ObjectMapper();
 	}
 	
 	@Ignore

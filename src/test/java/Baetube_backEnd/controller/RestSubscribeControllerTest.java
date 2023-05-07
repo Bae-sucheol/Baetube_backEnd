@@ -78,7 +78,7 @@ public class RestSubscribeControllerTest
 		when(subscribeMapper.select(any(), any())).thenReturn(null);
 		
 		mockMvc.perform(post("/api/subscribe/subscribe")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(content))
 		.andExpect(status().isOk())
 		.andDo(print());
@@ -87,7 +87,7 @@ public class RestSubscribeControllerTest
 		when(subscribeMapper.select(any(), any())).thenReturn(subscribers);
 		
 		mockMvc.perform(post("/api/subscribe/subscribe")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(content))
 		.andExpect(status().isConflict())
 		.andDo(print());
@@ -99,7 +99,7 @@ public class RestSubscribeControllerTest
 		when(subscribeMapper.select(any(), any())).thenReturn(subscribers);
 		
 		mockMvc.perform(post("/api/subscribe/unsubscribe")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(content))
 		.andExpect(status().isOk())
 		.andDo(print());
@@ -108,7 +108,7 @@ public class RestSubscribeControllerTest
 		when(subscribeMapper.select(any(), any())).thenReturn(null);
 		
 		mockMvc.perform(post("/api/subscribe/unsubscribe")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(content))
 		.andExpect(status().isConflict())
 		.andDo(print());
@@ -123,7 +123,7 @@ public class RestSubscribeControllerTest
 		when(subscribeMapper.select(any(), any())).thenReturn(subscribers);
 		
 		mockMvc.perform(get("/api/subscribe/select")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(content))
 		.andExpect(status().isOk())
 		.andDo(print());
@@ -131,7 +131,7 @@ public class RestSubscribeControllerTest
 		when(subscribeMapper.select(any(), any())).thenReturn(null);
 		
 		mockMvc.perform(get("/api/subscribe/select")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(content))
 		.andExpect(status().isConflict())
 		.andDo(print());

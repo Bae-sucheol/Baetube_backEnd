@@ -80,7 +80,7 @@ public class RestSubscribeController
 		try
 		{
 			Channel channel = jwtTokenDataExtractService.getChannelData(bearerToken, channelSequence);
-			subscribeDeleteService.delete(request);
+			subscribeDeleteService.delete(request, channel.getChannelId());
 			return ResponseEntity.status(HttpStatus.OK).build();
 		} 
 		catch (NullSubscriberException e)

@@ -6,8 +6,6 @@ import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.sql.Timestamp;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -19,7 +17,6 @@ import Baetube_backEnd.dto.Reply;
 import Baetube_backEnd.mapper.ContentsMapper;
 import Baetube_backEnd.mapper.NestedReplyMapper;
 import Baetube_backEnd.mapper.ReplyMapper;
-import Baetube_backEnd.service.nestedreply.NestedReplyInsertService;
 
 public class NestedReplyInsertServiceTest
 {

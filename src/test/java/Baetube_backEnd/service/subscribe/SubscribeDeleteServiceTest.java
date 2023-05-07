@@ -2,7 +2,6 @@ package Baetube_backEnd.service.subscribe;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyList;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -15,13 +14,11 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import Baetube_backEnd.dto.Subscribers;
 import Baetube_backEnd.exception.NullSubscriberException;
 import Baetube_backEnd.mapper.ChannelMapper;
 import Baetube_backEnd.mapper.SubscribeMapper;
-import Baetube_backEnd.service.subscribe.SubscribeDeleteService;
 
 public class SubscribeDeleteServiceTest
 {
@@ -50,7 +47,7 @@ public class SubscribeDeleteServiceTest
 	{
 		when(subscribeMapper.selectSubscribersList(any())).thenReturn(subscribers);
 		
-		assertEquals(true, subscribeDeleteService.delete(subscribers));
+		assertEquals(true, subscribeDeleteService.delete(subscribers , 1));
 		verify(subscribeMapper, atLeastOnce()).unSubscribe(any());
 		verify(channelMapper, atLeastOnce()).updateSubscribes(any(), any());
 	}
@@ -60,7 +57,7 @@ public class SubscribeDeleteServiceTest
 	{
 		when(subscribeMapper.selectSubscribersList(any())).thenReturn(null);
 		
-		assertEquals(true, subscribeDeleteService.delete(subscribers));
+		assertEquals(true, subscribeDeleteService.delete(subscribers, 1));
 		verify(subscribeMapper, atLeastOnce()).unSubscribe(any());
 		verify(channelMapper, atLeastOnce()).updateSubscribes(any(), any());
 	}

@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 import Baetube_backEnd.ErrorResponse;
 import Baetube_backEnd.dto.Channel;
 import Baetube_backEnd.exception.DuplicateChannelException;
-import Baetube_backEnd.exception.DuplicateUserException;
 import Baetube_backEnd.exception.NullChannelException;
 import Baetube_backEnd.service.channel.ChannelDeleteService;
 import Baetube_backEnd.service.channel.ChannelInsertService;

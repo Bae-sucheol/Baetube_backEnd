@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import Baetube_backEnd.dto.User;
 import Baetube_backEnd.dto.Video;
 
 public interface VideoMapper

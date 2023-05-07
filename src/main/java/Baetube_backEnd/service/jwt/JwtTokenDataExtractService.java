@@ -1,10 +1,6 @@
 package Baetube_backEnd.service.jwt;
 
-import static org.mockito.Matchers.contains;
-
 import java.util.List;
-
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;

@@ -2,7 +2,6 @@ package Baetube_backEnd.controller;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.atLeastOnce;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -14,7 +13,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.ArrayList;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -86,13 +84,13 @@ public class RestCommunityControllerTest
 		ArrayList<Community> communityList = new ArrayList<>();
 		communityList.add(correctCommunity);
 		
-		when(communityMapper.selectByChannel(1)).thenReturn(communityList);
-		when(communityMapper.selectByChannel(2)).thenReturn(null);
+		when(communityMapper.selectByChannel(1, 1)).thenReturn(communityList);
+		when(communityMapper.selectByChannel(2, 2)).thenReturn(null);
 		
 		String correctContent = objectMapper.writeValueAsString(correctChannel);
 	
 		mockMvc.perform(get("/api/community/channel_visit")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(correctContent))
 		.andExpect(status().isOk())
 		.andDo(print());
@@ -100,7 +98,7 @@ public class RestCommunityControllerTest
 		String wrongContent = objectMapper.writeValueAsString(wrongChannel);
 		
 		mockMvc.perform(get("/api/community/channel_visit")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(wrongContent))
 		.andExpect(status().isConflict())
 		.andDo(print());
@@ -116,7 +114,7 @@ public class RestCommunityControllerTest
 		String correctContent = objectMapper.writeValueAsString(correctCommunity);
 	
 		mockMvc.perform(post("/api/community/delete")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(correctContent))
 		.andExpect(status().isOk())
 		.andDo(print());
@@ -126,7 +124,7 @@ public class RestCommunityControllerTest
 		String wrongContent = objectMapper.writeValueAsString(wrongCommunity);
 		
 		mockMvc.perform(post("/api/community/delete")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(wrongContent))
 		.andExpect(status().isConflict())
 		.andDo(print());
@@ -139,7 +137,7 @@ public class RestCommunityControllerTest
 		String correctContent = objectMapper.writeValueAsString(correctCommunity);
 	
 		mockMvc.perform(post("/api/community/insert")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(correctContent))
 		.andExpect(status().isOk())
 		.andDo(print());

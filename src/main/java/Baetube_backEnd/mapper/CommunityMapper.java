@@ -3,7 +3,6 @@ package Baetube_backEnd.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
-import org.junit.runners.Parameterized.Parameters;
 
 import Baetube_backEnd.dto.Community;
 

@@ -27,17 +27,8 @@ public class RestCategoryController
 	{
 		try
 		{
-			System.out.println("카테고리 검색 시작.");
-			
 			List<Category> categoryList = categorySelectService.selectCategoryOrderByViews(bearerToken);
-			
-			System.out.println("카테고리 개수 : " + categoryList.size());
-			
-			for(Category item : categoryList)
-			{
-				System.out.println("category : " + item.getName());
-			}
-			
+
 			return ResponseEntity.status(HttpStatus.OK).body(categoryList);
 		} 
 		catch (NullCategoryException e)

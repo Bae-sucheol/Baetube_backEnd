@@ -1,7 +1,6 @@
 package Baetube_backEnd.service.rate;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
@@ -12,10 +11,6 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-
-import com.jayway.jsonpath.internal.function.text.Concatenate;
 
 import Baetube_backEnd.dto.Contents;
 import Baetube_backEnd.dto.Rate;

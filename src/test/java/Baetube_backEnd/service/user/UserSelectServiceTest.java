@@ -15,7 +15,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import Baetube_backEnd.dto.User;
-import Baetube_backEnd.exception.DuplicateUserException;
 import Baetube_backEnd.exception.NullUserException;
 import Baetube_backEnd.mapper.UserMapper;
 

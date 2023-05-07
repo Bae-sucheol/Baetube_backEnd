@@ -5,7 +5,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import Baetube_backEnd.dto.User;
 import Baetube_backEnd.exception.NullUserException;
-import Baetube_backEnd.exception.WrongIdPasswordException;
 import Baetube_backEnd.mapper.UserMapper;
 
 public class UserUpdateService

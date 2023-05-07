@@ -9,8 +9,6 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import Baetube_backEnd.dto.Vote;
 import Baetube_backEnd.mapper.VoteMapper;

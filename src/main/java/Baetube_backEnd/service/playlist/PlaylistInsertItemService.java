@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import Baetube_backEnd.dto.PlaylistItem;
 import Baetube_backEnd.exception.DuplicatePlaylistItemException;
-import Baetube_backEnd.exception.NullPlaylistItemException;
 import Baetube_backEnd.mapper.PlaylistMapper;
 
 public class PlaylistInsertItemService

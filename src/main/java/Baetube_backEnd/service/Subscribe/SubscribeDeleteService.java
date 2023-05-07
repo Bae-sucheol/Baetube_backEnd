@@ -18,8 +18,13 @@ public class SubscribeDeleteService
 	private ChannelMapper channelMapper;
 	
 	@Transactional
-	public boolean delete(List<Subscribers> request)
-	{
+	public boolean delete(List<Subscribers> request, Integer channelId)
+	{	
+		for(int i = 0; i < request.size(); i++)
+		{
+			request.get(i).setSubscriberId(channelId);
+		}
+		
 		List<Subscribers> subscribers = subscribeMapper.selectSubscribersList(request);
 		
 		if(subscribers == null)

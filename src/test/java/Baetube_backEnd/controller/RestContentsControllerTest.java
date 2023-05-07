@@ -19,7 +19,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import Baetube_backEnd.dto.Contents;
@@ -69,7 +68,7 @@ public class RestContentsControllerTest
 		when(contentsMapper.selectByContentsId(2L)).thenReturn(null);
 		
 		mockMvc.perform(post("/api/contents/delete")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(correctContent))
 		.andExpect(status().isOk())
 		.andDo(print());
@@ -77,7 +76,7 @@ public class RestContentsControllerTest
 		verify(contentsMapper, atLeastOnce()).delete(1L, 0);
 		
 		mockMvc.perform(post("/api/contents/delete")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(wrongContent))
 		.andExpect(status().isConflict())
 		.andDo(print());

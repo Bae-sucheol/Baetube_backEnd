@@ -1,6 +1,5 @@
 package Baetube_backEnd.dto;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 public class Reply

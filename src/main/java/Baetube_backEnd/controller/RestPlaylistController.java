@@ -221,7 +221,6 @@ public class RestPlaylistController
 	{                                             
 		try
 		{
-			System.out.println("요청이 도착했습니다.");
 			List<Playlist> playlistList = playlistChannelService.select(playlistId);
 			return ResponseEntity.status(HttpStatus.OK).body(playlistList);
 		} 

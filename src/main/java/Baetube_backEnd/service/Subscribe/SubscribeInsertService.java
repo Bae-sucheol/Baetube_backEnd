@@ -5,7 +5,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import Baetube_backEnd.dto.Subscribers;
 import Baetube_backEnd.exception.DuplicateSubscriberException;
-import Baetube_backEnd.exception.NullSubscriberException;
 import Baetube_backEnd.mapper.SubscribeMapper;
 
 public class SubscribeInsertService

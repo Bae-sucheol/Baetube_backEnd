@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import Baetube_backEnd.dto.Vote;
 import Baetube_backEnd.exception.DuplicateVoteOptionException;
-import Baetube_backEnd.exception.NullVoteException;
 import Baetube_backEnd.mapper.VoteMapper;
 
 public class VoteInsertOptionMultiService

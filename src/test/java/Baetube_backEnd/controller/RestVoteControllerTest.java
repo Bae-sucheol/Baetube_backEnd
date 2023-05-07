@@ -13,7 +13,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.ArrayList;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -101,12 +100,12 @@ public class RestVoteControllerTest
 	@Test
 	public void voteInsertTest() throws Exception
 	{
-		Vote vote = new Vote(1, "test", "test");
+		Vote vote = new Vote(1, 1, "test", 1, "test", 1);
 		
 		String content = objectMapper.writeValueAsString(vote);
 		
 		mockMvc.perform(post("/api/vote/insert")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(content))
 		.andExpect(status().isOk())
 		.andDo(print());
@@ -136,7 +135,7 @@ public class RestVoteControllerTest
 		when(voteMapper.selectVoteOptions(3)).thenReturn(null);
 		
 		mockMvc.perform(post("/api/vote/insert_option")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(correctContent))
 		.andExpect(status().isOk())
 		.andDo(print());
@@ -144,13 +143,13 @@ public class RestVoteControllerTest
 		verify(voteMapper, atLeastOnce()).insertVoteOption(any());
 		
 		mockMvc.perform(post("/api/vote/insert_option")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(wrongContent))
 		.andExpect(status().isConflict())
 		.andDo(print());
 		
 		mockMvc.perform(post("/api/vote/insert_option")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(nullContent))
 		.andExpect(status().isOk())
 		.andDo(print());
@@ -177,7 +176,7 @@ public class RestVoteControllerTest
 		when(voteMapper.selectVoteOptions(2)).thenReturn(wrongVoteList);
 		
 		mockMvc.perform(post("/api/vote/insert_option_multi")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(correctContent))
 		.andExpect(status().isOk())
 		.andDo(print());
@@ -185,7 +184,7 @@ public class RestVoteControllerTest
 		verify(voteMapper, atLeastOnce()).insertVoteOptionMulti(any());
 		
 		mockMvc.perform(post("/api/vote/insert_option_multi")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(wrongContent))
 		.andExpect(status().isConflict())
 		.andDo(print());
@@ -193,7 +192,7 @@ public class RestVoteControllerTest
 		when(voteMapper.selectVoteOptions(1)).thenReturn(null);
 		
 		mockMvc.perform(post("/api/vote/insert_option_multi")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(correctContent))
 		.andExpect(status().isOk())
 		.andDo(print());
@@ -204,8 +203,8 @@ public class RestVoteControllerTest
 	@Test
 	public void voteDeleteTest() throws Exception
 	{
-		Vote correctVote = new Vote(1, 1, "test", "test");
-		Vote wrongVote = new Vote(2, 2, "test2", "test2");
+		Vote correctVote = new Vote(1, 1, "test", 1, "test", 1);
+		Vote wrongVote = new Vote(2, 2, "test2", 1, "test2", 1);
 		
 		String correctContent = objectMapper.writeValueAsString(correctVote);
 		String wrongContent = objectMapper.writeValueAsString(wrongVote);
@@ -214,7 +213,7 @@ public class RestVoteControllerTest
 		when(voteMapper.selectVote(2)).thenReturn(null);
 		
 		mockMvc.perform(post("/api/vote/delete")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(correctContent))
 		.andExpect(status().isOk())
 		.andDo(print());
@@ -222,7 +221,7 @@ public class RestVoteControllerTest
 		verify(voteMapper, atLeastOnce()).deleteVote(any());
 		
 		mockMvc.perform(post("/api/vote/delete")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(wrongContent))
 		.andExpect(status().isConflict())
 		.andDo(print());
@@ -241,7 +240,7 @@ public class RestVoteControllerTest
 		when(voteMapper.selectVoteOption(2)).thenReturn(null);
 		
 		mockMvc.perform(post("/api/vote/delete_option")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(correctContent))
 		.andExpect(status().isOk())
 		.andDo(print());
@@ -249,7 +248,7 @@ public class RestVoteControllerTest
 		verify(voteMapper, atLeastOnce()).deleteVoteOption(any());
 		
 		mockMvc.perform(post("/api/vote/delete_option")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(wrongContent))
 		.andExpect(status().isConflict())
 		.andDo(print());
@@ -274,7 +273,7 @@ public class RestVoteControllerTest
 		when(voteMapper.selectVoteOptions(2)).thenReturn(correctVoteList);
 		
 		mockMvc.perform(post("/api/vote/delete_option_multi")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(correctContent))
 		.andExpect(status().isOk())
 		.andDo(print());
@@ -282,7 +281,7 @@ public class RestVoteControllerTest
 		verify(voteMapper, atLeastOnce()).deleteVoteOptionMulti(any());
 		
 		mockMvc.perform(post("/api/vote/delete_option_multi")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(wrongContent))
 		.andExpect(status().isConflict())
 		.andDo(print());
@@ -290,7 +289,7 @@ public class RestVoteControllerTest
 		when(voteMapper.selectVoteOptions(1)).thenReturn(null);
 		
 		mockMvc.perform(post("/api/vote/delete_option_multi")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(correctContent))
 		.andExpect(status().isOk())
 		.andDo(print());
@@ -311,7 +310,7 @@ public class RestVoteControllerTest
 		when(voteMapper.selectVote(2)).thenReturn(null);
 		
 		mockMvc.perform(post("/api/vote/update")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(correctContent))
 		.andExpect(status().isOk())
 		.andDo(print());
@@ -319,7 +318,7 @@ public class RestVoteControllerTest
 		verify(voteMapper, atLeastOnce()).updateVote(any(), any());
 		
 		mockMvc.perform(post("/api/vote/update")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(wrongContent))
 		.andExpect(status().isConflict())
 		.andDo(print());
@@ -341,13 +340,13 @@ public class RestVoteControllerTest
 		when(voteMapper.selectVoteOptions(2)).thenReturn(null);
 		
 		mockMvc.perform(get("/api/vote/select_vote_options")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(correctContent))
 		.andExpect(status().isOk())
 		.andDo(print());
 		
 		mockMvc.perform(get("/api/vote/select_vote_options")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(wrongContent))
 		.andExpect(status().isConflict())
 		.andDo(print());

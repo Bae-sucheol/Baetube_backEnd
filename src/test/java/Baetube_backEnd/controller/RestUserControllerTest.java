@@ -103,7 +103,7 @@ public class RestUserControllerTest
 		when(userMapper.selectByEmail("test2")).thenReturn(wrongUser);
 		
 		mockMvc.perform(post("/api/user/regist")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(correctContent))
 		.andExpect(status().isOk())
 		.andDo(print());
@@ -111,7 +111,7 @@ public class RestUserControllerTest
 		verify(userMapper, atLeastOnce()).insert(any());
 		
 		mockMvc.perform(post("/api/user/regist")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(wrongContent))
 		.andExpect(status().isConflict())
 		.andDo(print());
@@ -124,7 +124,7 @@ public class RestUserControllerTest
 		when(userMapper.selectByEmail("test2")).thenReturn(null);
 		
 		mockMvc.perform(post("/api/user/unregist")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(correctContent))
 		.andExpect(status().isOk())
 		.andDo(print());
@@ -132,7 +132,7 @@ public class RestUserControllerTest
 		verify(userMapper, atLeastOnce()).delete(any());
 		
 		mockMvc.perform(post("/api/user/unregist")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(wrongContent))
 		.andExpect(status().isConflict())
 		.andDo(print());
@@ -174,7 +174,7 @@ public class RestUserControllerTest
 		when(userMapper.selectByEmail("test2")).thenReturn(null);
 		
 		mockMvc.perform(post("/api/user/update")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(correctContent))
 		.andExpect(status().isOk())
 		.andDo(print());
@@ -182,7 +182,7 @@ public class RestUserControllerTest
 		verify(userMapper, atLeastOnce()).update(any(), any());
 		
 		mockMvc.perform(post("/api/user/update")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(wrongContent))
 		.andExpect(status().isConflict())
 		.andDo(print());
@@ -196,7 +196,7 @@ public class RestUserControllerTest
 		when(userMapper.selectByEmail("test3")).thenReturn(wrongPasswordUser);
 		
 		mockMvc.perform(post("/api/user/change_password")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(correctContent))
 		.andExpect(status().isOk())
 		.andDo(print());
@@ -204,13 +204,13 @@ public class RestUserControllerTest
 		verify(userMapper, atLeastOnce()).changePassword(any(), any());
 		
 		mockMvc.perform(post("/api/user/change_password")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(wrongContent))
 		.andExpect(status().isConflict())
 		.andDo(print());
 		
 		mockMvc.perform(post("/api/user/change_password")
-				.contentType(MediaType.APPLICATION_JSON_UTF8)
+				.contentType(MediaType.APPLICATION_JSON)
 				.content(wrongPasswordContent))
 		.andExpect(status().isConflict())
 		.andDo(print());
