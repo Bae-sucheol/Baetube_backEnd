@@ -66,7 +66,6 @@ public class JwtTokenDataExtractService
 		
 		if(user == null)
 		{
-			System.out.println("¾ø´Âµ¥?");
 			throw new NullUserException();
 		}
 		

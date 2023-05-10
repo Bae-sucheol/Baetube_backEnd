@@ -198,8 +198,12 @@ public class RestVideoController
 			
 			// 삽입 후 notification 테이블에 삽입하기 위해 구독자 userId를 select 한다.
 			List<Integer> subscribersUserId = subscribeSelectService.selectChannelSubscribersUserId(request.getChannelId());
-			// notification 테이블에 삽입.
-			notificationInsertService.insert(subscribersUserId, Long.parseLong(result.get("contentsId")));
+			
+			if(!subscribersUserId.isEmpty())
+			{
+				// notification 테이블에 삽입.
+				notificationInsertService.insert(subscribersUserId, Long.parseLong(result.get("contentsId")));
+			}
 			
 			List<String> subscribersTokens = subscribeSelectService.selectChannelSubscribersToken(request.getChannelId());
 			
@@ -212,6 +216,7 @@ public class RestVideoController
 
 			result.remove(FCMSendService.FCM_NOTIFICATION_VIDEO);
 			result.remove("contentsId");
+			
 			return ResponseEntity.status(HttpStatus.OK).body(result);
 		} 
 		catch (Exception e)
