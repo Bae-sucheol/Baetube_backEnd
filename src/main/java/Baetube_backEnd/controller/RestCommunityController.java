@@ -173,7 +173,6 @@ public class RestCommunityController
 	{
 		try
 		{
-			System.out.println("communityId : " + communityId);
 			Community community = communitySelectService.selectCommunity(communityId);
 			return ResponseEntity.status(HttpStatus.OK).body(community);
 		} 

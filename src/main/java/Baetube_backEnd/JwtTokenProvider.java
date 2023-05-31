@@ -32,15 +32,11 @@ public class JwtTokenProvider
 	private final Key key;
 	//@Value("${jwt.secret}")
 	private static String secret = "VlwEyVBsYt9V7zq57TejMnVUyzblYcfPQye08f7MGVA9XkHa";
-	// 테스트용으로 짧게 
-	private static final int day = 60 * 1000; // 1분
-	private static final int accessTokenTime = 1; // 5분
-	private static final int refreshTokenTime = 10; // 10분 
-	/*
+	
 	private static final int day = 24 * 60 * 60 * 1000; // 하루
 	private static final int accessTokenTime = 1; // 1일
-	private static final int refreshTokenTime = 60; // 60일 
-	*/
+	private static final int refreshTokenTime = 7; // 7일 
+	
 	
 	public JwtTokenProvider()
 	{

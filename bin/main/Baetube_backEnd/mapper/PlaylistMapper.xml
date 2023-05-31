@@ -82,6 +82,13 @@
 		
 		</select>
 		
+		<select id="selectChannelLaterPlaylist" resultType="playlistDto">
+		
+			SELECT playlist_id as playlistId, channel_id as channelId, name, public as visible,
+			video_count as videoCount, thumbnail FROM playlist WHERE channel_id = #{channelId} AND name = "나중에 볼 동영상"
+		
+		</select>
+		
 		<update id="update" parameterType="map">
 		
 			UPDATE playlist

@@ -209,8 +209,8 @@ public class RestUserController
 		                                                 
 		try
 		{
-			System.out.println("request access token : " + request.getAccessToken());
-			System.out.println("request refresh token : " + request.getRefreshToken());
+			//System.out.println("request access token : " + request.getAccessToken());
+			//System.out.println("request refresh token : " + request.getRefreshToken());
 			
 			TokenInfo tokenInfo = JwtAccessTokenService.generateToken(request);
 			return ResponseEntity.status(HttpStatus.OK).body(tokenInfo);

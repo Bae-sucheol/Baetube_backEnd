@@ -21,4 +21,5 @@ public interface VideoMapper
 	public Video selectByThumbnail(@Param("thumbnail") String thumbnail);
 	public List<Video> selectByKeywords(@Param("keywords") String keywords);
 	public List<Video> selectHistoryVideoKeywords(@Param("userId") Integer userId, @Param("keywords") String keywords);
+	public Video selectByContentsId(@Param("contentsId") Long contentsId);
 }

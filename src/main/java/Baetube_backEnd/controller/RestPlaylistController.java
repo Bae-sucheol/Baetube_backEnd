@@ -318,4 +318,29 @@ public class RestPlaylistController
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
 	}
+	
+	
+	@PostMapping("/api/playlist/item/insert/later/{channelSequence}")
+	//@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<Object> insertLaterVideo(@RequestHeader("Authorization") String bearerToken, @PathVariable Integer channelSequence, @RequestBody @Valid Integer request, Errors errors, HttpServletResponse response) throws IOException
+	{
+		if(errors.hasErrors())
+		{
+			String errorCodes = errors.getAllErrors().stream().map(error -> error.getCodes()[0]).collect(Collectors.joining(","));
+			
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse("errorCodes = " + errorCodes));
+		}
+		                                                 
+		try
+		{
+			Channel channel = jwtTokenDataExtractService.getChannelData(bearerToken, channelSequence);
+			playlistInsertItemService.insertLater(request, channel.getChannelId());
+			return ResponseEntity.status(HttpStatus.OK).build();
+		} 
+		catch (DuplicatePlaylistItemException e)
+		{
+			
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 존재하는 아이템 입니다.");
+		}
+	}
 }

@@ -25,4 +25,5 @@ public interface PlaylistMapper
 	
 	public void insertLikeVideo(@Param("channelId") Integer channelId, @Param("videoId") Integer videoId);
 	public PlaylistItem selectLikePlaylist(@Param("channelId") Integer channelId, @Param("videoId") Integer videoId);	
+	public Playlist selectChannelLaterPlaylist(@Param("channelId") Integer channelId);
 }

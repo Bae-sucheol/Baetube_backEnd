@@ -6,6 +6,8 @@ import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.io.IOException;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -30,7 +32,7 @@ public class ContentsDeleteServiceTest
 	}
 	
 	@Test
-	public void correctTest()
+	public void correctTest() throws IOException
 	{
 		Contents contents = new Contents(1L, 0);
 		
@@ -42,7 +44,7 @@ public class ContentsDeleteServiceTest
 	}
 	
 	@Test(expected = NullContentsException.class)
-	public void wrongTest()
+	public void wrongTest() throws IOException
 	{
 		Contents contents = new Contents(1L, 0);
 		
